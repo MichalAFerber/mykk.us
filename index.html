@@ -7,15 +7,17 @@
   <style>
     body {
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 0;
       height: 100vh;
-      background-color: #f0f0f0;
+      width: 100vw;
+      overflow: hidden; /* Prevents scrollbars */
     }
     img {
-      max-width: 100%;
-      height: auto;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* Scales image to cover the entire area, may crop */
+      /* Alternatively, use object-fit: contain; to show the full image without cropping */
+      display: block;
       cursor: pointer;
     }
   </style>
