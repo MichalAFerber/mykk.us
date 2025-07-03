@@ -10,20 +10,29 @@
       padding: 0;
       height: 100vh;
       width: 100vw;
-      overflow: hidden; /* Prevents scrollbars */
+      overflow: hidden;
     }
     img {
       width: 100vw;
       height: 100vh;
-      object-fit: cover; /* Scales image to cover the entire area, may crop */
-      /* Alternatively, use object-fit: contain; to show the full image without cropping */
+      object-fit: cover;
       display: block;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <img src="https://i.ibb.co/y9Wm6TK/wp3276334-krispy-kreme-wallpapers.jpg" alt="wp3276334-krispy-kreme-wallpapers" border="0" onclick="handleClick(event)">
+  <picture>
+    <!-- Use alternate image for phone screens (e.g., max-width: 768px) -->
+    <source 
+      media="(max-width: 768px)" 
+      srcset="https://i.ibb.co/TDyC2qnf/HD-wallpaper-krispy-kreme-doughnuts-krisykreme.jpg">
+    <!-- Default image for larger screens -->
+    <img 
+      src="https://i.ibb.co/y9Wm6TK/wp3276334-krispy-kreme-wallpapers.jpg" 
+      alt="Krispy Kreme Doughnuts" 
+      onclick="handleClick(event)">
+  </picture>
   <script>
     async function handleClick(event) {
       window.location.href = 'https://www.krispykreme.com/';
