@@ -24,28 +24,6 @@
   <img href="https://ibb.co/tG8wqfn" alt="Krispy Kreme Doughnuts" onclick="handleClick(event)">
   <script>
     async function handleClick(event) {
-      event.preventDefault();
-      const ip = await fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => data.ip)
-        .catch(() => 'Unknown IP');
-      const dateTime = new Date().toISOString();
-      const emailData = {
-        to: 'your-email@forwardemail.net',
-        from: 'no-reply@yourdomain.com',
-        subject: 'subject',
-        text: `Someone is snopping around.\n\nIP Address: ${ip}\nDate and Time: ${dateTime}`
-      };
-
-      await fetch('https://api.forwardemail.net/v1/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer your-api-key' // Replace with your ForwardEmail API key
-        },
-        body: JSON.stringify(emailData)
-      }).catch(error => console.error('Email send failed:', error));
-
       window.location.href = 'https://www.krispykreme.com/';
     }
   </script>
