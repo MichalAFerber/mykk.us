@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyKK.us</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <img href="https://ibb.co/tG8wqfn" alt="Krispy Kreme Doughnuts" onclick="handleClick(event)">
+  <script>
+    async function handleClick(event) {
+      event.preventDefault();
+      const ip = await fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => data.ip)
+        .catch(() => 'Unknown IP');
+      const dateTime = new Date().toISOString();
+      const emailData = {
+        to: 'your-email@forwardemail.net',
+        from: 'no-reply@yourdomain.com',
+        subject: 'subject',
+        text: `Someone is snopping around.\n\nIP Address: ${ip}\nDate and Time: ${dateTime}`
+      };
+
+      await fetch('https://api.forwardemail.net/v1/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer your-api-key' // Replace with your ForwardEmail API key
+        },
+        body: JSON.stringify(emailData)
+      }).catch(error => console.error('Email send failed:', error));
+
+      window.location.href = 'https://www.krispykreme.com/';
+    }
+  </script>
+</body>
+</html>
