@@ -11,20 +11,26 @@
       height: 100vh;
       width: 100vw;
       overflow: hidden;
+      background-color: #f0f0f0; /* Fallback background for empty space */
+      display: flex; /* Center picture element */
+      justify-content: center;
+      align-items: center;
     }
     picture, img {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      object-position: top;
+      max-width: 100vw;
+      max-height: 100vh;
+      width: auto;
+      height: auto;
+      object-fit: contain; /* Show entire image without cropping */
+      object-position: center; /* Center both vertically and horizontally */
       display: block;
       cursor: pointer;
     }
-    /* Override styles for phone screens */
+    /* Ensure full width for smaller screens, still centered */
     @media (max-width: 768px) {
       picture, img {
-        height: auto;
-        object-fit: contain;
+        width: 100vw; /* Fit full width */
+        height: auto; /* Maintain aspect ratio */
       }
     }
   </style>
@@ -43,7 +49,7 @@
     <source media="(max-width: 2560px)" srcset="/images/mykk-2560x1440.jpeg">
     <!-- Ultra-high-resolution screens (>2560px, 4K displays) -->
     <source media="(min-width: 2561px)" srcset="/images/mykk-3648x2736.jpeg">
-    <!-- Default image (fallback, or use for large screens) -->
+    <!-- Default image (fallback) -->
     <img src="/images/mykk-3508x2480.jpg" alt="Krispy Kreme Doughnuts" onclick="handleClick(event)">
   </picture>
   <script>
