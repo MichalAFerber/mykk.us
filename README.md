@@ -5,7 +5,7 @@ Features
 
 ## Responsive Images:
 
-<pre><code>
+```bash
 Uses the HTML <picture> element to serve different image sizes based on viewport width:
   mykk-800x1063.jpg for screens ≤800px (phones).
   mykk-1653-1136.jpg for screens ≤1653px (tablets/small laptops).
@@ -14,7 +14,7 @@ Uses the HTML <picture> element to serve different image sizes based on viewport
   mykk-2560x1440.jpeg for screens ≤2560px (high-res displays).
   mykk-3648x2736.jpeg for screens >2560px (4K displays).
   mykk-3508x2480.jpg as the fallback image.
-</code></pre>
+```
 
 ## No Cropping:
 
