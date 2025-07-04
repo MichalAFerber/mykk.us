@@ -13,8 +13,8 @@
       overflow: hidden;
     }
     picture, img {
-      height: 100vw;
       width: 100vw;
+      height: 100vh;
       object-fit: cover;
       display: block;
       cursor: pointer;
@@ -24,7 +24,7 @@
 <body>
   <picture>
     <!-- Use alternate image for phone screens (max-width: 768px) -->
-    <source srcset="https://i.ibb.co/TDyC2qnf/HD-wallpaper-krispy-kreme-doughnuts-krisykreme.jpg" onclick="handleClick(event)" media="(max-width: 768px)">
+    <source media="(max-width: 768px)" srcset="https://i.ibb.co/TDyC2qnf/HD-wallpaper-krispy-kreme-doughnuts-krisykreme.jpg" onclick="handleClick(event)">
     <!-- Default image for larger screens -->
     <img src="https://i.ibb.co/y9Wm6TK/wp3276334-krispy-kreme-wallpapers.jpg" alt="Krispy Kreme Doughnuts" onclick="handleClick(event)">
   </picture>
