@@ -1,3 +1,5 @@
+[](images/mykk-2560x1440.jpeg)
+
 # MyKK.us
 
 A minimalist, responsive web page for [MyKK.us](https://mykk.us/) that displays a Krispy Kreme-themed image, optimized for different viewport sizes, and redirects to the official Krispy Kreme website upon clicking. The image is centered both vertically and horizontally, ensuring it is never cropped, with different image resolutions served based on the device's screen size.
