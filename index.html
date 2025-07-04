@@ -11,8 +11,8 @@
       height: 100vh;
       width: 100vw;
       overflow: hidden;
-      background-color: #f0f0f0; /* Fallback background for empty space */
-      display: flex; /* Center picture element */
+      background-color: #ffffff;
+      display: flex;
       justify-content: center;
       align-items: center;
     }
@@ -21,16 +21,16 @@
       max-height: 100vh;
       width: auto;
       height: auto;
-      object-fit: contain; /* Show entire image without cropping */
-      object-position: center; /* Center both vertically and horizontally */
+      object-fit: contain;
+      object-position: center;
       display: block;
       cursor: pointer;
     }
     /* Ensure full width for smaller screens, still centered */
     @media (max-width: 768px) {
       picture, img {
-        width: 100vw; /* Fit full width */
-        height: auto; /* Maintain aspect ratio */
+        width: 100vw;
+        height: auto;
       }
     }
   </style>
@@ -41,16 +41,10 @@
     <source media="(max-width: 800px)" srcset="/images/mykk-800x1063.jpg">
     <!-- Medium screens (≤1653px, tablets/small laptops) -->
     <source media="(max-width: 1653px)" srcset="/images/mykk-1653-1136.jpg">
-    <!-- Medium-large screens (≤1680px, laptops) -->
-    <source media="(max-width: 1680px)" srcset="/images/mykk-1680x1050.jpg">
-    <!-- Full HD screens (≤1920px, desktops) -->
-    <source media="(max-width: 1920px)" srcset="/images/mykk-1920x1080.jpg">
     <!-- High-resolution screens (≤2560px, high-res displays) -->
     <source media="(max-width: 2560px)" srcset="/images/mykk-2560x1440.jpeg">
-    <!-- Ultra-high-resolution screens (>2560px, 4K displays) -->
-    <source media="(min-width: 2561px)" srcset="/images/mykk-3648x2736.jpeg">
     <!-- Default image (fallback) -->
-    <img src="/images/mykk-3508x2480.jpg" alt="Krispy Kreme Doughnuts" onclick="handleClick(event)">
+    <img src="/images/mykk-3508x2480" alt="Krispy Kreme Doughnuts" onclick="handleClick(event)">
   </picture>
   <script>
     async function handleClick(event) {
