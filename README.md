@@ -5,7 +5,7 @@ Features
 
 ## Responsive Images:
 
-```bash
+```css
 Uses the HTML <picture> element to serve different image sizes based on viewport width:
   mykk-800x1063.jpg for screens ≤800px (phones).
   mykk-1653-1136.jpg for screens ≤1653px (tablets/small laptops).
