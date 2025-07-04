@@ -1,4 +1,4 @@
-[](/images/mykk-2560x1440.jpeg)
+![](/images/mykk-2560x1440.jpeg)
 
 # MyKK.us
 
