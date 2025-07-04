@@ -5,14 +5,16 @@ Features
 
 ## Responsive Images:
 
+<pre>
 Uses the HTML <picture> element to serve different image sizes based on viewport width:
-mykk-800x1063.jpg for screens ≤800px (phones).
-mykk-1653-1136.jpg for screens ≤1653px (tablets/small laptops).
-mykk-1680x1050.jpg for screens ≤1680px (laptops).
-mykk-1920x1080.jpg for screens ≤1920px (desktops).
-mykk-2560x1440.jpeg for screens ≤2560px (high-res displays).
-mykk-3648x2736.jpeg for screens >2560px (4K displays).
-mykk-3508x2480.jpg as the fallback image.
+  mykk-800x1063.jpg for screens ≤800px (phones).
+  mykk-1653-1136.jpg for screens ≤1653px (tablets/small laptops).
+  mykk-1680x1050.jpg for screens ≤1680px (laptops).
+  mykk-1920x1080.jpg for screens ≤1920px (desktops).
+  mykk-2560x1440.jpeg for screens ≤2560px (high-res displays).
+  mykk-3648x2736.jpeg for screens >2560px (4K displays).
+  mykk-3508x2480.jpg as the fallback image.
+</pre>
 
 ## No Cropping:
 
@@ -24,6 +26,7 @@ mykk-3508x2480.jpg as the fallback image.
 
 ### Project Structure
 
+<pre>
 mykk.us/
 ├── index.html         # Main HTML file
 ├── images/            # Directory for image assets
@@ -32,6 +35,7 @@ mykk.us/
 │   ├── mykk-2560x1440.jpeg
 │   ├── mykk-3508x2480.jpg
 └── README.md          # This file
+</pre>
 
 ### Setup
 
