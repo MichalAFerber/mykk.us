@@ -3,7 +3,7 @@
 Landing page for [MyKK](https://mykk.us/) — a customizable, single-file browser start page and new-tab dashboard.
 
 **Live dashboard:** [start.mykk.us](https://start.mykk.us)
-**Source code:** [github.com/MichalAFerber/start.mykk.us](https://github.com/MichalAFerber/start.mykk.us)
+**Source code:** [github.com/MichalAFerber/mykk.us-dashboard](https://github.com/MichalAFerber/mykk.us-dashboard)
 
 ## What's Here
 
