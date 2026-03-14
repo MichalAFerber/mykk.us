@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You — MyKK</title>
+  <meta name="description" content="See what's coming next for MyKK dashboard.">
+  <title>Roadmap - MyKK</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,26 +42,55 @@
     <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary" target="_blank" rel="noopener">Install Free</a>
   </div>
 
-  <section class="thank-you-page">
+  <section class="roadmap-page">
     <div class="container">
-      <div class="thank-you-content">
-        <div class="thank-you-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      <div class="section-header">
+        <h1>Roadmap</h1>
+        <p>See what we're building and what's coming next.</p>
+      </div>
+
+      <h3>In Progress</h3>
+      <div class="roadmap-grid">
+        <div class="roadmap-item">
+          <span class="roadmap-status status-in-progress">In Progress</span>
+          <h3>Accessibility (a11y)</h3>
+          <p>ARIA labels, roles, live regions, focus management, and screen reader support across all widgets.</p>
         </div>
-        <h1>You're <span class="gradient-text">In!</span></h1>
-        <p class="thank-you-description">Thanks for subscribing to MyKK Pro. Your subscription is now active.</p>
-        <div class="thank-you-steps">
-          <h3>Next Steps</h3>
-          <ol>
-            <li>Install the <strong>MyKK Chrome Extension</strong> (if you haven't already)</li>
-            <li>Click the extension icon and <strong>Sign in with Google</strong> using the same email you used to purchase</li>
-            <li>Your Pro features will activate automatically</li>
-          </ol>
+        <div class="roadmap-item">
+          <span class="roadmap-status status-in-progress">In Progress</span>
+          <h3>Touch-Friendly UI</h3>
+          <p>Larger tap targets, swipe gestures, and touch-optimized controls for phones and tablets.</p>
         </div>
-        <div class="thank-you-actions">
-          <a href="https://start.mykk.us" class="btn btn-primary btn-lg">Open Dashboard</a>
-          <a href="/" class="btn btn-secondary btn-lg">Back to Home</a>
+      </div>
+
+      <h3>Planned</h3>
+      <div class="roadmap-grid">
+        <div class="roadmap-item">
+          <span class="roadmap-status status-planned">Planned</span>
+          <h3>Keyboard Shortcuts</h3>
+          <p>/ to focus search, Esc to close modals, arrow keys for navigation, and customizable key bindings.</p>
         </div>
+        <div class="roadmap-item">
+          <span class="roadmap-status status-planned">Planned</span>
+          <h3>Custom CSS Injection</h3>
+          <p>Inject your own stylesheets to personalize the dashboard beyond built-in themes.</p>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-status status-planned">Planned</span>
+          <h3>Bookmark Folders</h3>
+          <p>Collapsible groups and categories to organize large bookmark collections.</p>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-status status-planned">Planned</span>
+          <h3>Light / Dark Mode</h3>
+          <p>System preference detection with manual toggle. Full light theme for all widgets.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-suggest">
+        <h3>Have a suggestion?</h3>
+        <p>We'd love to hear your ideas for new features and improvements.</p>
+        <a href="/support" class="btn btn-primary">Share Your Feedback</a>
       </div>
     </div>
   </section>
@@ -103,6 +133,11 @@
     </div>
   </footer>
 
-  <script src="/script.js"></script>
+  <script>
+    document.querySelector('.nav-toggle').addEventListener('click', () => {
+      document.querySelector('.mobile-menu').classList.toggle('active');
+      document.querySelector('.nav-toggle').classList.toggle('active');
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to set up and customize your MyKK dashboard.">
+  <title>Documentation - MyKK</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>
+        <span>MyKK</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/docs">Docs</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="/support">Support</a>
+        <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener" class="nav-github" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+        <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Install Free</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="/#features">Features</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/docs">Docs</a>
+    <a href="/roadmap">Roadmap</a>
+    <a href="/support">Support</a>
+    <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary" target="_blank" rel="noopener">Install Free</a>
+  </div>
+
+  <section class="docs-page">
+    <div class="container">
+      <h1>Documentation</h1>
+      <div class="docs-layout">
+        <nav class="docs-sidebar">
+          <a href="#getting-started">Getting Started</a>
+          <a href="#installation">Installation</a>
+          <a href="#homepage">Setting as Homepage</a>
+          <a href="#widgets">Widgets</a>
+          <a href="#customization">Customization</a>
+          <a href="#cloud-sync">Cloud Sync</a>
+          <a href="#pro-features">Pro Features</a>
+          <a href="#self-hosting">Self-Hosting</a>
+          <a href="#chrome-extension">Chrome Extension</a>
+        </nav>
+        <div class="docs-content">
+          <div id="getting-started" class="docs-section">
+            <h2>Getting Started</h2>
+            <p>MyKK is a single HTML file dashboard that replaces your browser's new tab or start page. There are no build tools, no server requirements, and no dependencies. Simply download the file and open it in your browser to get started.</p>
+          </div>
+
+          <div id="installation" class="docs-section">
+            <h2>Installation</h2>
+            <p>There are three ways to start using MyKK:</p>
+            <ul>
+              <li><strong>Option 1: Download from GitHub</strong> &mdash; Download <code>index.html</code> from the <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub repository</a> and open it directly in your browser.</li>
+              <li><strong>Option 2: Live Demo</strong> &mdash; Visit <a href="https://start.mykk.us" target="_blank" rel="noopener">start.mykk.us</a> to use the hosted version instantly.</li>
+              <li><strong>Option 3: Chrome Extension</strong> &mdash; Install the <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" target="_blank" rel="noopener">Chrome extension</a> to replace your new tab page with MyKK.</li>
+            </ul>
+          </div>
+
+          <div id="homepage" class="docs-section">
+            <h2>Setting as Homepage</h2>
+            <ul>
+              <li><strong>Chrome:</strong> Go to Settings &gt; On startup &gt; Open a specific page &gt; Add the local file path or <code>start.mykk.us</code>.</li>
+              <li><strong>Firefox:</strong> Go to Settings &gt; Home &gt; Custom URLs and enter the file path or <code>start.mykk.us</code>.</li>
+              <li><strong>Edge:</strong> Similar to Chrome &mdash; go to Settings &gt; On startup &gt; Open a specific page and add your URL.</li>
+            </ul>
+          </div>
+
+          <div id="widgets" class="docs-section">
+            <h2>Widgets</h2>
+            <ul>
+              <li><strong>Search Bar:</strong> Supports 7 search engines &mdash; Google, Bing, DuckDuckGo, Brave, Yahoo, Ecosia, and Startpage. Click the engine icon to switch between them.</li>
+              <li><strong>Favorites:</strong> Drag-and-drop bookmarks with auto-detected favicons. Three icon style options are available. Click the + button to add a new bookmark.</li>
+              <li><strong>Calendar:</strong> A monthly calendar view with navigation arrows to move between months.</li>
+              <li><strong>Clock &amp; Date:</strong> Supports 12-hour and 24-hour formats with configurable seconds display and multiple date styles.</li>
+              <li><strong>Notepad:</strong> A simple text editor that auto-saves to your browser. Copy contents or download as a text file.</li>
+              <li><strong>Paint Canvas:</strong> Draw with brush, shapes, and text tools. Includes an eraser. Export your artwork as PNG or PDF.</li>
+              <li><strong>Webcam:</strong> A mirror view with countdown timer and flash effect for quick selfies.</li>
+            </ul>
+          </div>
+
+          <div id="customization" class="docs-section">
+            <h2>Customization</h2>
+            <ul>
+              <li>Click the <strong>gear icon</strong> to open Settings.</li>
+              <li><strong>Themes:</strong> Choose from built-in gradient themes or set a custom background image or color.</li>
+              <li><strong>Layout:</strong> Drag sections by their handle to reorder them. Resize widget columns to fit your preference.</li>
+              <li><strong>Widget visibility:</strong> Toggle individual widgets on or off in Settings to show only what you need.</li>
+            </ul>
+          </div>
+
+          <div id="cloud-sync" class="docs-section">
+            <h2>Cloud Sync</h2>
+            <ul>
+              <li>Click <strong>"Sign in with Google"</strong> in Settings to enable cloud sync.</li>
+              <li>Syncs your bookmarks, layout, theme, and widget settings across devices.</li>
+              <li>Uses Firebase &mdash; your data is stored in your Google account.</li>
+              <li>Works across all devices where you sign in with the same account.</li>
+              <li>To disable sync, sign out in Settings. Your data will revert to local storage.</li>
+            </ul>
+          </div>
+
+          <div id="pro-features" class="docs-section">
+            <h2>Pro Features</h2>
+            <ul>
+              <li><strong>Live Weather &amp; Radar:</strong> Current conditions, 5-day forecast, and an interactive radar map with animated overlays.</li>
+              <li><strong>iFrame Widgets:</strong> Embed Google Calendar, RSS feeds, X/Twitter timelines, or any URL directly in your dashboard.</li>
+              <li><strong>Donetick Integration:</strong> Connect to your Donetick task manager to view and manage tasks.</li>
+              <li><strong>Twitter/X Feed:</strong> Embed your timeline directly in the dashboard.</li>
+            </ul>
+            <p><strong>How to activate:</strong> Subscribe at <a href="https://mykk.us">mykk.us</a>, install the Chrome extension, and sign in with the same Google account.</p>
+          </div>
+
+          <div id="self-hosting" class="docs-section">
+            <h2>Self-Hosting</h2>
+            <ul>
+              <li>Download <code>index.html</code> from the <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub repository</a>.</li>
+              <li>Host on any web server, CDN, or simply open it locally as a file.</li>
+              <li>Compatible with Nginx, Apache, Cloudflare Pages, GitHub Pages, Netlify, and more.</li>
+              <li>No build step, no dependencies, no database required.</li>
+              <li>All data is stored in the visitor's browser localStorage.</li>
+            </ul>
+          </div>
+
+          <div id="chrome-extension" class="docs-section">
+            <h2>Chrome Extension</h2>
+            <ul>
+              <li>Install from the <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" target="_blank" rel="noopener">Chrome Web Store</a>.</li>
+              <li>Automatically sets MyKK as your new tab page.</li>
+              <li>Manages your Pro subscription &mdash; sign in with Google to activate.</li>
+              <li>The extension is optional. The dashboard works fully as a standalone HTML file.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>
+            <span>MyKK</span>
+          </a>
+          <p>Your browser's start page, reimagined. Open source and free forever.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Product</h4>
+            <a href="/#features">Features</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="https://start.mykk.us" target="_blank" rel="noopener">Live Demo</a>
+          </div>
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="/docs">Documentation</a>
+            <a href="/#faq">FAQ</a>
+            <a href="/support">Support</a>
+            <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
+          </div>
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MyKK | Created by <a href="https://github.com/MichalAFerber" target="_blank" rel="noopener">Michal Ferber</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.nav-toggle').addEventListener('click', () => {
+      document.querySelector('.mobile-menu').classList.toggle('active');
+      document.querySelector('.nav-toggle').classList.toggle('active');
+    });
+
+    document.querySelectorAll('.docs-sidebar a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.docs-sidebar a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

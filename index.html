@@ -3,909 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyKK — Your Browser's Start Page, Reimagined</title>
-  <meta name="description" content="A beautiful, customizable browser start page. Single HTML file. No server. No build tools. Just download and open.">
+  <meta name="description" content="A beautiful, customizable browser start page. Single HTML file. Open source. No server needed. Just download and open.">
   <meta name="keywords" content="start page, new tab, browser dashboard, homepage, customizable, self-hosted, open source">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mykk.us/">
   <meta property="og:title" content="MyKK — Your Browser's Start Page, Reimagined">
   <meta property="og:description" content="A beautiful, customizable browser start page. Single file. Zero setup. Works offline.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mykk.us">
+  <meta property="og:image" content="https://mykk.us/favicon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MyKK — Your Browser's Start Page, Reimagined">
+  <meta name="twitter:description" content="A beautiful, customizable browser start page. Single file. Zero setup. Works offline.">
+  <title>MyKK — Your Browser's Start Page, Reimagined</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg-dark: #0a0a1a;
-      --glass-bg: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --glass-hover: rgba(255, 255, 255, 0.1);
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-muted: rgba(255, 255, 255, 0.45);
-      --accent: #6c63ff;
-      --accent-light: #8b83ff;
-      --accent-glow: rgba(108, 99, 255, 0.3);
-      --gradient-1: linear-gradient(135deg, #6c63ff, #e040fb);
-      --gradient-2: linear-gradient(135deg, #00c9ff, #6c63ff);
-      --gradient-3: linear-gradient(135deg, #f857a6, #ff5858);
-      --radius: 16px;
-      --radius-sm: 10px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Background gradient orbs */
-    .bg-orbs {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .bg-orbs .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.35;
-    }
-    .bg-orbs .orb:nth-child(1) {
-      width: 600px; height: 600px;
-      background: #6c63ff;
-      top: -10%; left: -5%;
-      animation: float1 20s ease-in-out infinite;
-    }
-    .bg-orbs .orb:nth-child(2) {
-      width: 500px; height: 500px;
-      background: #e040fb;
-      top: 30%; right: -10%;
-      animation: float2 25s ease-in-out infinite;
-    }
-    .bg-orbs .orb:nth-child(3) {
-      width: 400px; height: 400px;
-      background: #00c9ff;
-      bottom: -5%; left: 30%;
-      animation: float3 22s ease-in-out infinite;
-    }
-
-    @keyframes float1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(80px, 60px); } }
-    @keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-60px, 80px); } }
-    @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(60px, -40px); } }
-
-    /* Layout */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    section {
-      padding: 100px 0;
-    }
-
-    /* Glass card */
-    .glass {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 0;
-      transition: background 0.3s, backdrop-filter 0.3s;
-    }
-    nav.scrolled {
-      background: rgba(10, 10, 26, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
-    }
-    nav .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      text-decoration: none;
-      color: var(--text-primary);
-    }
-    .nav-logo span {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-
-    .nav-hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-hamburger svg { display: block; }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: all 0.25s ease;
-    }
-    .btn-primary {
-      background: var(--gradient-1);
-      color: #fff;
-      box-shadow: 0 4px 20px var(--accent-glow);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px var(--accent-glow);
-    }
-    .btn-secondary {
-      background: var(--glass-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--glass-border);
-    }
-    .btn-secondary:hover {
-      background: var(--glass-hover);
-      transform: translateY(-2px);
-    }
-    .btn svg { width: 18px; height: 18px; }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 80px;
-    }
-    .hero .container {
-      text-align: center;
-      max-width: 900px;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--accent-light);
-      margin-bottom: 32px;
-    }
-    .hero-badge svg { width: 16px; height: 16px; }
-    .hero h1 {
-      font-size: clamp(2.5rem, 7vw, 4.5rem);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      margin-bottom: 24px;
-    }
-    .hero h1 .gradient-text {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: clamp(1.05rem, 2vw, 1.3rem);
-      color: var(--text-secondary);
-      max-width: 650px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      margin-top: 64px;
-    }
-    .hero-stat {
-      text-align: center;
-    }
-    .hero-stat .number {
-      font-size: 2rem;
-      font-weight: 800;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-stat .label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* Dashboard preview */
-    .preview-section {
-      padding: 0 0 80px;
-    }
-    .preview-wrapper {
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4), 0 0 60px var(--accent-glow);
-      position: relative;
-    }
-    .preview-wrapper .browser-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 20px;
-      background: rgba(30, 30, 50, 0.9);
-      border-bottom: 1px solid var(--glass-border);
-    }
-    .browser-dot {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-    }
-    .browser-dot.red { background: #ff5f57; }
-    .browser-dot.yellow { background: #ffbd2e; }
-    .browser-dot.green { background: #28c840; }
-    .browser-url {
-      flex: 1;
-      margin-left: 12px;
-      padding: 6px 16px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 8px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-family: 'Inter', monospace;
-    }
-    .preview-wrapper iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      display: block;
-    }
-    .preview-fallback {
-      width: 100%;
-      height: 600px;
-      background: linear-gradient(135deg, #1a1a3e 0%, #2d1b69 50%, #1a1a3e 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .preview-fallback-text {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-    }
-
-    /* Features */
-    .features { padding-top: 60px; }
-    .section-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .section-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent-light);
-      margin-bottom: 16px;
-    }
-    .section-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-    .section-header p {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .feature-card {
-      padding: 36px 32px;
-      transition: all 0.3s ease;
-    }
-    .feature-card:hover {
-      background: var(--glass-hover);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-    .feature-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .feature-icon svg { width: 26px; height: 26px; }
-    .feature-icon.purple { background: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(108, 99, 255, 0.05)); color: #6c63ff; }
-    .feature-icon.pink { background: linear-gradient(135deg, rgba(224, 64, 251, 0.2), rgba(224, 64, 251, 0.05)); color: #e040fb; }
-    .feature-icon.blue { background: linear-gradient(135deg, rgba(0, 201, 255, 0.2), rgba(0, 201, 255, 0.05)); color: #00c9ff; }
-    .feature-icon.green { background: linear-gradient(135deg, rgba(40, 200, 64, 0.2), rgba(40, 200, 64, 0.05)); color: #28c840; }
-    .feature-icon.orange { background: linear-gradient(135deg, rgba(255, 149, 0, 0.2), rgba(255, 149, 0, 0.05)); color: #ff9500; }
-    .feature-icon.red { background: linear-gradient(135deg, rgba(255, 88, 88, 0.2), rgba(255, 88, 88, 0.05)); color: #ff5858; }
-    .feature-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .feature-card p {
-      color: var(--text-secondary);
-      font-size: 0.92rem;
-      line-height: 1.6;
-    }
-
-    /* How it works */
-    .how-it-works {
-      background: linear-gradient(180deg, transparent, rgba(108, 99, 255, 0.03), transparent);
-    }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      position: relative;
-    }
-    .steps::before {
-      content: '';
-      position: absolute;
-      top: 44px;
-      left: 16%;
-      right: 16%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--glass-border), var(--accent), var(--glass-border));
-      opacity: 0.4;
-    }
-    .step {
-      text-align: center;
-      position: relative;
-    }
-    .step-number {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin: 0 auto 24px;
-      background: var(--gradient-1);
-      color: #fff;
-      position: relative;
-      z-index: 1;
-    }
-    .step h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .step p {
-      color: var(--text-secondary);
-      font-size: 0.92rem;
-      max-width: 280px;
-      margin: 0 auto;
-    }
-
-    /* Comparison */
-    .comparison-table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .comparison-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-size: 0.92rem;
-      min-width: 640px;
-    }
-    .comparison-table thead th {
-      padding: 18px 20px;
-      text-align: left;
-      font-weight: 600;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--glass-border);
-    }
-    .comparison-table thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
-    .comparison-table thead th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
-    .comparison-table thead th.highlight {
-      color: var(--accent-light);
-      position: relative;
-    }
-    .comparison-table tbody td {
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      color: var(--text-secondary);
-    }
-    .comparison-table tbody tr:last-child td { border-bottom: none; }
-    .comparison-table tbody td:first-child {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    .comparison-table tbody td.highlight {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-    .check { color: #28c840; font-weight: 700; }
-    .cross { color: rgba(255, 255, 255, 0.25); }
-
-    /* Widgets showcase */
-    .widgets-showcase {
-      background: linear-gradient(180deg, transparent, rgba(224, 64, 251, 0.03), transparent);
-    }
-    .widgets-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-    .widget-card {
-      padding: 32px;
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      transition: all 0.3s ease;
-    }
-    .widget-card:hover {
-      background: var(--glass-hover);
-      transform: translateY(-2px);
-    }
-    .widget-card .widget-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-    }
-    .widget-card .widget-icon svg { width: 22px; height: 22px; color: var(--accent-light); }
-    .widget-card h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .widget-card p {
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-
-    /* Pricing */
-    .pricing {
-      background: linear-gradient(180deg, transparent, rgba(108, 99, 255, 0.03), transparent);
-    }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .pricing-card {
-      padding: 36px 32px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-    .pricing-card-pro {
-      border-color: rgba(108, 99, 255, 0.3);
-      background: rgba(108, 99, 255, 0.08);
-    }
-    .pricing-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--gradient-1);
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 4px 16px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .pricing-header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .pricing-header h3 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .pricing-amount {
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: -2px;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .pricing-period {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    .pricing-features {
-      list-style: none;
-      margin-bottom: 24px;
-      flex: 1;
-    }
-    .pricing-features li {
-      padding: 6px 0;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .check-icon {
-      color: #28c840;
-      font-weight: 700;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-    }
-    .check-icon.pro {
-      color: var(--accent-light);
-    }
-    .pricing-card .btn {
-      margin-top: auto;
-    }
-
-    /* Roadmap */
-    .roadmap-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .roadmap-card {
-      padding: 28px 24px;
-      transition: all 0.3s ease;
-    }
-    .roadmap-card:hover {
-      background: var(--glass-hover);
-      transform: translateY(-2px);
-    }
-    .roadmap-card h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin: 12px 0 8px;
-    }
-    .roadmap-card p {
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-    .roadmap-status {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 3px 10px;
-      border-radius: 12px;
-    }
-    .status-in-progress {
-      background: rgba(108, 99, 255, 0.15);
-      color: var(--accent-light);
-    }
-    .status-planned {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 900px) {
-      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
-      .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 640px) {
-      .roadmap-grid { grid-template-columns: 1fr; }
-    }
-
-    /* CTA */
-    .cta {
-      text-align: center;
-    }
-    .cta-box {
-      padding: 80px 48px;
-      background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(224, 64, 251, 0.08));
-      border: 1px solid rgba(108, 99, 255, 0.2);
-      border-radius: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-box::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(108, 99, 255, 0.08), transparent 50%);
-      pointer-events: none;
-    }
-    .cta-box h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-      position: relative;
-    }
-    .cta-box p {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      max-width: 500px;
-      margin: 0 auto 36px;
-      position: relative;
-    }
-    .cta-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-    }
-
-    /* Footer */
-    footer {
-      padding: 48px 0;
-      border-top: 1px solid var(--glass-border);
-    }
-    footer .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .footer-left {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-    .footer-left a {
-      color: var(--text-secondary);
-      text-decoration: none;
-    }
-    .footer-left a:hover { color: var(--text-primary); }
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-    }
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--text-primary); }
-
-    /* Animations */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Mobile nav */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(10, 10, 26, 0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 200;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 32px;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-    .mobile-nav-close {
-      position: absolute;
-      top: 20px;
-      right: 24px;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
-      .widgets-grid { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; gap: 48px; }
-      .steps::before { display: none; }
-      .hero-stats { gap: 32px; }
-      .preview-wrapper iframe,
-      .preview-fallback { height: 400px; }
-    }
-
-    @media (max-width: 640px) {
-      section { padding: 64px 0; }
-      .container { padding: 0 16px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: column; gap: 20px; }
-      .hero-buttons { flex-direction: column; align-items: center; }
-      .btn { width: 100%; max-width: 300px; justify-content: center; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-      .cta-box { padding: 48px 24px; }
-      footer .container { flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
-      .preview-wrapper iframe,
-      .preview-fallback { height: 300px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-
-  <!-- Background -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
-  <!-- Navigation -->
-  <nav id="nav">
-    <div class="container">
-      <a href="#" class="nav-logo"><span>MyKK</span></a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#roadmap">Roadmap</a></li>
-        <li><a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://start.mykk.us" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.85rem;">Live Demo</a></li>
-      </ul>
-      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Open menu">
-        <svg width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="4" y1="8" x2="24" y2="8"/><line x1="4" y1="14" x2="24" y2="14"/><line x1="4" y1="20" x2="24" y2="20"/></svg>
+  <nav class="nav">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18M9 9v12"/>
+        </svg>
+        <span>MyKK</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="/docs">Docs</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="/support">Support</a>
+        <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener" class="nav-github" title="GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Install Free</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile nav overlay -->
-  <div class="mobile-nav" id="mobileNav">
-    <button class="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Close menu">
-      <svg width="32" height="32" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="8" y1="8" x2="24" y2="24"/><line x1="24" y1="8" x2="8" y2="24"/></svg>
-    </button>
-    <a href="#features" onclick="toggleMobileNav()">Features</a>
-    <a href="#pricing" onclick="toggleMobileNav()">Pricing</a>
-    <a href="#roadmap" onclick="toggleMobileNav()">Roadmap</a>
+  <div class="mobile-menu">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="/docs">Docs</a>
+    <a href="/roadmap">Roadmap</a>
+    <a href="/support">Support</a>
     <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://start.mykk.us" class="btn btn-primary">Try Live Demo</a>
+    <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary" target="_blank" rel="noopener">Install Free</a>
   </div>
 
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <div class="hero-badge glass">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Open Source &amp; Free Forever
-      </div>
-      <h1>Your Browser's<br>Start Page, <span class="gradient-text">Reimagined</span></h1>
-      <p>A beautiful, customizable dashboard that lives in a single HTML file. No server. No Docker. No build tools. Just download, open, and make it yours.</p>
-      <div class="hero-buttons">
-        <a href="https://start.mykk.us" class="btn btn-primary" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-          Try Live Demo
-        </a>
-        <a href="https://github.com/MichalAFerber/mykk.us-dashboard" class="btn btn-secondary" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="number">1</div>
-          <div class="label">Single HTML File</div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge">Open Source</span>
+          <span>Single HTML file &middot; No server needed</span>
         </div>
-        <div class="hero-stat">
-          <div class="number">0</div>
-          <div class="label">Dependencies</div>
+        <h1>Your Browser's Start Page,<br><span class="gradient-text">Reimagined</span></h1>
+        <p class="hero-description">
+          A beautiful, customizable dashboard that lives in a single HTML file. Download it, open it, make it yours. No install, no config, no Docker.
+        </p>
+        <div class="hero-actions">
+          <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Install for Chrome
+          </a>
+          <a href="https://start.mykk.us" class="btn btn-secondary btn-lg" target="_blank" rel="noopener">Try Live Demo</a>
         </div>
-        <div class="hero-stat">
-          <div class="number">10+</div>
-          <div class="label">Built-in Widgets</div>
-        </div>
-        <div class="hero-stat">
-          <div class="number">7</div>
-          <div class="label">Search Engines</div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">Free</span>
+            <span class="stat-label">To Use</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">~250KB</span>
+            <span class="stat-label">Single File</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Offline</span>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Live Preview -->
-  <section class="preview-section">
-    <div class="container">
-      <div class="preview-wrapper fade-in">
-        <div class="browser-bar">
-          <div class="browser-dot red"></div>
-          <div class="browser-dot yellow"></div>
-          <div class="browser-dot green"></div>
-          <div class="browser-url">start.mykk.us</div>
-        </div>
-        <iframe src="https://start.mykk.us" title="MyKK Dashboard Preview" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"></iframe>
-        <div class="preview-fallback" style="display:none;">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          <span class="preview-fallback-text">Visit <a href="https://start.mykk.us" target="_blank" rel="noopener" style="color: var(--accent-light);">start.mykk.us</a> to see the dashboard in action</span>
+      <div class="hero-image">
+        <div class="screenshot-placeholder">
+          <!-- Replace src with actual screenshot.webp -->
+          <div class="placeholder-content">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <p>screenshot.webp</p>
+          </div>
         </div>
       </div>
     </div>
@@ -914,87 +108,169 @@
   <!-- Features -->
   <section class="features" id="features">
     <div class="container">
-      <div class="section-header fade-in">
-        <div class="section-label">Features</div>
+      <div class="section-header">
         <h2>Everything You Need,<br>Nothing You Don't</h2>
         <p>A fully-loaded start page that respects your privacy and works without an internet connection.</p>
       </div>
       <div class="features-grid">
-        <!-- Feature 1: Single File -->
-        <div class="feature-card glass fade-in">
-          <div class="feature-icon purple">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
-          <h3>Single File</h3>
-          <p>The entire dashboard is one HTML file. Download it, open it in your browser, and you're done. No install. No config.</p>
+          <h3>Single HTML File</h3>
+          <p>The entire dashboard is one file. Download from GitHub, open in your browser, done. Easy to self-host anywhere.</p>
         </div>
-        <!-- Feature 2: Fully Customizable -->
-        <div class="feature-card glass fade-in">
-          <div class="feature-icon pink">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </div>
           <h3>Fully Customizable</h3>
-          <p>Grid layout, gradient themes, custom backgrounds, widget sizing &mdash; every pixel is yours to control through an intuitive settings panel.</p>
+          <p>Grid layout, gradient themes, custom backgrounds, widget sizing — every pixel is yours to control.</p>
         </div>
-        <!-- Feature 3: Drag & Drop -->
-        <div class="feature-card glass fade-in">
-          <div class="feature-icon blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
           </div>
           <h3>Drag &amp; Drop Layout</h3>
-          <p>Rearrange every section by grabbing its handle and dragging. Touch-friendly on mobile with always-visible drag handles.</p>
+          <p>Rearrange sections by grabbing their handle and dragging. Touch-friendly on mobile too.</p>
         </div>
-        <!-- Feature 4: Cloud Sync -->
-        <div class="feature-card glass fade-in">
-          <div class="feature-icon green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           </div>
           <h3>Optional Cloud Sync</h3>
-          <p>Works 100% offline with localStorage. Sign in with Google to sync settings across all your devices. Your choice.</p>
+          <p>Works 100% offline with localStorage. Sign in with Google to sync across devices. Your choice.</p>
         </div>
-        <!-- Feature 5: Weather -->
-        <div class="feature-card glass fade-in">
-          <div class="feature-icon orange">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-5-5h-.09A7 7 0 1 0 5 18"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-5-5h-.09A7 7 0 1 0 5 18"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
           </div>
-          <h3>Live Weather &amp; Radar</h3>
-          <p>Current conditions, 5-day forecast, and interactive radar with switchable layers. Animated overlays for rain, snow, and more.</p>
+          <h3>Live Weather &amp; Radar <span class="pro-tag">Pro</span></h3>
+          <p>Current conditions, 5-day forecast, and interactive radar with animated overlays for rain, snow, and more.</p>
         </div>
-        <!-- Feature 6: Privacy -->
-        <div class="feature-card glass fade-in">
-          <div class="feature-icon red">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
           <h3>Privacy First</h3>
-          <p>All data stored locally in your browser. No tracking, no analytics, no accounts required. Open source so you can verify it yourself.</p>
+          <p>All data stored locally. No tracking, no analytics, no accounts required. Open source — verify it yourself.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How it works -->
-  <section class="how-it-works" id="how-it-works">
+  <!-- Widgets -->
+  <section class="widgets-showcase" id="widgets">
     <div class="container">
-      <div class="section-header fade-in">
-        <div class="section-label">Getting Started</div>
+      <div class="section-header">
+        <h2>More Than Just Bookmarks</h2>
+        <p>Built-in tools that turn your start page into a productivity hub.</p>
+      </div>
+      <div class="widgets-grid">
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <h4>Multi-Engine Search</h4>
+            <p>Google, Bing, DuckDuckGo, Brave, Yahoo, Ecosia, and Startpage. Switch engines with a click.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <h4>Mini Calendar</h4>
+            <p>Compact monthly calendar with navigation. Pairs with embeddable Google Calendar via iFrame widgets.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+          </div>
+          <div>
+            <h4>Paint Canvas</h4>
+            <p>Full drawing tool with brush, shapes, text, and eraser. Export as PNG or PDF.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4>Notepad</h4>
+            <p>Quick notes that auto-save to your browser. Copy to clipboard or download as text.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h4>Favorites Bar</h4>
+            <p>Drag-and-drop bookmarks with auto-detected favicons for 40+ popular services.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div>
+            <h4>iFrame Embeds <span class="pro-tag">Pro</span></h4>
+            <p>Embed anything — Google Calendar, RSS feeds, X/Twitter timelines, or any web content.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <div>
+            <h4>Webcam &amp; Selfie</h4>
+            <p>Quick mirror view with countdown timer, flash effect, and instant download.</p>
+          </div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h4>Clock &amp; Date</h4>
+            <p>Live clock with 12/24 hour format, multiple date styles, and configurable seconds display.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-header">
         <h2>Up and Running in Seconds</h2>
         <p>No package managers. No terminal commands. No Docker containers.</p>
       </div>
       <div class="steps">
-        <div class="step fade-in">
+        <div class="step">
           <div class="step-number">1</div>
           <h3>Download</h3>
-          <p>Grab the single <code>index.html</code> file from GitHub &mdash; or just visit the live demo.</p>
+          <p>Grab the single <code>index.html</code> file from GitHub</p>
         </div>
-        <div class="step fade-in">
+        <div class="step-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="step">
           <div class="step-number">2</div>
           <h3>Open</h3>
-          <p>Double-click the file to open it in any browser. Set it as your homepage or new tab page.</p>
+          <p>Double-click to open in any browser. Set as your homepage</p>
         </div>
-        <div class="step fade-in">
+        <div class="step-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="step">
           <div class="step-number">3</div>
           <h3>Customize</h3>
-          <p>Click the gear icon to configure widgets, themes, search engines, weather, and more.</p>
+          <p>Click the gear icon to configure widgets, themes, and more</p>
         </div>
       </div>
     </div>
@@ -1003,12 +279,11 @@
   <!-- Comparison -->
   <section class="comparison" id="compare">
     <div class="container">
-      <div class="section-header fade-in">
-        <div class="section-label">Comparison</div>
+      <div class="section-header">
         <h2>Why MyKK?</h2>
         <p>See how MyKK stacks up against popular self-hosted dashboards.</p>
       </div>
-      <div class="glass fade-in" style="overflow: hidden;">
+      <div class="comparison-wrapper">
         <div class="comparison-table-wrapper">
           <table class="comparison-table">
             <thead>
@@ -1077,200 +352,195 @@
     </div>
   </section>
 
-  <!-- Widgets -->
-  <section class="widgets-showcase" id="widgets">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="section-label">Widgets</div>
-        <h2>More Than Just Bookmarks</h2>
-        <p>Built-in tools that turn your start page into a productivity hub.</p>
-      </div>
-      <div class="widgets-grid">
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-          <div>
-            <h4>Multi-Engine Search</h4>
-            <p>Google, Bing, DuckDuckGo, Brave, Yahoo, Ecosia, and Startpage. Switch engines with a click.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <div>
-            <h4>Mini Calendar</h4>
-            <p>Compact monthly calendar with navigation. Pairs with embeddable Google Calendar via iFrame widgets.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-          </div>
-          <div>
-            <h4>Paint Canvas</h4>
-            <p>Full drawing tool with brush, shapes, text, and eraser. Export your creations as PNG or PDF.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <div>
-            <h4>Notepad</h4>
-            <p>Quick notes that auto-save to your browser. Copy to clipboard or download as a text file anytime.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div>
-            <h4>Favorites Bar</h4>
-            <p>Drag-and-drop bookmarks with auto-detected favicons for 40+ popular services. Three icon style options.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <div>
-            <h4>iFrame Embeds</h4>
-            <p>Embed anything &mdash; Google Calendar, RSS feeds, X/Twitter timelines, or any web content. Unlimited widgets.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          </div>
-          <div>
-            <h4>Webcam &amp; Selfie</h4>
-            <p>Quick mirror view with a 3-second countdown timer, flash effect, and instant download. No app needed.</p>
-          </div>
-        </div>
-        <div class="widget-card glass fade-in">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div>
-            <h4>Clock &amp; Date</h4>
-            <p>Live clock with 12/24 hour format and multiple date styles. Configurable seconds display.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Pricing -->
   <section class="pricing" id="pricing">
     <div class="container">
-      <div class="section-header fade-in">
-        <div class="section-label">Pricing</div>
+      <div class="section-header">
         <h2>Free Forever.<br>Pro When You're Ready.</h2>
-        <p>The dashboard is open source and always free. The extension unlocks premium integrations.</p>
+        <p>The dashboard is open source and always free. Pro unlocks premium integrations.</p>
       </div>
       <div class="pricing-grid">
-        <!-- Free Plan -->
-        <div class="pricing-card glass fade-in">
+        <div class="pricing-card">
           <div class="pricing-header">
             <h3>Free</h3>
-            <div class="pricing-amount">$0</div>
-            <p class="pricing-period">forever</p>
+            <div class="price">
+              <span class="price-amount">$0</span>
+              <span class="price-period">forever</span>
+            </div>
           </div>
           <ul class="pricing-features">
-            <li><span class="check-icon">&#10003;</span> Search bar (7 engines)</li>
-            <li><span class="check-icon">&#10003;</span> Favorites / bookmarks</li>
-            <li><span class="check-icon">&#10003;</span> Mini calendar</li>
-            <li><span class="check-icon">&#10003;</span> Date &amp; clock widgets</li>
-            <li><span class="check-icon">&#10003;</span> Drag &amp; drop layout</li>
-            <li><span class="check-icon">&#10003;</span> Custom themes &amp; backgrounds</li>
-            <li><span class="check-icon">&#10003;</span> Notepad &amp; paint canvas</li>
-            <li><span class="check-icon">&#10003;</span> Cloud sync (Google Sign-In)</li>
-            <li><span class="check-icon">&#10003;</span> Export / import settings</li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Search bar (7 engines)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Favorites / bookmarks
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Mini calendar
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Date &amp; clock widgets
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Drag &amp; drop layout
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Custom themes &amp; backgrounds
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Notepad &amp; paint canvas
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud sync (Google Sign-In)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Export / import settings
+            </li>
           </ul>
-          <a href="https://start.mykk.us" class="btn btn-secondary" target="_blank" rel="noopener">Try Free Dashboard</a>
+          <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-secondary btn-full" target="_blank" rel="noopener">Install Free</a>
         </div>
-        <!-- Pro Plan -->
-        <div class="pricing-card pricing-card-pro glass fade-in">
-          <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Best Value</div>
           <div class="pricing-header">
             <h3>Pro</h3>
-            <div class="pricing-amount">$12</div>
-            <p class="pricing-period">per year</p>
+            <div class="price">
+              <span class="price-amount">$12</span>
+              <span class="price-period">per year</span>
+            </div>
           </div>
           <ul class="pricing-features">
-            <li><span class="check-icon">&#10003;</span> Everything in Free</li>
-            <li><span class="check-icon pro">&#10003;</span> Live weather &amp; radar</li>
-            <li><span class="check-icon pro">&#10003;</span> iFrame widgets (unlimited)</li>
-            <li><span class="check-icon pro">&#10003;</span> Donetick task integration</li>
-            <li><span class="check-icon pro">&#10003;</span> Twitter/X feed widget</li>
-            <li><span class="check-icon pro">&#10003;</span> Chrome extension</li>
-            <li><span class="check-icon pro">&#10003;</span> Priority support</li>
-            <li><span class="check-icon pro">&#10003;</span> Use on up to 3 devices</li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Everything in Free
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <strong>Live weather &amp; radar</strong>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <strong>iFrame widgets</strong> (unlimited)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <strong>Donetick</strong> task integration
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <strong>Twitter/X</strong> feed widget
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Chrome extension
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Priority support
+            </li>
           </ul>
-          <button id="checkout-pro" class="btn btn-primary" type="button">Subscribe to Pro</button>
+          <button class="btn btn-primary btn-full" id="checkout-pro" type="button">Subscribe to Pro</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Roadmap -->
-  <section class="roadmap" id="roadmap">
+  <!-- Roadmap Preview -->
+  <section class="roadmap-preview" id="roadmap">
     <div class="container">
-      <div class="section-header fade-in">
-        <div class="section-label">Roadmap</div>
-        <h2>What's Coming Next</h2>
-        <p>Features we're actively building or planning.</p>
+      <div class="section-header">
+        <h2>What's <span class="gradient-text">Next</span></h2>
+        <p>Here's what we're working on</p>
       </div>
       <div class="roadmap-grid">
-        <div class="roadmap-card glass fade-in">
+        <div class="roadmap-item">
           <div class="roadmap-status status-in-progress">In Progress</div>
-          <h4>Accessibility (a11y)</h4>
-          <p>ARIA labels, roles, live regions, focus management, and screen reader support across all widgets.</p>
+          <h3>Accessibility (a11y)</h3>
+          <p>ARIA labels, focus management, and screen reader support across all widgets.</p>
         </div>
-        <div class="roadmap-card glass fade-in">
+        <div class="roadmap-item">
           <div class="roadmap-status status-in-progress">In Progress</div>
-          <h4>Touch-Friendly UI</h4>
+          <h3>Touch-Friendly UI</h3>
           <p>Larger tap targets, swipe gestures, and touch-optimized controls for phones and tablets.</p>
         </div>
-        <div class="roadmap-card glass fade-in">
+        <div class="roadmap-item">
           <div class="roadmap-status status-planned">Planned</div>
-          <h4>Keyboard Shortcuts</h4>
-          <p>/ to focus search, Esc to close modals, arrow keys for navigation, and customizable bindings.</p>
+          <h3>Keyboard Shortcuts</h3>
+          <p>/ to focus search, Esc to close modals, arrow keys for navigation.</p>
         </div>
-        <div class="roadmap-card glass fade-in">
+        <div class="roadmap-item">
           <div class="roadmap-status status-planned">Planned</div>
-          <h4>Custom CSS Injection</h4>
+          <h3>Custom CSS Injection</h3>
           <p>Inject your own stylesheets to personalize the dashboard beyond built-in themes.</p>
         </div>
-        <div class="roadmap-card glass fade-in">
-          <div class="roadmap-status status-planned">Planned</div>
-          <h4>Bookmark Folders</h4>
-          <p>Collapsible groups and categories to organize large bookmark collections.</p>
-        </div>
-        <div class="roadmap-card glass fade-in">
-          <div class="roadmap-status status-planned">Planned</div>
-          <h4>Light / Dark Mode</h4>
-          <p>Switchable theme with system preference detection.</p>
-        </div>
+      </div>
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="/roadmap" class="btn btn-secondary btn-lg">View Full Roadmap</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Got questions? We've got answers</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Is MyKK really free?</summary>
+          <p>Yes! The dashboard is open source and completely free. All core features — search, bookmarks, calendar, notepad, paint canvas, drag &amp; drop, themes, cloud sync, and more — are included at no cost. Pro adds premium integrations like live weather, iFrame embeds, and task management.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is the dashboard exactly?</summary>
+          <p>It's a single HTML file (~250 KB) that you download and open in your browser. Set it as your homepage or new tab page. No server, no Docker, no terminal — just a file. It's also open source on <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need the Chrome extension?</summary>
+          <p>No. The dashboard works as a standalone HTML file. The extension makes it easier to set MyKK as your new tab page and manages your Pro subscription, but it's optional.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does cloud sync work?</summary>
+          <p>Sign in with Google to sync your settings, bookmarks, and layout across all your devices via Firebase. Without sign-in, everything is stored locally in your browser's localStorage.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I activate Pro?</summary>
+          <p>After subscribing, install the MyKK Chrome extension (if you haven't already), click the extension icon, and sign in with the same Google account you used to purchase. Pro features activate automatically.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a refund policy?</summary>
+          <p>Yes, we offer a 30-day money-back guarantee. If you're not satisfied with Pro, contact us at <a href="mailto:support@mykk.us">support@mykk.us</a> for a full refund.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does it collect any data?</summary>
+          <p>No. MyKK does not collect, store, or transmit any personal data. All settings are stored locally or synced via your own Google account if you enable cloud sync. The code is open source so you can verify this yourself.</p>
+        </details>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta" id="cta">
+  <section class="cta">
     <div class="container">
-      <div class="cta-box fade-in">
-        <h2>Make Your Browser Feel<br>Like <span class="gradient-text">Home</span></h2>
-        <p>Start free, upgrade when you're ready. Open source, no strings attached.</p>
-        <div class="cta-buttons">
-          <a href="https://start.mykk.us" class="btn btn-primary" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-            Try Live Demo
+      <div class="cta-content">
+        <h2>Make Your Browser Feel Like <span class="gradient-text">Home</span></h2>
+        <p>Open source, free forever, no strings attached.</p>
+        <div class="cta-actions">
+          <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Install for Chrome — It's Free
           </a>
-          <a href="https://github.com/MichalAFerber/mykk.us-dashboard" class="btn btn-secondary" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <a href="https://github.com/MichalAFerber/mykk.us-dashboard" class="btn btn-secondary btn-lg" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             View on GitHub
           </a>
         </div>
@@ -1279,70 +549,47 @@
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="footer">
     <div class="container">
-      <div class="footer-left">
-        Built by <a href="https://github.com/MichalAFerber" target="_blank" rel="noopener">Michal Ferber</a> &middot; Open Source under MIT
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 9v12"/>
+            </svg>
+            <span>MyKK</span>
+          </a>
+          <p>Your browser's start page, reimagined. Open source and free forever.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="https://start.mykk.us" target="_blank" rel="noopener">Live Demo</a>
+          </div>
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="/docs">Documentation</a>
+            <a href="#faq">FAQ</a>
+            <a href="/support">Support</a>
+            <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
+          </div>
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+          </div>
+        </div>
       </div>
-      <ul class="footer-links">
-        <li><a href="https://start.mykk.us" target="_blank" rel="noopener">Live Demo</a></li>
-        <li><a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="/support">Support</a></li>
-        <li><a href="/privacy">Privacy</a></li>
-      </ul>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MyKK | Created by <a href="https://github.com/MichalAFerber" target="_blank" rel="noopener">Michal Ferber</a></p>
+      </div>
     </div>
   </footer>
 
-  <script>
-    // Sticky nav background on scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-
-    // Mobile nav toggle
-    function toggleMobileNav() {
-      document.getElementById('mobileNav').classList.toggle('open');
-    }
-
-    // Scroll-triggered fade-in
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Stripe Checkout
-    const checkoutBtn = document.getElementById('checkout-pro');
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', async () => {
-        checkoutBtn.disabled = true;
-        checkoutBtn.textContent = 'Redirecting\u2026';
-        try {
-          const res = await fetch('https://api.mykk.us/api/checkout/create-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({}),
-          });
-          const data = await res.json();
-          if (data.url) {
-            window.location.href = data.url;
-          } else {
-            alert('Something went wrong. Please try again or contact support@mykk.us');
-          }
-        } catch {
-          alert('Connection error. Please try again or contact support@mykk.us');
-        } finally {
-          checkoutBtn.disabled = false;
-          checkoutBtn.textContent = 'Subscribe to Pro';
-        }
-      });
-    }
-  </script>
+  <script src="/script.js"></script>
 </body>
 </html>
