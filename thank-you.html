@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — MyKK.us</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-dark: #0a0a1a;
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.45);
+      --accent: #6c63ff;
+      --accent-light: #8b83ff;
+      --gradient-1: linear-gradient(135deg, #6c63ff, #e040fb);
+      --radius: 16px;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .bg-orbs { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .bg-orbs .orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
+    .bg-orbs .orb:nth-child(1) { width: 600px; height: 600px; background: #6c63ff; top: -10%; left: -5%; }
+    .bg-orbs .orb:nth-child(2) { width: 500px; height: 500px; background: #e040fb; top: 30%; right: -10%; }
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .check-circle {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #28c840, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      font-size: 36px;
+      color: #fff;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    h1 .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .info-box {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 32px 0;
+      backdrop-filter: blur(20px);
+    }
+    .info-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .info-box ol {
+      text-align: left;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+    .buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+    .btn-primary {
+      background: var(--gradient-1);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+    .btn-secondary:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+  <div class="container">
+    <div class="check-circle">&#10003;</div>
+    <h1>You're <span class="gradient-text">In!</span></h1>
+    <p>Thanks for subscribing to MyKK.us Pro. Your subscription is now active.</p>
+    <div class="info-box">
+      <h3>Next Steps</h3>
+      <ol>
+        <li>Install the <strong>MyKK.us Chrome Extension</strong> (if you haven't already)</li>
+        <li>Click the extension icon and <strong>Sign in with Google</strong> using the same email you used to purchase</li>
+        <li>Your Pro features will activate automatically</li>
+      </ol>
+    </div>
+    <div class="buttons">
+      <a href="https://start.mykk.us" class="btn btn-primary">Open Dashboard</a>
+      <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

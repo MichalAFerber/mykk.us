@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — MyKK</title>
+  <meta name="description" content="Get help with MyKK — your browser's start page, reimagined.">
+  <meta property="og:title" content="Support — MyKK">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mykk.us/support">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-dark: #0a0a1a;
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-hover: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.45);
+      --accent: #6c63ff;
+      --accent-light: #8b83ff;
+      --accent-glow: rgba(108, 99, 255, 0.3);
+      --gradient-1: linear-gradient(135deg, #6c63ff, #e040fb);
+      --gradient-2: linear-gradient(135deg, #00c9ff, #6c63ff);
+      --gradient-3: linear-gradient(135deg, #f857a6, #ff5858);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Background gradient orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .bg-orbs .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+    }
+    .bg-orbs .orb:nth-child(1) {
+      width: 600px; height: 600px;
+      background: #6c63ff;
+      top: -10%; left: -5%;
+      animation: float1 20s ease-in-out infinite;
+    }
+    .bg-orbs .orb:nth-child(2) {
+      width: 500px; height: 500px;
+      background: #e040fb;
+      top: 30%; right: -10%;
+      animation: float2 25s ease-in-out infinite;
+    }
+    .bg-orbs .orb:nth-child(3) {
+      width: 400px; height: 400px;
+      background: #00c9ff;
+      bottom: -5%; left: 30%;
+      animation: float3 22s ease-in-out infinite;
+    }
+
+    @keyframes float1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(80px, 60px); } }
+    @keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-60px, 80px); } }
+    @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(60px, -40px); } }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glass card */
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(10, 10, 26, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .nav-logo span {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+    .btn-primary {
+      background: var(--gradient-1);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+    .btn-secondary:hover {
+      background: var(--glass-hover);
+      transform: translateY(-2px);
+    }
+    .btn svg { width: 18px; height: 18px; }
+
+    /* Page content */
+    .page-content {
+      padding: 140px 0 80px;
+    }
+    .page-content .content-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .page-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .page-content h1 .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-content .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    /* Support cards */
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .support-card {
+      padding: 36px 32px;
+      transition: all 0.3s ease;
+    }
+    .support-card:hover {
+      background: var(--glass-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    .support-card .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .support-card .card-icon svg { width: 26px; height: 26px; }
+    .support-card .card-icon.purple { background: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(108, 99, 255, 0.05)); color: #6c63ff; }
+    .support-card .card-icon.pink { background: linear-gradient(135deg, rgba(224, 64, 251, 0.2), rgba(224, 64, 251, 0.05)); color: #e040fb; }
+    .support-card .card-icon.blue { background: linear-gradient(135deg, rgba(0, 201, 255, 0.2), rgba(0, 201, 255, 0.05)); color: #00c9ff; }
+    .support-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .support-card p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .support-card a.card-link {
+      color: var(--accent-light);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .support-card a.card-link:hover { color: var(--text-primary); }
+
+    /* Checklist section */
+    .checklist-section {
+      margin-bottom: 48px;
+    }
+    .checklist-section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .checklist-section p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .checklist li {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      padding: 10px 0 10px 36px;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      background: transparent;
+    }
+    .checklist li::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 19px;
+      width: 12px;
+      height: 6px;
+      border-left: 2px solid var(--accent-light);
+      border-bottom: 2px solid var(--accent-light);
+      transform: rotate(-45deg);
+      opacity: 0.6;
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--glass-border);
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .footer-left a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .footer-left a:hover { color: var(--text-primary); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      .page-content { padding: 120px 0 60px; }
+      .support-grid { grid-template-columns: 1fr; }
+      footer .container { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="container">
+      <a href="/" class="nav-logo"><span>MyKK</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Back to Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <section class="page-content">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>Get <span class="gradient-text">Help</span></h1>
+        <p class="subtitle">Need assistance with MyKK? We're here to help. Choose the best way to reach us below.</p>
+
+        <!-- Support channels -->
+        <div class="support-grid">
+          <div class="support-card glass">
+            <div class="card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h3>Email Support</h3>
+            <p>Send us an email and we'll get back to you within 24&ndash;48 hours. Best for account issues, billing questions, and general inquiries.</p>
+            <a href="mailto:support@mykk.us" class="card-link">support@mykk.us &rarr;</a>
+          </div>
+
+          <div class="support-card glass">
+            <div class="card-icon pink">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3>FAQ</h3>
+            <p>Many common questions are answered on our homepage. Check the features section and how-it-works guide before reaching out.</p>
+            <a href="/#features" class="card-link">View FAQ on homepage &rarr;</a>
+          </div>
+
+          <div class="support-card glass" style="grid-column: 1 / -1;">
+            <div class="card-icon blue">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </div>
+            <h3>Bug Reports &amp; Feature Requests</h3>
+            <p>Found a bug or have an idea for a new feature? Open an issue on our GitHub repository. This is the fastest way to report technical problems and helps us track and prioritize fixes.</p>
+            <a href="https://github.com/MichalAFerber/mykk.us-dashboard/issues" target="_blank" rel="noopener" class="card-link">Open an issue on GitHub &rarr;</a>
+          </div>
+        </div>
+
+        <!-- What to include -->
+        <div class="checklist-section">
+          <h2>What to Include in Your Report</h2>
+          <p>To help us resolve your issue as quickly as possible, please include the following details when contacting support or filing a bug report:</p>
+          <div class="glass" style="padding: 28px 32px;">
+            <ul class="checklist">
+              <li>Your browser name and version (e.g., Chrome 130, Firefox 128, Safari 18)</li>
+              <li>Your operating system (e.g., Windows 11, macOS 15, Ubuntu 24.04)</li>
+              <li>A clear description of the issue or unexpected behavior</li>
+              <li>Steps to reproduce the problem (what you did before the issue appeared)</li>
+              <li>Screenshots or screen recordings, if possible</li>
+              <li>Whether you are using the dashboard locally, via start.mykk.us, or through the Chrome extension</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-left">
+        Built by <a href="https://github.com/MichalAFerber" target="_blank" rel="noopener">Michal Ferber</a> &middot; Open Source under MIT
+      </div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav background on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — MyKK</title>
+  <meta name="description" content="Privacy policy for MyKK.us — your browser's start page, reimagined.">
+  <meta property="og:title" content="Privacy Policy — MyKK">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mykk.us/privacy">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-dark: #0a0a1a;
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-hover: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.45);
+      --accent: #6c63ff;
+      --accent-light: #8b83ff;
+      --accent-glow: rgba(108, 99, 255, 0.3);
+      --gradient-1: linear-gradient(135deg, #6c63ff, #e040fb);
+      --gradient-2: linear-gradient(135deg, #00c9ff, #6c63ff);
+      --gradient-3: linear-gradient(135deg, #f857a6, #ff5858);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Background gradient orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .bg-orbs .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+    }
+    .bg-orbs .orb:nth-child(1) {
+      width: 600px; height: 600px;
+      background: #6c63ff;
+      top: -10%; left: -5%;
+      animation: float1 20s ease-in-out infinite;
+    }
+    .bg-orbs .orb:nth-child(2) {
+      width: 500px; height: 500px;
+      background: #e040fb;
+      top: 30%; right: -10%;
+      animation: float2 25s ease-in-out infinite;
+    }
+    .bg-orbs .orb:nth-child(3) {
+      width: 400px; height: 400px;
+      background: #00c9ff;
+      bottom: -5%; left: 30%;
+      animation: float3 22s ease-in-out infinite;
+    }
+
+    @keyframes float1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(80px, 60px); } }
+    @keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-60px, 80px); } }
+    @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(60px, -40px); } }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glass card */
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(10, 10, 26, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .nav-logo span {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* Page content */
+    .page-content {
+      padding: 140px 0 80px;
+    }
+    .page-content .content-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .page-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .page-content h1 .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-content .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 48px;
+    }
+    .policy-section {
+      margin-bottom: 40px;
+    }
+    .policy-section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    .policy-section p,
+    .policy-section li {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+    .policy-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+    }
+    .policy-section ul li {
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .policy-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-light);
+    }
+    .policy-section a {
+      color: var(--accent-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .policy-section a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--glass-border);
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .footer-left a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .footer-left a:hover { color: var(--text-primary); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      .page-content { padding: 120px 0 60px; }
+      footer .container { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="container">
+      <a href="/" class="nav-logo"><span>MyKK</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Back to Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <section class="page-content">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1><span class="gradient-text">Privacy Policy</span></h1>
+        <p class="subtitle">Last updated: March 14, 2026</p>
+
+        <div class="policy-section">
+          <h2>Overview</h2>
+          <p>MyKK is built with privacy as a core principle. We collect the minimum data necessary to provide our services. There are no analytics, no tracking scripts, and no ads anywhere in our products.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>MyKK Dashboard (start.mykk.us)</h2>
+          <p>The MyKK Dashboard is a single HTML file that runs entirely in your browser.</p>
+          <ul>
+            <li>All settings, bookmarks, notes, and preferences are stored in your browser's <strong>localStorage</strong>. This data never leaves your device unless you opt into cloud sync.</li>
+            <li>No data is sent to any server during normal use.</li>
+            <li>The dashboard works fully offline.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>Optional Google Sign-In &amp; Cloud Sync</h2>
+          <p>You may choose to sign in with your Google account to sync your dashboard settings across devices. This feature is entirely optional.</p>
+          <ul>
+            <li>Authentication is handled by <strong>Firebase Authentication</strong> (Google Sign-In). We receive your name, email address, and profile photo from Google.</li>
+            <li>When cloud sync is enabled, your dashboard settings are stored in <strong>Google Cloud Firestore</strong>, associated with your Google account.</li>
+            <li>You can sign out at any time, which stops all syncing. Your local data remains in localStorage.</li>
+            <li>We do not access your Google contacts, files, calendar, or any other Google services beyond authentication.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>MyKK Chrome Extension</h2>
+          <p>The MyKK Chrome Extension enhances the dashboard experience by setting it as your new tab page.</p>
+          <ul>
+            <li>The extension stores your subscription status in <strong>chrome.storage.local</strong>, which stays on your device.</li>
+            <li>The extension uses <strong>Google OAuth</strong> for authentication when you sign in.</li>
+            <li>No browsing history, tabs, or other browser data is collected or accessed by the extension.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>Backend API (api.mykk.us)</h2>
+          <p>Our backend API handles license validation for premium features.</p>
+          <ul>
+            <li>When you activate a license, we store your <strong>email address</strong> and a <strong>device identifier</strong> to validate your subscription.</li>
+            <li>This data is used solely for license verification and is not shared with third parties.</li>
+            <li>No usage data, browsing behavior, or personal content is collected by the API.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>Payments</h2>
+          <p>All payments are processed by <strong>Stripe</strong>. We do not store, process, or have access to your credit card numbers, bank account details, or other payment information. Stripe's privacy policy governs the handling of your payment data. You can review it at <a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>Data We Do Not Collect</h2>
+          <ul>
+            <li>We do not use analytics or tracking tools (no Google Analytics, no Mixpanel, nothing).</li>
+            <li>We do not serve or display advertisements.</li>
+            <li>We do not sell, rent, or share your data with third parties.</li>
+            <li>We do not track your browsing history or behavior.</li>
+            <li>We do not use cookies for tracking. Any cookies present are strictly for authentication sessions.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>Data Retention &amp; Deletion</h2>
+          <ul>
+            <li><strong>localStorage data:</strong> Controlled entirely by you. Clear your browser data to remove it.</li>
+            <li><strong>Cloud sync data:</strong> You can delete your synced data by signing out and requesting deletion. Contact us to have your Firestore data removed.</li>
+            <li><strong>License data:</strong> Your email and device ID are retained for the duration of your subscription. Contact us to request deletion after your subscription ends.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>Third-Party Services</h2>
+          <p>MyKK integrates with the following third-party services:</p>
+          <ul>
+            <li><strong>Firebase Authentication &amp; Firestore</strong> (Google) &mdash; for optional cloud sync</li>
+            <li><strong>Stripe</strong> &mdash; for payment processing</li>
+            <li><strong>OpenWeatherMap</strong> &mdash; for weather widget data (your location is sent to their API if you enable the weather widget)</li>
+          </ul>
+          <p>Each service has its own privacy policy governing how they handle your data.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>Changes to This Policy</h2>
+          <p>We may update this privacy policy from time to time. Changes will be posted on this page with an updated revision date. We encourage you to review this page periodically.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>Contact</h2>
+          <p>If you have questions about this privacy policy or want to request data deletion, contact us at <a href="mailto:support@mykk.us">support@mykk.us</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-left">
+        Built by <a href="https://github.com/MichalAFerber" target="_blank" rel="noopener">Michal Ferber</a> &middot; Open Source under MIT
+      </div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/support.html">Support</a></li>
+        <li><a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav background on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
+</body>
+</html>
