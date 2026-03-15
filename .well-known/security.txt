@@ -1,0 +1,3 @@
+Contact: mailto:support@mykk.us
+Preferred-Languages: en
+Canonical: https://mykk.us/.well-known/security.txt

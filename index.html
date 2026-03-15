@@ -24,10 +24,7 @@
   <nav class="nav">
     <div class="container nav-container">
       <a href="/" class="nav-logo">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <path d="M3 9h18M9 9v12"/>
-        </svg>
+        <img src="/favicon.svg" width="32" height="32" alt="MyKK">
         <span>MyKK</span>
       </a>
       <div class="nav-links">
@@ -62,6 +59,11 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
+      <div class="hero-image">
+        <div class="screenshot-placeholder">
+          <img src="/screenshot.webp" alt="MyKK Dashboard" width="1280" height="800">
+        </div>
+      </div>
       <div class="hero-content">
         <div class="hero-badge">
           <span class="badge">Open Source</span>
@@ -91,14 +93,9 @@
             <span class="stat-value">100%</span>
             <span class="stat-label">Offline</span>
           </div>
-        </div>
-      </div>
-      <div class="hero-image">
-        <div class="screenshot-placeholder">
-          <!-- Replace src with actual screenshot.webp -->
-          <div class="placeholder-content">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <p>screenshot.webp</p>
+          <div class="stat">
+            <span class="stat-value">7,376</span>
+            <span class="stat-label">Lines of Code</span>
           </div>
         </div>
       </div>
@@ -481,6 +478,16 @@
           <h3>Custom CSS Injection</h3>
           <p>Inject your own stylesheets to personalize the dashboard beyond built-in themes.</p>
         </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status status-planned">Planned</div>
+          <h3>Screensaver</h3>
+          <p>Idle-screen mode for kiosk displays and always-on screens to prevent burn-in.</p>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status status-planned">Planned</div>
+          <h3>Community Themes</h3>
+          <p>Submit and browse user-created themes from the community.</p>
+        </div>
       </div>
       <div style="text-align: center; margin-top: 40px;">
         <a href="/roadmap" class="btn btn-secondary btn-lg">View Full Roadmap</a>
@@ -524,6 +531,38 @@
           <summary>Does it collect any data?</summary>
           <p>No. MyKK does not collect, store, or transmit any personal data. All settings are stored locally or synced via your own Google account if you enable cloud sync. The code is open source so you can verify this yourself.</p>
         </details>
+        <details class="faq-item">
+          <summary>Do I need to sign in?</summary>
+          <p>No. MyKK works entirely without an account. Signing in with Google is optional and only needed if you want to sync your settings across multiple devices or activate Pro features.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I get a weather API key?</summary>
+          <p>Sign up for a free account at <a href="https://openweathermap.org/api" target="_blank" rel="noopener">OpenWeatherMap</a>. Copy your API key from your account dashboard, then paste it into MyKK Settings &gt; Weather. The free tier supports current weather, forecasts, and radar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What are iFrame Widgets?</summary>
+          <p>iFrame widgets let you embed any web content directly into your dashboard — Google Calendar, RSS feeds, Twitter/X timelines, or any URL that supports embedding. This is a Pro feature.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I add Google Calendar?</summary>
+          <p>In Google Calendar, go to Settings &gt; your calendar &gt; Integrate calendar &gt; copy the "Embed code" URL. Add a new iFrame widget in MyKK and paste the URL. Resize as needed.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I add an RSS or news feed?</summary>
+          <p>Use a service like <a href="https://rssdog.com" target="_blank" rel="noopener">rssdog.com</a> to generate an embeddable URL for any RSS feed. Then add it as an iFrame widget in your dashboard.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I embed Twitter / X?</summary>
+          <p>Go to <a href="https://publish.twitter.com" target="_blank" rel="noopener">publish.twitter.com</a>, enter your profile or list URL, and copy the embed code. Add it as an iFrame widget in MyKK.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I find embed codes for other services?</summary>
+          <p>Most services that support embedding provide an "Embed" or "Share" option. Look for an iframe code or embed URL. If a service provides one, you can paste it into an iFrame widget.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I reorder sections on the dashboard?</summary>
+          <p>Hover over (or tap on mobile) any section to reveal the drag handle. Click and hold the handle, then drag the section to its new position. Sections snap into place automatically.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -554,10 +593,7 @@
       <div class="footer-content">
         <div class="footer-brand">
           <a href="/" class="footer-logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <path d="M3 9h18M9 9v12"/>
-            </svg>
+            <img src="/favicon.svg" width="24" height="24" alt="MyKK">
             <span>MyKK</span>
           </a>
           <p>Your browser's start page, reimagined. Open source and free forever.</p>
