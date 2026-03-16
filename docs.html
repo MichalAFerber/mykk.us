@@ -50,103 +50,378 @@
           <a href="#getting-started">Getting Started</a>
           <a href="#installation">Installation</a>
           <a href="#homepage">Setting as Homepage</a>
-          <a href="#widgets">Widgets</a>
+          <a href="#widgets">Free Widgets</a>
           <a href="#customization">Customization</a>
           <a href="#cloud-sync">Cloud Sync</a>
-          <a href="#pro-features">Pro Features</a>
+          <a href="#pro-features">Pro Features <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></a>
           <a href="#self-hosting">Self-Hosting</a>
           <a href="#chrome-extension">Chrome Extension</a>
+          <a href="#faq">FAQ</a>
         </nav>
         <div class="docs-content">
+
+          <!-- Getting Started -->
           <div id="getting-started" class="docs-section">
             <h2>Getting Started</h2>
-            <p>MyKK is a single HTML file dashboard that replaces your browser's new tab or start page. There are no build tools, no server requirements, and no dependencies. Simply download the file and open it in your browser to get started.</p>
+            <p>MyKK is a single HTML file dashboard that replaces your browser's new tab or start page. There are no build tools, no server requirements, and no dependencies. Simply download the file and open it in your browser, or visit the Cloud Dashboard at <a href="https://start.mykk.us" target="_blank" rel="noopener">start.mykk.us</a> to get started instantly.</p>
+            <p>Everything runs client-side in your browser. Your data is stored locally in your browser's localStorage by default. If you sign in with Google, your settings and bookmarks can sync across devices via Firebase.</p>
+            <p>MyKK is open source and free to use. A Pro subscription unlocks additional widgets like Weather, iFrame embeds, RSS feeds, and more.</p>
           </div>
 
+          <!-- Installation -->
           <div id="installation" class="docs-section">
             <h2>Installation</h2>
             <p>There are three ways to start using MyKK:</p>
-            <ul>
-              <li><strong>Option 1: Download from GitHub</strong> &mdash; Download <code>index.html</code> from the <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub repository</a> and open it directly in your browser.</li>
-              <li><strong>Option 2: Live Demo</strong> &mdash; Visit <a href="https://start.mykk.us" target="_blank" rel="noopener">start.mykk.us</a> to use the hosted version instantly.</li>
-              <li><strong>Option 3: Chrome Extension</strong> &mdash; Install the <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" target="_blank" rel="noopener">Chrome extension</a> to replace your new tab page with MyKK.</li>
-            </ul>
+            <h3>Option 1: Download from GitHub</h3>
+            <ol>
+              <li>Go to the <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub repository</a>.</li>
+              <li>Download the <code>index.html</code> file (click the green "Code" button, then "Download ZIP", or clone the repo).</li>
+              <li>Open <code>index.html</code> directly in your browser. That's it &mdash; no install, no build step.</li>
+            </ol>
+            <h3>Option 2: Cloud Dashboard</h3>
+            <ol>
+              <li>Visit <a href="https://start.mykk.us" target="_blank" rel="noopener">start.mykk.us</a> in your browser.</li>
+              <li>The dashboard loads instantly. Bookmark it or set it as your homepage.</li>
+              <li>Sign in with Google to enable cloud sync and Pro features.</li>
+            </ol>
+            <h3>Option 3: Chrome Extension</h3>
+            <ol>
+              <li>Install from the <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" target="_blank" rel="noopener">Chrome Web Store</a>.</li>
+              <li>Every new tab will automatically open your MyKK dashboard.</li>
+              <li>Sign in with Google to activate Pro features and sync across devices.</li>
+            </ol>
           </div>
 
+          <!-- Setting as Homepage -->
           <div id="homepage" class="docs-section">
             <h2>Setting as Homepage</h2>
-            <ul>
-              <li><strong>Chrome:</strong> Go to Settings &gt; On startup &gt; Open a specific page &gt; Add the local file path or <code>start.mykk.us</code>.</li>
-              <li><strong>Firefox:</strong> Go to Settings &gt; Home &gt; Custom URLs and enter the file path or <code>start.mykk.us</code>.</li>
-              <li><strong>Edge:</strong> Similar to Chrome &mdash; go to Settings &gt; On startup &gt; Open a specific page and add your URL.</li>
-            </ul>
+            <p>You can set MyKK as your browser's homepage or startup page so it loads every time you open your browser.</p>
+            <h3>Google Chrome</h3>
+            <ol>
+              <li>Open Chrome and go to <strong>Settings</strong> (three-dot menu &gt; Settings).</li>
+              <li>Scroll to <strong>"On startup"</strong>.</li>
+              <li>Select <strong>"Open a specific page or set of pages"</strong>.</li>
+              <li>Click <strong>"Add a new page"</strong> and enter <code>start.mykk.us</code> (or the local file path to your <code>index.html</code>).</li>
+            </ol>
+            <h3>Mozilla Firefox</h3>
+            <ol>
+              <li>Open Firefox and go to <strong>Settings</strong>.</li>
+              <li>Click <strong>"Home"</strong> in the left sidebar.</li>
+              <li>Under <strong>"Homepage and new windows"</strong>, select <strong>"Custom URLs"</strong>.</li>
+              <li>Enter <code>start.mykk.us</code> or the local file path.</li>
+            </ol>
+            <h3>Microsoft Edge</h3>
+            <ol>
+              <li>Open Edge and go to <strong>Settings</strong>.</li>
+              <li>Click <strong>"Start, home, and new tabs"</strong>.</li>
+              <li>Under <strong>"When Edge starts"</strong>, select <strong>"Open these pages"</strong>.</li>
+              <li>Click <strong>"Add a new page"</strong> and enter <code>start.mykk.us</code>.</li>
+            </ol>
+            <h3>Safari</h3>
+            <ol>
+              <li>Open Safari and go to <strong>Settings</strong> (Safari menu &gt; Settings).</li>
+              <li>Click the <strong>"General"</strong> tab.</li>
+              <li>In the <strong>"Homepage"</strong> field, enter <code>start.mykk.us</code>.</li>
+            </ol>
           </div>
 
+          <!-- Free Widgets -->
           <div id="widgets" class="docs-section">
-            <h2>Widgets</h2>
+            <h2>Free Widgets</h2>
+            <p>MyKK comes with a generous set of free widgets that cover everyday needs. Toggle any widget on or off from the Settings panel (gear icon).</p>
+
+            <h3>Search</h3>
+            <p>A versatile search bar that supports 7 search engines: Google, Bing, DuckDuckGo, Brave, Yahoo, Ecosia, and Startpage. Click the search engine icon on the left side of the bar to cycle between engines. Your preferred engine is saved automatically.</p>
+
+            <h3>Shortcuts / Bookmarks</h3>
+            <p>A customizable grid of your favorite websites with auto-detected favicons. Click the <strong>+</strong> button to add a new shortcut by entering a name and URL. Drag and drop shortcuts to reorder them. Three icon style options are available in Settings. Each shortcut can be edited or removed by hovering over it and clicking the edit icon.</p>
+
+            <h3>Calendar</h3>
+            <p>A clean monthly calendar view. Use the left and right arrows to navigate between months. The current day is highlighted automatically. Click any date to see it highlighted.</p>
+
+            <h3>Clock &amp; Date</h3>
+            <p>Displays the current time and date. Configurable options include:</p>
             <ul>
-              <li><strong>Search Bar:</strong> Supports 7 search engines &mdash; Google, Bing, DuckDuckGo, Brave, Yahoo, Ecosia, and Startpage. Click the engine icon to switch between them.</li>
-              <li><strong>Favorites:</strong> Drag-and-drop bookmarks with auto-detected favicons. Three icon style options are available. Click the + button to add a new bookmark.</li>
-              <li><strong>Calendar:</strong> A monthly calendar view with navigation arrows to move between months.</li>
-              <li><strong>Clock &amp; Date:</strong> Supports 12-hour and 24-hour formats with configurable seconds display and multiple date styles.</li>
-              <li><strong>Notepad:</strong> A simple text editor that auto-saves to your browser. Copy contents or download as a text file.</li>
-              <li><strong>Paint Canvas:</strong> Draw with brush, shapes, and text tools. Includes an eraser. Export your artwork as PNG or PDF.</li>
-              <li><strong>Webcam:</strong> A mirror view with countdown timer and flash effect for quick selfies.</li>
+              <li><strong>12-hour or 24-hour format</strong></li>
+              <li><strong>Show or hide seconds</strong></li>
+              <li><strong>Multiple date display styles</strong></li>
             </ul>
+
+            <h3>Greeting</h3>
+            <p>A personalized greeting message that changes based on the time of day (Good Morning, Good Afternoon, Good Evening). Set your name in Settings to see a personalized greeting like "Good Morning, Alex".</p>
+
+            <h3>Quotes</h3>
+            <p>Displays an inspirational or thought-provoking quote that rotates automatically. A fresh quote appears each time you open a new tab or refresh the page.</p>
+
+            <h3>Notepad</h3>
+            <p>A versatile text editor that auto-saves to your browser. The Notepad now has <strong>3 modes</strong>:</p>
+            <ul>
+              <li><strong>Plain Text:</strong> A simple, distraction-free text area for quick notes.</li>
+              <li><strong>Rich Text:</strong> A full-featured editor with formatting options including bold, italic, underline, lists, headings, and more.</li>
+              <li><strong>Markdown:</strong> Write in Markdown syntax with a live preview. Supports standard Markdown features like headings, bold, italic, links, code blocks, and lists.</li>
+            </ul>
+            <p>You can copy your note's contents to the clipboard or download it as a file. Switch between modes using the mode selector at the top of the Notepad widget.</p>
+
+            <h3>Paint Canvas</h3>
+            <p>A built-in drawing tool with multiple features:</p>
+            <ul>
+              <li><strong>Brush tool</strong> with adjustable size and color</li>
+              <li><strong>Shape tools</strong> for rectangles, circles, and lines</li>
+              <li><strong>Text tool</strong> to add text anywhere on the canvas</li>
+              <li><strong>Eraser</strong> for corrections</li>
+              <li><strong>Export</strong> your artwork as PNG or PDF</li>
+            </ul>
+
+            <h3>Webcam</h3>
+            <p>A mirror view using your device's camera. Includes a countdown timer and flash effect for taking quick selfies. Your browser will ask for camera permission the first time you enable this widget. Photos can be saved directly from the widget.</p>
           </div>
 
+          <!-- Customization -->
           <div id="customization" class="docs-section">
             <h2>Customization</h2>
+            <p>Click the <strong>gear icon</strong> in the top-right corner to open the Settings panel. From there you can personalize nearly every aspect of your dashboard.</p>
+
+            <h3>Themes</h3>
+            <p>Choose from a collection of built-in gradient themes to change the look of your dashboard instantly. Each theme applies a unique color scheme to the background and UI elements.</p>
+
+            <h3>Background</h3>
+            <p>Beyond the preset themes, you can set a fully custom background:</p>
             <ul>
-              <li>Click the <strong>gear icon</strong> to open Settings.</li>
-              <li><strong>Themes:</strong> Choose from built-in gradient themes or set a custom background image or color.</li>
-              <li><strong>Layout:</strong> Drag sections by their handle to reorder them. Resize widget columns to fit your preference.</li>
-              <li><strong>Widget visibility:</strong> Toggle individual widgets on or off in Settings to show only what you need.</li>
+              <li><strong>Custom image:</strong> Enter an image URL or upload a local image file to use as your background.</li>
+              <li><strong>Solid color:</strong> Pick any color using the color picker.</li>
             </ul>
+
+            <h3>Page Title</h3>
+            <p>Customize the browser tab title that appears for your dashboard. By default it shows "MyKK", but you can change it to anything you like (e.g., "Home", "Dashboard", or your name).</p>
+
+            <h3>Favicon</h3>
+            <p>Change the small icon that appears in your browser tab. Upload a custom favicon or enter an image URL to personalize your tab icon.</p>
+
+            <h3>Widget Sizing</h3>
+            <p>Adjust the column width of individual widgets to make them larger or smaller. This lets you create a layout that fits your screen and priorities &mdash; give more space to the widgets you use most.</p>
+
+            <h3>Drag &amp; Drop Reordering</h3>
+            <p>Rearrange widget sections by dragging their handle (the grip icon on the top of each section). Drop them in your preferred order. Your layout is saved automatically.</p>
           </div>
 
+          <!-- Cloud Sync -->
           <div id="cloud-sync" class="docs-section">
             <h2>Cloud Sync</h2>
+            <p>Cloud Sync lets you keep your dashboard consistent across multiple devices and browsers.</p>
+            <h3>How to enable</h3>
+            <ol>
+              <li>Click the <strong>gear icon</strong> to open Settings.</li>
+              <li>Click <strong>"Sign in with Google"</strong>.</li>
+              <li>Authorize MyKK to save your settings to Firebase.</li>
+            </ol>
+            <h3>What syncs</h3>
             <ul>
-              <li>Click <strong>"Sign in with Google"</strong> in Settings to enable cloud sync.</li>
-              <li>Syncs your bookmarks, layout, theme, and widget settings across devices.</li>
-              <li>Uses Firebase &mdash; your data is stored in your Google account.</li>
-              <li>Works across all devices where you sign in with the same account.</li>
-              <li>To disable sync, sign out in Settings. Your data will revert to local storage.</li>
+              <li>Bookmarks / shortcuts</li>
+              <li>Widget layout and order</li>
+              <li>Theme and background settings</li>
+              <li>Widget-specific settings (clock format, search engine, notepad content, etc.)</li>
             </ul>
+            <h3>How it works</h3>
+            <p>Your data is stored securely in Firebase under your Google account. Sync happens automatically when you make changes. When you sign in on a new device, your settings are pulled down and applied.</p>
+            <h3>Disabling sync</h3>
+            <p>To stop syncing, open Settings and click <strong>"Sign Out"</strong>. Your dashboard will revert to using local browser storage only. Your cloud data remains saved and will be restored if you sign in again.</p>
           </div>
 
+          <!-- Pro Features -->
           <div id="pro-features" class="docs-section">
-            <h2>Pro Features</h2>
+            <h2>Pro Features <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px;vertical-align:middle;">Pro</span></h2>
+            <p>Pro features are available with a MyKK Pro subscription. Subscribe at <a href="https://mykk.us/#pricing" target="_blank" rel="noopener">mykk.us</a>, then sign in with the same Google account on the Cloud Dashboard or Chrome extension to unlock them.</p>
+
+            <h3>Weather &amp; Radar <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>A full-featured weather widget showing current conditions, temperature, humidity, wind speed, and a 5-day forecast. Powered by <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a>.</p>
+            <p><strong>Setup:</strong></p>
+            <ol>
+              <li>Get a free API key from <a href="https://openweathermap.org/api" target="_blank" rel="noopener">openweathermap.org/api</a> (sign up for a free account and generate an API key).</li>
+              <li>Enter your API key in the Weather widget settings.</li>
+              <li>Set your location (city name or coordinates).</li>
+            </ol>
+            <p><strong>Weather Radar:</strong> Click the radar button to open a fullscreen interactive weather radar map. The radar includes toggleable overlay layers:</p>
             <ul>
-              <li><strong>Live Weather &amp; Radar:</strong> Current conditions, 5-day forecast, and an interactive radar map with animated overlays.</li>
-              <li><strong>iFrame Widgets:</strong> Embed Google Calendar, RSS feeds, X/Twitter timelines, or any URL directly in your dashboard.</li>
-              <li><strong>Donetick Integration:</strong> Connect to your Donetick task manager to view and manage tasks.</li>
-              <li><strong>Twitter/X Feed:</strong> Embed your timeline directly in the dashboard.</li>
+              <li><strong>Rain</strong> &mdash; precipitation intensity</li>
+              <li><strong>Clouds</strong> &mdash; cloud cover</li>
+              <li><strong>Temperature</strong> &mdash; heat map overlay</li>
+              <li><strong>Wind</strong> &mdash; wind speed and direction</li>
             </ul>
-            <p><strong>How to activate:</strong> Subscribe at <a href="https://mykk.us">mykk.us</a>, install the Chrome extension, and sign in with the same Google account.</p>
+            <p>The radar is powered by OpenWeatherMap tile layers and centers on your configured location.</p>
+
+            <h3>iFrame Widgets <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Embed any web page directly into your dashboard using iFrame widgets. This is one of the most flexible Pro features &mdash; you can embed virtually anything that supports iframe embedding.</p>
+            <p><strong>Common uses:</strong></p>
+            <ul>
+              <li>Google Calendar</li>
+              <li>Google Maps</li>
+              <li>Notion pages</li>
+              <li>Trello boards</li>
+              <li>Any website that allows embedding</li>
+            </ul>
+            <p>To add an iFrame widget, enter the embed URL in the widget settings. You can add multiple iFrame widgets and resize them independently.</p>
+
+            <h3>RSS Feeds <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Display RSS feed content directly on your dashboard. Stay up to date with your favorite news sources, blogs, or podcasts without leaving your start page.</p>
+            <p><strong>Setup:</strong></p>
+            <ol>
+              <li>Find the RSS feed URL for the site you want to follow (usually found at <code>/feed</code>, <code>/rss</code>, or look for an RSS icon on the site).</li>
+              <li>Enter the RSS feed URL in the widget settings.</li>
+              <li>The widget will display the latest items with titles, summaries, and links.</li>
+            </ol>
+
+            <h3>Stock Quotes <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Track stock prices directly on your dashboard. By default, the Stock Quotes widget uses <strong>Yahoo Finance</strong> data, which requires no API key.</p>
+            <p>For more reliable or higher-frequency data, you can optionally enter a <a href="https://marketstack.com/" target="_blank" rel="noopener">Marketstack</a> API key in the widget settings. Marketstack offers a free tier that covers basic stock quote needs.</p>
+            <p>Add your ticker symbols (e.g., AAPL, GOOGL, TSLA) and the widget will display current prices, daily change, and percentage change.</p>
+
+            <h3>Daily Focus <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Set a single main goal for the day. The Daily Focus widget prominently displays your focus item so you stay on track every time you open a new tab. It resets each day so you can set a fresh goal.</p>
+
+            <h3>To-Do List <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>A simple, fast to-do list built right into your dashboard. Add tasks, check them off, and remove completed items. Tasks are saved and synced across devices if you have Cloud Sync enabled.</p>
+
+            <h3>Ambient Sounds <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Play calming background sounds to help you focus or relax. Choose from a variety of ambient soundscapes like rain, ocean waves, forest sounds, and more. Adjust the volume to your preference. Great for work or study sessions.</p>
+
+            <h3>Donetick <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Integrate with <a href="https://donetick.com/" target="_blank" rel="noopener">Donetick</a>, an open-source task and chore management app. Connect your Donetick account to view and manage your tasks directly from MyKK.</p>
+            <p><strong>Setup:</strong></p>
+            <ol>
+              <li>Create an account at <a href="https://donetick.com/" target="_blank" rel="noopener">donetick.com</a> (or self-host your own instance).</li>
+              <li>Enter your Donetick server URL and API credentials in the widget settings.</li>
+              <li>Your tasks will appear in the widget, and you can mark them as complete directly from the dashboard.</li>
+            </ol>
+
+            <h3>X / Twitter Feed <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Embed an X (Twitter) timeline directly into your dashboard. See the latest posts from any public account or your own timeline without leaving your start page.</p>
+            <p><strong>Setup:</strong></p>
+            <ol>
+              <li>Go to <a href="https://publish.twitter.com/" target="_blank" rel="noopener">publish.twitter.com</a>.</li>
+              <li>Enter the URL of the Twitter/X profile you want to embed (e.g., <code>https://x.com/username</code>).</li>
+              <li>Copy the generated embed code or URL.</li>
+              <li>Paste it into the X/Twitter widget settings in MyKK.</li>
+            </ol>
           </div>
 
+          <!-- Self-Hosting -->
           <div id="self-hosting" class="docs-section">
             <h2>Self-Hosting</h2>
-            <ul>
+            <p>MyKK is a single HTML file with zero dependencies, making it trivial to self-host.</p>
+            <h3>Quick start</h3>
+            <ol>
               <li>Download <code>index.html</code> from the <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub repository</a>.</li>
-              <li>Host on any web server, CDN, or simply open it locally as a file.</li>
-              <li>Compatible with Nginx, Apache, Cloudflare Pages, GitHub Pages, Netlify, and more.</li>
-              <li>No build step, no dependencies, no database required.</li>
-              <li>All data is stored in the visitor's browser localStorage.</li>
+              <li>Place it on any web server or simply open it as a local file in your browser.</li>
+            </ol>
+            <h3>Compatible hosting platforms</h3>
+            <ul>
+              <li>Any static web server (Nginx, Apache, Caddy, etc.)</li>
+              <li>Cloudflare Pages</li>
+              <li>GitHub Pages</li>
+              <li>Netlify</li>
+              <li>Vercel</li>
+              <li>Amazon S3 / CloudFront</li>
+              <li>Or simply open the file directly from your local filesystem</li>
+            </ul>
+            <h3>What to know</h3>
+            <ul>
+              <li><strong>No build step required.</strong> The file is ready to serve as-is.</li>
+              <li><strong>No database needed.</strong> All user data is stored in the visitor's browser localStorage.</li>
+              <li><strong>No server-side code.</strong> Everything runs client-side in the browser.</li>
+              <li><strong>Cloud Sync and Pro features</strong> still work when self-hosting, as long as you sign in with Google. These features connect to MyKK's Firebase backend.</li>
             </ul>
           </div>
 
+          <!-- Chrome Extension -->
           <div id="chrome-extension" class="docs-section">
             <h2>Chrome Extension</h2>
-            <ul>
-              <li>Install from the <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" target="_blank" rel="noopener">Chrome Web Store</a>.</li>
-              <li>Automatically sets MyKK as your new tab page.</li>
-              <li>Manages your Pro subscription &mdash; sign in with Google to activate.</li>
-              <li>The extension is optional. The dashboard works fully as a standalone HTML file.</li>
-            </ul>
+            <p>The MyKK Chrome extension replaces your new tab page with the MyKK dashboard.</p>
+            <h3>Installation</h3>
+            <ol>
+              <li>Visit the <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" target="_blank" rel="noopener">Chrome Web Store listing</a>.</li>
+              <li>Click <strong>"Add to Chrome"</strong>.</li>
+              <li>Open a new tab &mdash; MyKK will appear automatically.</li>
+            </ol>
+            <h3>How it works</h3>
+            <p>The extension works specifically with the <strong>Cloud Dashboard</strong> at <a href="https://start.mykk.us" target="_blank" rel="noopener">start.mykk.us</a>. When you open a new tab, the extension loads the Cloud Dashboard and handles Google authentication for Pro features and Cloud Sync.</p>
+            <h3>Pro activation</h3>
+            <ol>
+              <li>Subscribe to Pro at <a href="https://mykk.us/#pricing" target="_blank" rel="noopener">mykk.us</a>.</li>
+              <li>Install the Chrome extension.</li>
+              <li>Sign in with the <strong>same Google account</strong> you used to subscribe.</li>
+              <li>Pro features will unlock automatically.</li>
+            </ol>
+            <p>The extension is optional. The dashboard works fully as a standalone HTML file or via the Cloud Dashboard URL. The extension simply provides a seamless new-tab experience and handles Pro subscription management.</p>
           </div>
+
+          <!-- FAQ -->
+          <div id="faq" class="docs-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>What is MyKK?</h3>
+            <p>MyKK is a customizable browser start page / new tab dashboard. It is a single HTML file that runs entirely in your browser with no server requirements. It includes widgets like search, bookmarks, calendar, clock, notepad, paint canvas, and more. With a Pro subscription, you get additional widgets like weather, stock quotes, RSS feeds, and iFrame embeds.</p>
+
+            <h3>Do I need to sign in?</h3>
+            <p>No. MyKK works fully without signing in. All your data is stored locally in your browser's localStorage. Signing in with Google is only needed if you want to enable Cloud Sync (to keep your settings across devices) or activate Pro features.</p>
+
+            <h3>How do I get a weather API key?</h3>
+            <ol>
+              <li>Go to <a href="https://openweathermap.org/api" target="_blank" rel="noopener">openweathermap.org/api</a>.</li>
+              <li>Click <strong>"Sign Up"</strong> and create a free account.</li>
+              <li>After signing in, go to <strong>"API keys"</strong> in your account dashboard.</li>
+              <li>Copy your default API key (or generate a new one).</li>
+              <li>Paste it into the Weather widget settings in MyKK.</li>
+            </ol>
+            <p>The free tier provides 1,000 API calls per day, which is more than enough for personal use. New API keys may take up to a few hours to activate.</p>
+
+            <h3>What are iFrame widgets?</h3>
+            <p>iFrame widgets let you embed external web pages directly into your MyKK dashboard. Any website that allows iframe embedding can be displayed as a widget. This includes Google Calendar, Google Maps, Notion pages, web apps, dashboards, and more. You simply enter the embed URL and the page will load inside your dashboard.</p>
+
+            <h3>How do I add Google Calendar?</h3>
+            <ol>
+              <li>Open <a href="https://calendar.google.com/calendar/r/settings" target="_blank" rel="noopener">Google Calendar settings</a>.</li>
+              <li>Click on the calendar you want to embed in the left sidebar.</li>
+              <li>Scroll down to <strong>"Integrate calendar"</strong>.</li>
+              <li>Copy the <strong>"Embed code"</strong> &mdash; specifically the URL inside the <code>src="..."</code> attribute.</li>
+              <li>Paste that URL into an iFrame widget in MyKK.</li>
+            </ol>
+            <p>Note: Your Google Calendar must be set to public, or you must use the "public URL" for it to display in an iframe.</p>
+
+            <h3>How do I add an RSS feed?</h3>
+            <ol>
+              <li>Find the RSS feed URL for the website you want to follow. Common patterns include:
+                <ul>
+                  <li><code>https://example.com/feed</code></li>
+                  <li><code>https://example.com/rss</code></li>
+                  <li><code>https://example.com/feed.xml</code></li>
+                </ul>
+              </li>
+              <li>Look for an RSS icon on the website, or check their footer for a feed link.</li>
+              <li>Enter the feed URL in the RSS widget settings in MyKK.</li>
+            </ol>
+
+            <h3>How do I embed Twitter/X?</h3>
+            <ol>
+              <li>Go to <a href="https://publish.twitter.com/" target="_blank" rel="noopener">publish.twitter.com</a>.</li>
+              <li>Enter the URL of the X/Twitter profile (e.g., <code>https://x.com/username</code>).</li>
+              <li>Choose <strong>"Embedded Timeline"</strong> as the display option.</li>
+              <li>Copy the generated embed code or URL.</li>
+              <li>Paste it into the X/Twitter widget settings in MyKK.</li>
+            </ol>
+
+            <h3>How do I find embed codes for iFrame widgets?</h3>
+            <p>Most web services that support embedding will have a <strong>"Share"</strong> or <strong>"Embed"</strong> option. Look for:</p>
+            <ul>
+              <li>A "Share" button with an "Embed" tab (common on Google services, YouTube, etc.)</li>
+              <li>An <code>&lt;iframe&gt;</code> code snippet &mdash; you need the URL from the <code>src="..."</code> attribute.</li>
+              <li>A direct embed URL (some services provide this separately).</li>
+            </ul>
+            <p>If you have a full <code>&lt;iframe&gt;</code> code like <code>&lt;iframe src="https://..."&gt;&lt;/iframe&gt;</code>, just copy the URL from inside the <code>src</code> attribute and paste that into MyKK's iFrame widget.</p>
+
+            <h3>How do I reorder sections?</h3>
+            <p>Each widget section has a drag handle (grip icon) at the top. Click and hold the handle, then drag the section to your desired position and release. Your layout order is saved automatically and will persist across sessions. If Cloud Sync is enabled, your layout will sync across devices.</p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -168,7 +443,7 @@
             <a href="/#features">Features</a>
             <a href="/#pricing">Pricing</a>
             <a href="/roadmap">Roadmap</a>
-            <a href="https://start.mykk.us" target="_blank" rel="noopener">Live Demo</a>
+            <a href="https://start.mykk.us" target="_blank" rel="noopener">Cloud Dashboard</a>
           </div>
           <div class="footer-column">
             <h4>Resources</h4>
