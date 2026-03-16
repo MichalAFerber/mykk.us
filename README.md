@@ -5,6 +5,18 @@ Landing page for [MyKK](https://mykk.us/) — a customizable, single-file browse
 **Live dashboard:** [start.mykk.us](https://start.mykk.us)
 **Source code:** [github.com/MichalAFerber/mykk.us-dashboard](https://github.com/MichalAFerber/mykk.us-dashboard)
 
+## What's New
+
+See the full [Changelog](CHANGELOG.md) for all updates. Recent highlights:
+
+- Comprehensive documentation page with all widgets, Pro features, and FAQ
+- Release Notes page at /changelog
+- Expanded comparison table (5 competitors including Dashy)
+- Updated pricing cards and roadmap
+- Pro badges on feature cards (RSS, Ambient Sounds, Stock Quotes)
+- Complete website redesign with dark theme and shared CSS/JS
+- New pages: docs, roadmap, support, privacy, terms
+
 ## What's Here
 
 This repo contains the marketing site at [mykk.us](https://mykk.us/). It's a single `index.html` that showcases the dashboard and links visitors to the live demo and GitHub source.
