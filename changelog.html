@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MyKK Dashboard release notes and changelog.">
+  <title>Release Notes - MyKK</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo">
+        <img src="/favicon.svg" width="32" height="32" alt="MyKK">
+        <span>MyKK</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/docs">Docs</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="/support">Support</a>
+        <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener" class="nav-github" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+        <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Install Free</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="/#features">Features</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/docs">Docs</a>
+    <a href="/roadmap">Roadmap</a>
+    <a href="/support">Support</a>
+    <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary" target="_blank" rel="noopener">Install Free</a>
+  </div>
+
+  <section class="legal-page">
+    <div class="container">
+      <h1>Release Notes</h1>
+      <p class="legal-updated">Changelog for the MyKK Dashboard</p>
+      <div class="legal-content">
+
+        <h2>March 16, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Weather radar fullscreen — current conditions display with Rain, Clouds, Temp, Wind layer toggles</li>
+          <li>Notepad modes — Plain Text, Rich Text, and Markdown with per-mode toolbars and live preview</li>
+          <li>Rich Text export as .rtf file format</li>
+          <li>Stock quotes widget with Yahoo Finance (free) and optional Marketstack API</li>
+          <li>RSS feed widget</li>
+          <li>Ambient sounds mixer (rain, fireplace, ocean, forest, and more)</li>
+          <li>Daily Focus and To-Do List widgets</li>
+          <li>Loading spinner with user's background during initial load</li>
+          <li>Custom favicon URL setting</li>
+          <li>Theme Toggle button in toolbar (can be hidden independently of theme setting)</li>
+          <li>Light/dark theme now available to free users</li>
+          <li>Pro badges on settings TOC for gated features</li>
+          <li>Docs link in settings replacing inline FAQ</li>
+          <li>Dashboard pages system</li>
+          <li>Greeting and Quotes widgets</li>
+        </ul>
+        <h3>Bug Fixes</h3>
+        <ul>
+          <li>Fixed extension communication — switched from inline script injection to CustomEvent (CSP fix for Cloudflare Pages)</li>
+          <li>Fixed intermittent Pro widget detection with polling fallback</li>
+          <li>Fixed widget positions not persisting for Pro widgets after page refresh</li>
+          <li>Fixed widget drag positions not saving on first drag (auto-flow layout)</li>
+          <li>Fixed stock widget API URL pointing to wrong domain</li>
+          <li>Fixed light theme visibility for settings toggles and controls</li>
+          <li>Fixed large gaps between integration toggles in settings</li>
+          <li>Stocks now preserve user's CSV watchlist order</li>
+          <li>Removed widget titles from Stocks and To-Do for cleaner look</li>
+          <li>Changed Ambient Sounds icon from music note to soundwave bars</li>
+        </ul>
+        <h3>Layout</h3>
+        <ul>
+          <li>Default widget size changed to 6 columns (two per row on desktop)</li>
+          <li>Dense grid packing — widgets fill gaps instead of leaving empty rows</li>
+          <li>Tablet view now single-column matching mobile</li>
+          <li>Fullscreen widgets (notepad, paint, radar, webcam) now respect light/dark theme</li>
+        </ul>
+
+        <h2>March 15, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Stock quotes, RSS feeds, ambient sounds, and dashboard pages added</li>
+          <li>Extension status detection via data attribute for faster Pro activation</li>
+        </ul>
+        <h3>Bug Fixes</h3>
+        <ul>
+          <li>Fixed extension communication CSP issue on Cloudflare Pages</li>
+        </ul>
+
+        <h2>March 14, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Custom MyKK dashboard logo and favicon (purple-pink gradient with widget layout)</li>
+          <li>Transparent PNG icons for extension (16, 48, 128px)</li>
+        </ul>
+
+        <h2>March 13, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Repository renamed from start.mykk.us to mykk.us-dashboard</li>
+          <li>Google Sign-In authentication for Pro subscription management</li>
+          <li>Chrome extension with popup UI for sign-in, dashboard access, and upgrade</li>
+          <li>Stripe Checkout integration for Pro subscriptions ($12/year)</li>
+          <li>Cloudflare Worker API for license management</li>
+        </ul>
+
+        <h2>March 9, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Overhauled settings UI with gated integrations behind extension</li>
+          <li>Updated default widget sizes and settings defaults</li>
+        </ul>
+
+        <h2>March 8, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Polished widget layout and search engine UX</li>
+          <li>Removed widget titles for cleaner appearance</li>
+        </ul>
+        <h3>Bug Fixes</h3>
+        <ul>
+          <li>Fixed search dropdown behavior</li>
+          <li>Halved grid row height for finer sizing control</li>
+          <li>Fixed calendar rows and popup z-index issues</li>
+        </ul>
+
+        <h2>March 7, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Switched widget layout from CSS order to explicit grid placement</li>
+          <li>Removed spacer widget system (free-placement drag replaces it)</li>
+        </ul>
+
+        <h2>February 13, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Rewritten section drag-and-drop (GitHub pinned-repos style)</li>
+        </ul>
+
+        <h2>February 12, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Accessibility: ARIA labels, roles, live regions, focus management, screen reader support</li>
+          <li>Touch-friendly UI with larger tap targets and swipe gestures</li>
+          <li>Donetick chore widget with extension subscription gating</li>
+          <li>Section drag handles visible on desktop hover</li>
+          <li>Full documentation, MIT license, and expanded FAQ in README</li>
+          <li>Attribution section for all libraries, APIs, and services</li>
+        </ul>
+        <h3>Bug Fixes</h3>
+        <ul>
+          <li>Fixed grid layout overflow (top row widgets exceeded 12 columns)</li>
+          <li>Removed cloud sync button from toolbar when signed in</li>
+          <li>Firebase auth switched back to signInWithPopup (redirect wasn't persisting)</li>
+          <li>Fixed Firebase popup sign-in and broken cloud avatar image</li>
+        </ul>
+
+        <h2>February 11, 2026</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Major settings page restructure with organized sections</li>
+          <li>Drag handles on date, search, and toolbar widgets</li>
+          <li>Disabled Google Calendar iframe widget by default</li>
+          <li>Removed Firebase Configuration UI from settings</li>
+          <li>Added FAQ section to settings (collapsed by default)</li>
+          <li>Renamed Camera to Webcam</li>
+        </ul>
+
+        <h2>v1.0.0 — Initial Release</h2>
+        <h3>Features</h3>
+        <ul>
+          <li>Single HTML file dashboard (~400 KB)</li>
+          <li>12-column CSS grid with resizable widgets</li>
+          <li>Multi-engine search (Google, Bing, DuckDuckGo, Brave, Yahoo, Ecosia, Startpage)</li>
+          <li>Drag-and-drop bookmarks with auto-detected favicons</li>
+          <li>Mini calendar with month navigation</li>
+          <li>Clock &amp; date with 12/24h format</li>
+          <li>Notepad with auto-save</li>
+          <li>Paint canvas (brush, shapes, text, eraser, export PNG/PDF)</li>
+          <li>Webcam mirror with selfie countdown</li>
+          <li>iFrame widget system for embedding any content</li>
+          <li>Weather with OpenWeatherMap (current, forecast, radar)</li>
+          <li>Weather animation overlay (rain, snow, clouds)</li>
+          <li>Google Sign-In cloud sync via Firebase</li>
+          <li>Gradient themes, custom backgrounds, solid colors</li>
+          <li>Mobile-friendly responsive layout</li>
+          <li>Configurable auto-refresh</li>
+          <li>Export/import settings as JSON</li>
+          <li>Cloudflare Pages deployment</li>
+          <li>Works 100% offline</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <img src="/favicon.svg" width="24" height="24" alt="MyKK">
+            <span>MyKK</span>
+          </a>
+          <p>Your browser's start page, reimagined. Open source and free forever.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Product</h4>
+            <a href="/#features">Features</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/changelog">Release Notes</a>
+            <a href="https://start.mykk.us" target="_blank" rel="noopener">Cloud Dashboard</a>
+          </div>
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="/docs">Documentation</a>
+            <a href="/#faq">FAQ</a>
+            <a href="/support">Support</a>
+            <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
+          </div>
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MyKK | Created by <a href="https://github.com/MichalAFerber" target="_blank" rel="noopener">Michal Ferber</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.nav-toggle').addEventListener('click', () => {
+      document.querySelector('.mobile-menu').classList.toggle('active');
+      document.querySelector('.nav-toggle').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

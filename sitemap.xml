@@ -25,6 +25,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://mykk.us/changelog</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mykk.us/privacy</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>yearly</changefreq>
