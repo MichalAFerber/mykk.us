@@ -35,7 +35,7 @@
         <a href="/roadmap">Roadmap</a>
         <a href="/support">Support</a>
         <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener" class="nav-github" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
-        <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Install Free</a>
+        <a href="https://chrome.google.com/webstore/detail/ipeboldhljgjleidbklaanchekkdnjlo" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Install Free</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
@@ -48,76 +48,100 @@
     <a href="/roadmap">Roadmap</a>
     <a href="/support">Support</a>
     <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://chrome.google.com/webstore/detail/mggnhojgnpoeidackebojcnijjfjideo" class="btn btn-primary" target="_blank" rel="noopener">Install Free</a>
+    <a href="https://chrome.google.com/webstore/detail/ipeboldhljgjleidbklaanchekkdnjlo" class="btn btn-primary" target="_blank" rel="noopener">Install Free</a>
   </div>
 
   <section class="legal-page">
     <div class="container">
       <h1>Privacy Policy</h1>
-      <p><strong>Last updated:</strong> March 14, 2026</p>
+      <p><strong>Last updated:</strong> April 24, 2026</p>
 
       <div class="legal-content">
-        <h2>Introduction</h2>
-        <p>MyKK ("we," "our," or "us") is a browser dashboard and start page extension for Google Chrome. We are committed to protecting your privacy. This Privacy Policy explains how we handle information when you use the MyKK extension and related services.</p>
-
-        <h2>Information We Collect</h2>
-        <p>MyKK collects and stores the following types of information:</p>
+        <h2>Overview</h2>
+        <p>MyKK.us consists of two parts:</p>
         <ul>
-          <li><strong>Custom Settings:</strong> Your dashboard layout preferences, widget configurations, bookmarks, and visual customizations are stored locally on your device using your browser's built-in storage.</li>
-          <li><strong>Extension Settings:</strong> Preferences such as theme selection, layout options, and feature toggles are stored using Chrome's storage APIs to enable syncing across your devices when signed into Chrome.</li>
+          <li>The <strong>MyKK Cloud Dashboard</strong> at <a href="https://start.mykk.us">start.mykk.us</a> — a free, open-source browser start page you can use without installing anything.</li>
+          <li>The <strong>MyKK.us Chrome extension</strong> — a companion that activates Pro features on the dashboard for paid subscribers.</li>
+        </ul>
+        <p>This policy explains what data each part collects, where it's stored, who it's shared with, and how you can control it.</p>
+
+        <h2>Data We Collect</h2>
+
+        <h3>MyKK Cloud Dashboard (start.mykk.us)</h3>
+        <p>The dashboard stores your configuration <strong>locally in your browser</strong> via <code>localStorage</code>. This includes widget layout, bookmarks, notepad contents, theme selection, and custom CSS. This data never leaves your device unless you opt into cloud sync.</p>
+        <p>If you enable <strong>cloud sync</strong>, your dashboard configuration is stored in Firebase (operated by Google). Cloud sync is opt-in and disabled by default.</p>
+
+        <h3>MyKK.us Chrome Extension</h3>
+        <p>When you click "Sign in with Google" in the extension popup to activate Pro, the extension collects and transmits:</p>
+        <ul>
+          <li><strong>Email address</strong> — read from your Google account via OAuth (<code>chrome.identity.getAuthToken</code>) one time after you grant consent. The email is sent to our API at <code>api.mykk.us</code> so we can look up your Pro subscription.</li>
+          <li><strong>Device identifier</strong> — a random UUID generated once per browser installation and stored in <code>chrome.storage.local</code>. Sent alongside your email so we can enforce per-subscription device limits (default: 3 devices per subscription).</li>
+        </ul>
+        <p>The extension does <strong>not</strong> read browsing history, contents of other tabs, form data, or any Google account data other than your email address.</p>
+
+        <h3>Payment Information</h3>
+        <p>If you purchase Pro, payment is processed by <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe</a>. Card details are entered directly into Stripe Checkout — we never see or store them. After a successful payment, Stripe notifies our API via webhook and we record the resulting subscription metadata (customer ID, subscription ID, email, plan) in our database.</p>
+
+        <h2>Where Your Data Is Stored</h2>
+        <ul>
+          <li><strong>On your device</strong> — dashboard configuration in <code>localStorage</code>; extension cache of subscription status, email, and device ID in <code>chrome.storage.local</code>.</li>
+          <li><strong>Our backend (Cloudflare)</strong> — a Cloudflare D1 (SQLite) database holds one row per paid subscription with: email, license key, Stripe customer ID, Stripe subscription ID, plan name, max device count, active flag, and created/updated timestamps. A separate table records device activations (license ID, device UUID, activation timestamp).</li>
+          <li><strong>Stripe</strong> — all payment data (cards, billing addresses, invoices) is stored by Stripe under <a href="https://stripe.com/privacy" target="_blank" rel="noopener">their privacy policy</a>.</li>
+          <li><strong>Firebase</strong> (optional) — if you enable dashboard cloud sync, your configuration is stored by Google under <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">their privacy policy</a>.</li>
         </ul>
 
-        <h2>Information We Do Not Collect</h2>
-        <p>MyKK is designed with privacy at its core. We do <strong>not</strong> collect:</p>
+        <h2>How We Use Your Data</h2>
         <ul>
-          <li>Personal identification information (name, email, address)</li>
-          <li>Browsing history or browsing activity</li>
-          <li>Analytics or usage tracking data</li>
-          <li>Cookies for tracking purposes</li>
-          <li>Any data from other tabs, windows, or extensions</li>
+          <li>To verify your Pro subscription when you sign in with Google.</li>
+          <li>To communicate your subscription status to the dashboard so Pro widgets unlock automatically.</li>
+          <li>To enforce the per-subscription device limit.</li>
+          <li>To revalidate your subscription roughly every 24 hours so expired subscriptions stop unlocking Pro features.</li>
+          <li>To process payments and send subscription-related transactional email (receipts, renewal notices, cancellation confirmations) via Stripe.</li>
         </ul>
 
-        <h2>How We Use Your Information</h2>
-        <p>The information stored by MyKK is used solely to provide and maintain your personalized dashboard experience:</p>
+        <h2>Data We Do Not Collect</h2>
         <ul>
-          <li><strong>localStorage:</strong> Used to store your dashboard configuration and preferences directly in your browser. This data never leaves your device unless you opt into cloud sync.</li>
-          <li><strong>Chrome Sync:</strong> If you are signed into Chrome, your extension settings may be synced across your devices using Chrome's built-in sync functionality. This is managed entirely by Google's Chrome infrastructure.</li>
+          <li>Browsing history or contents of other tabs or windows</li>
+          <li>Analytics, telemetry, or usage tracking</li>
+          <li>Advertising or tracking cookies</li>
+          <li>Your name, postal address, age, or phone number</li>
+          <li>Any Google account data other than the email address you sign in with</li>
         </ul>
 
-        <h2>Data Storage</h2>
-        <p>MyKK uses the following storage mechanisms:</p>
+        <h2>Data Sharing</h2>
+        <p>We do not sell your data, and we do not share it with third parties for advertising, analytics, or marketing. Your data is shared only with the service providers we depend on to deliver MyKK:</p>
         <ul>
-          <li><strong>Chrome Storage APIs:</strong> Your extension settings and preferences are stored using <code>chrome.storage.local</code> and <code>chrome.storage.sync</code>, which are secure, sandboxed storage areas provided by the Chrome browser.</li>
-          <li><strong>Firebase (Optional Cloud Sync):</strong> If you choose to enable cloud sync for your dashboard data, your settings are securely stored using Firebase. This is entirely optional and requires explicit opt-in.</li>
+          <li><strong>Stripe</strong> — processes payments and manages your subscription.</li>
+          <li><strong>Google</strong> — authenticates Google Sign-In; if you enable cloud sync, Firebase (a Google service) stores your dashboard configuration.</li>
+          <li><strong>Cloudflare</strong> — hosts our API (Cloudflare Workers) and subscription database (Cloudflare D1).</li>
         </ul>
 
-        <h2>Third-Party Services</h2>
-        <p>MyKK integrates with the following third-party services:</p>
+        <h2>Data Retention</h2>
         <ul>
-          <li><strong>Firebase:</strong> Used for optional cloud sync of dashboard settings. Firebase is operated by Google and is subject to <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
-          <li><strong>Stripe:</strong> Used for processing payments for MyKK Pro subscriptions. Stripe handles all payment information directly and is subject to <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's Privacy Policy</a>. We do not store your payment card details.</li>
+          <li><strong>Local data</strong> persists until you clear your browser storage, sign out of the extension, or uninstall it.</li>
+          <li><strong>Subscription records</strong> persist while your subscription is active. If you cancel, the record is kept (marked inactive) so we can restore access if you resubscribe. To request full deletion, contact <a href="mailto:support@mykk.us">support@mykk.us</a>.</li>
+          <li><strong>Device activations</strong> are removed when you click "Sign Out" in the extension popup, or when your subscription is cancelled.</li>
         </ul>
 
-        <h2>Data Security</h2>
-        <p>We take reasonable measures to protect your information. All data stored locally remains on your device and is protected by your browser's built-in security features. Cloud-synced data is transmitted over encrypted connections and stored securely using industry-standard practices.</p>
+        <h2>Your Rights and Controls</h2>
+        <ul>
+          <li><strong>Sign Out</strong> — use the button in the extension popup. This deactivates the current device and clears locally cached subscription data.</li>
+          <li><strong>Uninstall</strong> — removes all extension data from your device.</li>
+          <li><strong>Manage or cancel Pro</strong> — use the Stripe Customer Portal linked from your receipt emails.</li>
+          <li><strong>Delete my data</strong> — email <a href="mailto:support@mykk.us">support@mykk.us</a> from the address associated with your subscription. We'll remove your subscription record and device activations from our database.</li>
+        </ul>
+
+        <h2>Security</h2>
+        <p>All network traffic uses HTTPS. OAuth tokens are managed by Chrome's identity API and are not persisted by the extension. Our Cloudflare D1 database is encrypted at rest. Stripe handles payment data directly under their PCI-DSS compliance.</p>
 
         <h2>Children's Privacy</h2>
-        <p>MyKK is not directed at children under the age of 13. We do not knowingly collect personal information from children. Since MyKK does not collect personal information from any users, there is no risk of inadvertently collecting children's data.</p>
+        <p>MyKK is not directed at children under 13, and we do not knowingly collect data from them. If you believe a child has signed up for Pro, contact us and we'll delete the account.</p>
 
         <h2>Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated "Last updated" date. We encourage you to review this policy periodically.</p>
+        <p>We'll update the "Last updated" date at the top whenever this policy changes. For material changes affecting how we use or share data, existing Pro subscribers will be notified by email.</p>
 
-        <h2>Your Rights</h2>
-        <p>Since MyKK stores data locally on your device, you have full control over your data at all times. You can:</p>
-        <ul>
-          <li>View and modify your settings directly within the extension</li>
-          <li>Clear all stored data by removing the extension</li>
-          <li>Disable cloud sync at any time through the extension settings</li>
-          <li>Request deletion of any cloud-synced data by contacting us</li>
-        </ul>
-
-        <h2>Contact Us</h2>
-        <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:support@mykk.us">support@mykk.us</a>.</p>
+        <h2>Contact</h2>
+        <p>Questions, deletion requests, or anything else: <a href="mailto:support@mykk.us">support@mykk.us</a>.</p>
       </div>
     </div>
   </section>
