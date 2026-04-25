@@ -85,7 +85,7 @@
         <h2>Where Your Data Is Stored</h2>
         <ul>
           <li><strong>On your device</strong> — dashboard configuration in <code>localStorage</code>; extension cache of subscription status, email, and device ID in <code>chrome.storage.local</code>.</li>
-          <li><strong>Our backend (Cloudflare)</strong> — a Cloudflare D1 (SQLite) database holds one row per paid subscription with: email, license key, Stripe customer ID, Stripe subscription ID, plan name, max device count, active flag, and created/updated timestamps. A separate table records device activations (license ID, device UUID, activation timestamp).</li>
+          <li><strong>Our backend (Cloudflare)</strong> — a Cloudflare D1 (SQLite) database holds one row per paid subscription with: email, Stripe customer ID, Stripe subscription ID, plan name, max device count, active flag, and created/updated timestamps. A separate table records device activations (subscription record ID, device UUID, activation timestamp).</li>
           <li><strong>Stripe</strong> — all payment data (cards, billing addresses, invoices) is stored by Stripe under <a href="https://stripe.com/privacy" target="_blank" rel="noopener">their privacy policy</a>.</li>
           <li><strong>Firebase</strong> (optional) — if you enable dashboard cloud sync, your configuration is stored by Google under <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">their privacy policy</a>.</li>
         </ul>
