@@ -1,0 +1,8 @@
+# Disable Cloudflare's automatic Web Analytics (RUM) beacon injection.
+# `no-transform` tells Cloudflare's proxy not to rewrite the response body,
+# which is how it auto-injects static.cloudflareinsights.com/beacon.min.js.
+# We use self-hosted Plausible for analytics instead.
+# Ref: https://developers.cloudflare.com/web-analytics/faq/ (no-transform note).
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate, no-transform
