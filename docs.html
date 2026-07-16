@@ -101,6 +101,14 @@
               <li>Every new tab will automatically open your MyKK dashboard.</li>
               <li>Sign in with Google to activate Pro features and sync across devices.</li>
             </ol>
+            <h3>Install as an App (PWA)</h3>
+            <p>MyKK is a Progressive Web App, so you can install the Cloud Dashboard like a native app and use it offline:</p>
+            <ol>
+              <li>Visit <a href="https://start.mykk.us" target="_blank" rel="noopener">start.mykk.us</a> in a supported browser (Chrome, Edge, Safari, and most modern browsers).</li>
+              <li>Use your browser's <strong>Install</strong> option &mdash; the install icon in the address bar on desktop, or <strong>"Add to Home Screen"</strong> from the share menu on mobile.</li>
+              <li>Launch it from your home screen, dock, or app drawer in its own window.</li>
+            </ol>
+            <p>Once installed, MyKK loads instantly and keeps working <strong>offline</strong> thanks to a built-in service worker &mdash; your dashboard, settings, and bookmarks stay available even without a connection.</p>
           </div>
 
           <!-- Setting as Homepage -->
@@ -146,6 +154,22 @@
 
             <h3>Shortcuts / Bookmarks</h3>
             <p>A customizable grid of your favorite websites. Icons are auto-detected using <a href="https://dashboardicons.com" target="_blank" rel="noopener">dashboardicons.com</a> for 40+ popular services, with the site's own favicon as a fallback. You can also paste a custom icon URL from any CDN such as <a href="https://icons8.com" target="_blank" rel="noopener">icons8.com</a>, <a href="https://simpleicons.org" target="_blank" rel="noopener">simpleicons.org</a>, or any image host. Click the <strong>+</strong> button to add a new shortcut by entering a name and URL. Drag and drop shortcuts to reorder them. Three icon style options are available in Settings. Each shortcut can be edited or removed by hovering over it and clicking the edit icon.</p>
+
+            <h3>Adding Custom Bookmark Icons</h3>
+            <p>Most sites get a crisp icon automatically, but you can set your own whenever you want a nicer or more specific logo:</p>
+            <ol>
+              <li>Open a shortcut's <strong>Add</strong> or <strong>Edit</strong> dialog and find the <strong>Icon URL</strong> field (leave it blank to keep automatic detection).</li>
+              <li>Paste a direct link to an image (PNG or SVG). A few reliable ways to find one:
+                <ul>
+                  <li><strong>Google Images</strong> &mdash; search for <code>&lt;app name&gt; app official logo png</code> or <code>&lt;app name&gt; logo png google play</code>, open the image, and copy its address.</li>
+                  <li><strong><a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a></strong> &mdash; search the app name, pick an icon, and copy its PNG or SVG URL.</li>
+                  <li><strong><a href="https://simpleicons.org" target="_blank" rel="noopener">Simple Icons</a></strong> &mdash; clean single-color brand SVGs for popular services.</li>
+                  <li><strong><a href="https://dashboardicons.com" target="_blank" rel="noopener">Dashboard Icons</a></strong> &mdash; browse the same icon set MyKK uses and copy the raw file URL.</li>
+                </ul>
+              </li>
+              <li>Prefer a <strong>square</strong> image (roughly 128&times;128 or larger) for the sharpest result. Transparent PNGs look best against the icon background styles.</li>
+            </ol>
+            <p><strong>Tip:</strong> If a linked image ever stops loading (some hosts block hotlinking), re-host it &mdash; for example on your own site or an image host &mdash; and update the URL. For a permanent, offline-safe icon you can also paste a <a href="https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URLs" target="_blank" rel="noopener">data URI</a> instead of a web link. You can also change the icon background color and style (gradient, solid, or transparent) in <strong>Settings &rarr; Favorites</strong>.</p>
 
             <h3>Calendar</h3>
             <p>A clean monthly calendar view. Use the left and right arrows to navigate between months. The current day is highlighted automatically. Click any date to see it highlighted.</p>
@@ -280,6 +304,22 @@
               <li>Enter the RSS feed URL in the widget settings.</li>
               <li>The widget will display the latest items with titles, summaries, and links.</li>
             </ol>
+
+            <h3>Calendar Feeds (ICS Sync) <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
+            <p>Subscribe to your calendars and see what's coming up right on your dashboard. The <strong>Upcoming Events</strong> widget merges any number of ICS/iCal feeds &mdash; Google Calendar, Outlook, Apple iCloud, Nextcloud, and more &mdash; into one list, grouped by day (Today, Tomorrow, and dates ahead). Recurring events and all-day events are supported, and each calendar shows with its own color.</p>
+            <p><strong>Setup:</strong></p>
+            <ol>
+              <li>Find your calendar's secret ICS address (or a <code>webcal://</code> link):
+                <ul>
+                  <li><strong>Google Calendar</strong> &mdash; Settings &rarr; select your calendar &rarr; "Secret address in iCal format".</li>
+                  <li><strong>Outlook / Microsoft 365</strong> &mdash; Calendar settings &rarr; Shared calendars &rarr; publish a calendar, then copy the ICS link.</li>
+                  <li><strong>Apple iCloud</strong> &mdash; make a calendar public and copy its <code>webcal://</code> link.</li>
+                </ul>
+              </li>
+              <li>Open <strong>Settings &rarr; Calendar Feeds</strong> and click <strong>Add Calendar Feed</strong>.</li>
+              <li>Paste the URL, give the calendar a name, and pick a color. Add as many calendars as you like.</li>
+            </ol>
+            <p>Feeds are cached and refreshed automatically, and there's a manual refresh button on the widget. Events are read-only.</p>
 
             <h3>Stock Quotes <span style="background:linear-gradient(135deg,#667eea,#e040fb);color:white;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;vertical-align:middle;">Pro</span></h3>
             <p>Track stock prices directly on your dashboard. By default, the Stock Quotes widget uses <strong>Yahoo Finance</strong> data, which requires no API key.</p>
