@@ -2,6 +2,20 @@
 
 All notable changes to the MyKK website (mykk.us).
 
+## July 16, 2026
+
+### Docs
+- Added a "how to add custom bookmark icons" guide (Google Images, Icons8, Simple Icons, Dashboard Icons)
+- Documented Calendar Feeds (ICS Sync) as a Pro feature and installing MyKK as an app (PWA)
+
+### Roadmap
+- Moved ICS Calendar Sync, Custom CSS Injection, Keyboard Shortcuts, and Screensaver to Completed
+- Added PWA / Offline Mode, High Contrast Mode, and Dashboard Pages to Completed
+- Removed Music Player from Planned
+
+### Release Notes
+- Added a July 16, 2026 changelog entry covering the latest dashboard features
+
 ## March 16, 2026
 
 ### Features
