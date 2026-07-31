@@ -1,0 +1,20 @@
+# MyKK
+
+> A beautiful, customizable browser start page by Michal Ferber. Single HTML file, open source (MIT), no server needed—download and open. Marketing and docs site for the MyKK product.
+
+## Pages
+
+- [Docs](https://mykk.us/docs)
+- [Roadmap](https://mykk.us/roadmap)
+- [Support](https://mykk.us/support)
+- [Changelog](https://mykk.us/changelog)
+- [Privacy Policy](https://mykk.us/privacy)
+- [Terms of Use](https://mykk.us/terms)
+
+## Source
+
+- [GitHub repository](https://github.com/MichalAFerber/mykk.us)
+
+## Network
+
+- [Cloud Dashboard](https://start.mykk.us/)

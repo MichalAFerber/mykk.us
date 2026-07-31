@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mykk.us/sitemap.xml
+Sitemap: https://mykk.us/sitemap-index.xml

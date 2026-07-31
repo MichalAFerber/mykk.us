@@ -89,7 +89,7 @@ describe('robots.txt', () => {
     const txt = read('robots.txt');
     expect(txt).toMatch(/User-agent:\s*\*/i);
     expect(txt).toMatch(/Allow:\s*\//i);
-    expect(txt).toContain('https://mykk.us/sitemap.xml');
+    expect(txt).toContain('https://mykk.us/sitemap-index.xml');
   });
 });
 
