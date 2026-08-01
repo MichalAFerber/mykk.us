@@ -1,3 +1,4 @@
+Expires: 2027-08-01T00:00:00.000Z
 Contact: mailto:support@mykk.us
 Preferred-Languages: en
 Canonical: https://mykk.us/.well-known/security.txt
