@@ -684,8 +684,8 @@ h3 { font-size: 1.25rem; }
 
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
 }
 
 .footer-column h4 {
@@ -1037,4 +1037,74 @@ h3 { font-size: 1.25rem; }
   .hero-actions { flex-direction: column; }
   .hero-stats { flex-direction: column; gap: 24px; }
   .footer-links { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* Contact form (§6/§7). The page had no form styling of its own — it was a Tally
+   iframe that brought its own — so these are new, drawn from the site's tokens
+   rather than pinning a second palette. .btn/.btn-primary is reused as the submit
+   control: it is background:var(--accent) on white text, so it renders visibly in
+   the content area. */
+.contact-form {
+  margin: 24px 0;
+  display: grid;
+  gap: 16px;
+  max-width: 640px;
+}
+
+.contact-row { display: grid; gap: 16px; }
+
+@media (min-width: 640px) {
+  .contact-row { grid-template-columns: 1fr 1fr; }
+}
+
+.contact-field { display: block; }
+
+.contact-field > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-secondary);
+}
+
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--fg-primary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition);
+}
+
+.contact-field textarea { resize: vertical; }
+
+.contact-field input:focus-visible,
+.contact-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-actions .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+#contact-status {
+  margin: 0;
+  font-size: 14px;
+  color: var(--fg-secondary);
 }
