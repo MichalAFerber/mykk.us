@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Get help with MyKK. Contact support, browse FAQs, or submit a support request.">
+  <meta name="description" content="Get help with MyKK — check the FAQ and the documentation, email support@mykk.us, or send a message. No ticket portal, no chatbot, just a human.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mykk.us/support">
   <meta property="og:title" content="Support - MyKK">
-  <meta property="og:description" content="Get help with MyKK. Contact support, browse FAQs, or submit a support request.">
+  <meta property="og:description" content="Get help with MyKK — check the FAQ and the documentation, email support@mykk.us, or send a message. No ticket portal, no chatbot, just a human.">
   <meta property="og:image" content="https://mykk.us/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="MyKK">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Support - MyKK">
-  <meta name="twitter:description" content="Get help with MyKK. Contact support, browse FAQs, or submit a support request.">
+  <meta name="twitter:description" content="Get help with MyKK — check the FAQ and the documentation, email support@mykk.us, or send a message. No ticket portal, no chatbot, just a human.">
   <meta name="twitter:image" content="https://mykk.us/og.png">
   <link rel="canonical" href="https://mykk.us/support">
   <title>Support - MyKK</title>
@@ -63,108 +63,105 @@
   <section class="legal-page support-page">
     <div class="container">
       <h1>Support</h1>
-      <p>Need help with MyKK? We're here to assist you.</p>
+      <p class="support-intro">Need help? We're here to assist you.</p>
 
-      <div class="legal-content">
-        <h2>Frequently Asked Questions</h2>
-        <p>Many common questions are already answered in our FAQ section. Check it out before submitting a support request.</p>
-        <p><a href="/#faq">View Frequently Asked Questions</a></p>
+      <div class="support-card">
+        <h2>Before you write</h2>
+        <p>Check the <a href="/#faq">FAQ</a> and the <a href="/docs">documentation</a>&mdash;most questions are answered there. Prefer email? Write to <strong>support@mykk.us</strong>&mdash;we typically respond within 24&ndash;48 hours.</p>
+      </div>
 
-        <h2>Contact Us</h2>
-        <p>Submit a support request using the form below and we'll get back to you as soon as possible.</p>
-        <!-- §6/§7 standard contact form. Posts to the mailer's /contact lane: no
-             credential in the page, authenticated server-side by Turnstile plus the
-             Origin allowlist on product:mykk. -->
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="contact-row">
-            <label class="contact-field">
-              <span>Name</span>
-              <input name="name" type="text" required maxlength="100" autocomplete="name">
-            </label>
-            <label class="contact-field">
-              <span>Email</span>
-              <input name="email" type="email" required maxlength="254" autocomplete="email">
-            </label>
-          </div>
+      <!-- §6/§7 standard contact form. Posts to the mailer's /contact lane: no
+           credential in the page, authenticated server-side by Turnstile plus the
+           Origin allowlist on product:mykk. -->
+      <form id="contact-form" class="support-card contact-form" novalidate>
+        <h2>Send a message</h2>
+        <p>Fill this out and it lands in our inbox&mdash;protected by Cloudflare Turnstile, no account required.</p>
+        <div class="contact-row">
           <label class="contact-field">
-            <span>Subject</span>
-            <input name="subject" type="text" required maxlength="150">
+            <span>Name</span>
+            <input name="name" type="text" required maxlength="100" autocomplete="name">
           </label>
           <label class="contact-field">
-            <span>Message</span>
-            <textarea name="message" required maxlength="5000" rows="6"></textarea>
+            <span>Email</span>
+            <input name="email" type="email" required maxlength="254" autocomplete="email">
           </label>
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAAD3zZhlPo_O_mrmP" data-theme="auto"></div>
-          <div class="contact-actions">
-            <button type="submit" class="btn btn-primary">Send message</button>
-            <p id="contact-status" role="status" aria-live="polite"></p>
-          </div>
-          <noscript>
-            <p>This form needs JavaScript enabled. You can reach us at <strong>support@mykk.us</strong>.</p>
-          </noscript>
-        </form>
+        </div>
+        <label class="contact-field">
+          <span>Subject <span class="contact-optional">(optional)</span></span>
+          <input name="subject" type="text" maxlength="150">
+        </label>
+        <label class="contact-field">
+          <span>Message</span>
+          <textarea name="message" required maxlength="5000" rows="5"></textarea>
+        </label>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAD3zZhlPo_O_mrmP" data-theme="auto"></div>
+        <div class="contact-actions">
+          <button type="submit" class="btn btn-primary">Send message</button>
+          <p id="contact-status" role="status" aria-live="polite"></p>
+        </div>
+        <p class="contact-note">Please don't send secrets or credentials. We aim to reply within a couple of business days.</p>
+        <noscript>
+          <p>This form needs JavaScript enabled. You can reach us at <strong>support@mykk.us</strong>.</p>
+        </noscript>
+      </form>
 
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-        <script>
-          (() => {
-            const form = document.getElementById('contact-form');
-            if (!form) return;
-            const status = document.getElementById('contact-status');
-            form.addEventListener('submit', async (e) => {
-              e.preventDefault();
-              const btn = form.querySelector('button[type=submit]');
-              const data = Object.fromEntries(new FormData(form).entries());
-              if (!data['cf-turnstile-response']) {
-                status.textContent = 'Please complete the verification challenge.';
-                return;
-              }
-              btn.disabled = true;
-              status.textContent = 'Sending…';
-              try {
-                const res = await fetch('https://mailer.thompsonblack.us/contact/mykk', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(data),
-                });
-                // Parse defensively: an edge error (e.g. 502) returns HTML, not JSON.
-                let out = null;
-                try { out = await res.json(); } catch {}
-                if (res.ok && out && out.sent) {
-                  form.reset();
-                  if (window.turnstile) window.turnstile.reset();
-                  status.textContent = "Thanks — your message is on its way. We'll reply within 24–48 hours.";
-                } else {
-                  const detail = (out && out.error) || 'Something went wrong.';
-                  status.textContent = detail + ' (HTTP ' + res.status + ') — please email support@mykk.us.';
-                  // A Turnstile token is single-use. Without a reset here the retry resubmits the
-                  // spent token and fails again for a different reason than the first time — the
-                  // visitor sees two failures and concludes the form is broken. Resetting empties
-                  // the field, so the guard above asks them to re-solve instead.
-                  if (window.turnstile) window.turnstile.reset();
-                  btn.disabled = false;
-                }
-              } catch {
-                status.textContent = 'Network error — please email support@mykk.us.';
+      <div class="support-card">
+        <h2>Prefer GitHub?</h2>
+        <p>MyKK is MIT-licensed and developed in the open. File an issue or send a pull request.</p>
+        <a href="https://github.com/MichalAFerber/mykk.us-dashboard" target="_blank" rel="noopener" class="btn btn-secondary"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>github.com/MichalAFerber/mykk.us-dashboard</a>
+      </div>
+
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+      <script>
+        (() => {
+          const form = document.getElementById('contact-form');
+          if (!form) return;
+          const status = document.getElementById('contact-status');
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button[type=submit]');
+            const data = Object.fromEntries(new FormData(form).entries());
+            if (!data.name || !data.email || !data.message) {
+              status.textContent = 'Please fill in your name, email, and message.';
+              return;
+            }
+            if (!data['cf-turnstile-response']) {
+              status.textContent = 'Please complete the verification challenge.';
+              return;
+            }
+            btn.disabled = true;
+            status.textContent = 'Sending…';
+            try {
+              const res = await fetch('https://mailer.thompsonblack.us/contact/mykk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+              });
+              // Parse defensively: an edge error (e.g. 502) returns HTML, not JSON.
+              let out = null;
+              try { out = await res.json(); } catch {}
+              if (res.ok && out && out.sent) {
+                form.reset();
+                if (window.turnstile) window.turnstile.reset();
+                status.textContent = "Thanks — your message is on its way. We'll be in touch.";
+              } else {
+                const detail = (out && out.error) || 'Something went wrong.';
+                status.textContent = detail + ' (HTTP ' + res.status + ') — please email support@mykk.us.';
+                // A Turnstile token is single-use. Without a reset here the retry resubmits the
+                // spent token and fails again for a different reason than the first time — the
+                // visitor sees two failures and concludes the form is broken. Resetting empties
+                // the field, so the guard above asks them to re-solve instead.
                 if (window.turnstile) window.turnstile.reset();
                 btn.disabled = false;
               }
-            });
-          })();
-        </script>
-
-        <h2>Email Support</h2>
-        <p>You can also reach us directly via email at <a href="mailto:support@mykk.us">support@mykk.us</a>. We typically respond within 24-48 hours.</p>
-
-        <h2>What to Include</h2>
-        <p>To help us resolve your issue quickly, please include the following information in your support request:</p>
-        <ul>
-          <li>Browser name and version (e.g., Chrome 124)</li>
-          <li>Operating system (e.g., Windows 11, macOS Sonoma)</li>
-          <li>A clear description of the issue</li>
-          <li>Steps to reproduce the problem</li>
-          <li>Screenshots or screen recordings, if applicable</li>
-        </ul>
-      </div>
+            } catch {
+              status.textContent = 'Network error — please email support@mykk.us.';
+              if (window.turnstile) window.turnstile.reset();
+              btn.disabled = false;
+            }
+          });
+        })();
+      </script>
     </div>
   </section>
 
