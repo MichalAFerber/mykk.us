@@ -772,47 +772,51 @@ h3 { font-size: 1.25rem; }
 }
 .legal-content a:hover { text-decoration: underline; }
 
-/* Support Page */
+/* Support Page — the ipcow.com/support layout: a narrow centered column with
+   an intro line, then stacked cards (FAQ/email, the form, GitHub). */
+.support-page .container { max-width: 768px; }
+
 .support-page .support-intro {
   color: var(--fg-secondary);
   font-size: 18px;
-  margin-bottom: 48px;
-  max-width: 800px;
+  margin-bottom: 40px;
 }
 
-.support-content { max-width: 800px; }
-
-.support-section {
-  margin-bottom: 48px;
-}
-.support-section h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-.support-section p {
-  color: var(--fg-secondary);
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
-.support-section ul {
-  color: var(--fg-secondary);
-  padding-left: 24px;
-}
-.support-section ul li {
-  padding: 4px 0;
-  line-height: 1.7;
-}
-.support-section a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.contact-form-container {
+.support-card {
   margin-top: 24px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
 }
+
+.support-card h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.support-card > p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--fg-secondary);
+  line-height: 1.6;
+}
+
+.support-card a:not(.btn) {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.support-card strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.support-card > .btn { margin-top: 16px; }
 
 /* Docs Page */
 .docs-page { padding: 140px 0 80px; }
@@ -1039,17 +1043,13 @@ h3 { font-size: 1.25rem; }
   .footer-links { grid-template-columns: 1fr; gap: 24px; }
 }
 
-/* Contact form (§6/§7). The page had no form styling of its own — it was a Tally
-   iframe that brought its own — so these are new, drawn from the site's tokens
-   rather than pinning a second palette. .btn/.btn-primary is reused as the submit
-   control: it is background:var(--accent) on white text, so it renders visibly in
-   the content area. */
-.contact-form {
-  margin: 24px 0;
-  display: grid;
-  gap: 16px;
-  max-width: 640px;
-}
+/* Contact form (§6/§7), drawn from the site's tokens rather than pinning a
+   second palette. .btn/.btn-primary is reused as the submit control. The form
+   element is itself a .support-card; these rules space the rows inside it. */
+.contact-form > .contact-row,
+.contact-form > .contact-field,
+.contact-form > .cf-turnstile,
+.contact-form > .contact-actions { margin-top: 16px; }
 
 .contact-row { display: grid; gap: 16px; }
 
@@ -1065,6 +1065,11 @@ h3 { font-size: 1.25rem; }
   font-size: 14px;
   font-weight: 500;
   color: var(--fg-secondary);
+}
+
+.contact-optional {
+  font-weight: 400;
+  color: var(--fg-muted);
 }
 
 .contact-field input,
@@ -1107,4 +1112,11 @@ h3 { font-size: 1.25rem; }
   margin: 0;
   font-size: 14px;
   color: var(--fg-secondary);
+}
+
+/* Two classes: outweighs .support-card > p, which would otherwise win. */
+.contact-form .contact-note {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--fg-muted);
 }
