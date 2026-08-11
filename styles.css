@@ -657,17 +657,19 @@ h3 { font-size: 1.25rem; }
   color: var(--success);
 }
 
-/* Footer */
+/* Footer — house 4-column layout shared across sites (see resizewizard.app);
+   brand column + Product/Resources/About/Legal navs over a centered credit strip. */
 .footer {
-  padding: 60px 0 30px;
+  margin-top: 80px;
+  padding: 48px 0;
   border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
 }
 
-.footer-content {
+.footer-grid {
   display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 60px;
-  margin-bottom: 40px;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
 }
 
 .footer-logo {
@@ -677,42 +679,57 @@ h3 { font-size: 1.25rem; }
   text-decoration: none;
   color: var(--fg-primary);
   font-weight: 600;
-  margin-bottom: 16px;
 }
-.footer-logo svg { color: var(--accent); }
-.footer-brand p { color: var(--fg-secondary); font-size: 14px; }
 
-.footer-links {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
+.footer-brand p {
+  margin-top: 12px;
+  color: var(--fg-secondary);
+  font-size: 14px;
 }
+
+.footer-repo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: var(--fg-secondary);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footer-repo:hover { color: var(--accent); }
 
 .footer-column h4 {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--fg-muted);
-  margin-bottom: 16px;
+}
+
+.footer-column ul {
+  list-style: none;
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
 }
 
 .footer-column a {
-  display: block;
   color: var(--fg-secondary);
   text-decoration: none;
   font-size: 14px;
-  padding: 6px 0;
   transition: color var(--transition);
 }
-.footer-column a:hover { color: var(--fg-primary); }
+.footer-column a:hover { color: var(--accent); }
 
 .footer-bottom {
-  padding-top: 30px;
+  margin-top: 40px;
+  padding-top: 24px;
   border-top: 1px solid var(--border-color);
   text-align: center;
 }
-.footer-bottom p { color: var(--fg-muted); font-size: 14px; }
+.footer-bottom p { color: var(--fg-secondary); font-size: 14px; }
 .footer-bottom a { color: var(--accent); text-decoration: none; }
+.footer-bottom a:hover { text-decoration: underline; }
 
 /* Legal / Support Pages */
 .legal-page {
@@ -1018,6 +1035,8 @@ h3 { font-size: 1.25rem; }
   .docs-layout { grid-template-columns: 1fr; }
   .docs-sidebar { position: static; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
   .docs-sidebar a { border-left: none; padding-left: 0; padding: 6px 12px; background: var(--bg-tertiary); border-radius: var(--radius-sm); }
+  .footer-grid { grid-template-columns: repeat(4, 1fr); }
+  .footer-brand { grid-column: 1 / -1; }
 }
 
 @media (max-width: 768px) {
@@ -1030,8 +1049,7 @@ h3 { font-size: 1.25rem; }
   .step-arrow { transform: rotate(90deg); }
   .pricing-grid { grid-template-columns: 1fr; }
   .roadmap-grid { grid-template-columns: 1fr; }
-  .footer-content { grid-template-columns: 1fr; gap: 40px; }
-  .footer-links { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .thank-you-actions { flex-direction: column; align-items: center; }
   .error-actions { flex-direction: column; align-items: center; }
   .cta-actions { flex-direction: column; align-items: center; }
@@ -1040,7 +1058,6 @@ h3 { font-size: 1.25rem; }
 @media (max-width: 480px) {
   .hero-actions { flex-direction: column; }
   .hero-stats { flex-direction: column; gap: 24px; }
-  .footer-links { grid-template-columns: 1fr; gap: 24px; }
 }
 
 /* Contact form (§6/§7), drawn from the site's tokens rather than pinning a
