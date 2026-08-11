@@ -36,13 +36,21 @@ This repo contains the marketing site at [mykk.us](https://mykk.us/). It's a sin
 - Glassmorphism with animated gradient background orbs
 - Fully responsive with mobile hamburger nav overlay
 - Scroll-triggered fade-in animations via IntersectionObserver
-- Sticky nav with blur on scroll
+- Sticky, backdrop-blurred family nav with dark/light theme toggle
 - SVG icons throughout (no icon library)
-- Zero dependencies beyond Google Fonts (Inter)
+- Zero dependencies; display headings use self-hosted JetBrains Mono Variable (no Google Fonts)
 
 ## Deployment
 
 Deployed automatically via Cloudflare Pages on push to `main`.
+
+## Standards
+
+Governed by [TGWAB Dev Standards](https://github.com/MichalAFerber/tgwab-standards) v2.33.0. The site shell tracks the wizard-family design system (`wizard-web` `packages/theme` + `packages/ui`) out of tree—family tokens with dual theme, the shared nav/footer markup, and hand-written utilities implementing the classes that markup emits (see the header notes in `styles.css`). Conformity is manual: changes to the shared shell must be ported by hand.
+
+## Deviations
+
+- §1—footer year rendered at build time—no build step: static HTML ships a literal year, bumped each January—2026-08-11—review 2027-01-01
 
 ## License
 
