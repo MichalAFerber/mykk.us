@@ -1,8 +1,36 @@
-# Disable Cloudflare's automatic Web Analytics (RUM) beacon injection.
+# Cloudflare Pages Headers — family standard (TGWAB dev-standards §12).
+# Strict CSP with the MyKK-specific allowances: connect-src api.mykk.us (the
+# Stripe-checkout session backend the Pro button POSTs to) and
+# mailer.thompsonblack.us (the shared first-party contact-form mailer).
+# script-src 'unsafe-inline' covers the pre-paint theme init, the nav script,
+# and the contact-form handler (no external scripts besides Plausible and
+# Turnstile). font-src keeps data: per the family baseline.
+#
+# Cache-Control stays max-age=0 must-revalidate (assets are not fingerprinted);
 # `no-transform` tells Cloudflare's proxy not to rewrite the response body,
-# which is how it auto-injects static.cloudflareinsights.com/beacon.min.js.
+# which is how it auto-injects the static.cloudflareinsights.com RUM beacon.
 # We use self-hosted Plausible for analytics instead.
 # Ref: https://developers.cloudflare.com/web-analytics/faq/ (no-transform note).
 
 /*
   Cache-Control: public, max-age=0, must-revalidate, no-transform
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), idle-detection=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), payment=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline' https://plausible.thompsonblack.us https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.thompsonblack.us https://api.mykk.us https://mailer.thompsonblack.us; frame-src https://challenges.cloudflare.com; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  ! Access-Control-Allow-Origin
+
+# pages.dev is never a canonical host (DS §11). Cloudflare noindexes PREVIEW
+# deployments only — the production <project>.pages.dev is indexable without this.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+# RFC 9116 §2.3 — security.txt MUST be text/plain with charset=utf-8 (DS §11).
+/.well-known/security.txt
+  Content-Type: text/plain; charset=utf-8

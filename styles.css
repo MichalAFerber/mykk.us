@@ -1,19 +1,128 @@
-/* MyKK.us Website Styles */
+/* MyKK.us Website Styles — ported onto the TGWAB family design system
+   (wizard-web @wizard/theme "house standard"): dual theme (light default,
+   dark via system preference or the nav toggle), family tokens, JetBrains
+   Mono display headings. Per-site delta is the accent family only; the
+   original MyKK token names are aliased onto family tokens (the runbook
+   §3.6 re-scope pattern) so pre-existing content CSS follows both themes. */
 
+/* Self-hosted JetBrains Mono Variable (@fontsource-variable/jetbrains-mono
+   v5.3.0, latin + latin-ext). No Google Fonts, ever (DS §1). */
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url(/fonts/jetbrains-mono-latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url(/fonts/jetbrains-mono-latin-ext-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* ---------- family theme tokens (verbatim from @wizard/theme) ---------- */
 :root {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121a;
-  --bg-tertiary: #1a1a28;
-  --bg-card: #16161f;
-  --fg-primary: #f0f0f5;
-  --fg-secondary: #a0a0b0;
-  --fg-muted: #6c6c7e;
-  --border-color: #2a2a3a;
+  /* light (purple-biased neutrals, not gray-on-gray) */
+  --bg: #ffffff;
+  --bg2: #f7f6fa;
+  --card: #ffffff;
+  --tertiary: #efedf4;
+  --ink: #1a1a2e;
+  --ink2: #52526b;
+  --muted: #8a8aa0;
+  --line: #e4e2ec;
+  --accent: #7c4dbe;
+  --accent-hover: #6b3fad;
+  --accent-soft: rgba(124, 77, 190, 0.1);
+  --grad-a: #7c4dbe;
+  --grad-b: #5a3596;
+  --shadow: 0 8px 30px rgba(26, 26, 46, 0.1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0a0a0f;
+    --bg2: #12121a;
+    --card: #16161f;
+    --tertiary: #1a1a28;
+    --ink: #f0f0f5;
+    --ink2: #a0a0b0;
+    --muted: #6c6c7e;
+    --line: #2a2a3a;
+    --accent: #9d6ee0;
+    --accent-hover: #b18aeb;
+    --accent-soft: rgba(157, 110, 224, 0.15);
+    --grad-a: #9d6ee0;
+    --grad-b: #6f42b8;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --card: #16161f;
+  --tertiary: #1a1a28;
+  --ink: #f0f0f5;
+  --ink2: #a0a0b0;
+  --muted: #6c6c7e;
+  --line: #2a2a3a;
+  --accent: #9d6ee0;
+  --accent-hover: #b18aeb;
+  --accent-soft: rgba(157, 110, 224, 0.15);
+  --grad-a: #9d6ee0;
+  --grad-b: #6f42b8;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+/* MyKK brand accent override (the ONLY per-site design delta). Dark values
+   are the original MyKK indigo (#6c63ff) and its #6c63ff → #e040fb gradient.
+   The original design was dark-only, so the LIGHT accent is a derived darker
+   indigo of the same hue for contrast on white — owner to confirm (see PR). */
+:root {
+  --accent: #5348e0;
+  --accent-hover: #4438cf;
+  --accent-soft: rgba(108, 99, 255, 0.12);
+  --grad-a: #6c63ff;
+  --grad-b: #e040fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --accent: #6c63ff;
+    --accent-hover: #7b73ff;
+    --accent-soft: rgba(108, 99, 255, 0.15);
+    --grad-a: #6c63ff;
+    --grad-b: #e040fb;
+  }
+}
+:root[data-theme='dark'] {
   --accent: #6c63ff;
   --accent-hover: #7b73ff;
-  --accent-light: rgba(108, 99, 255, 0.15);
-  --gradient-start: #6c63ff;
-  --gradient-end: #e040fb;
+  --accent-soft: rgba(108, 99, 255, 0.15);
+  --grad-a: #6c63ff;
+  --grad-b: #e040fb;
+}
+
+/* Legacy MyKK token names, aliased onto the family tokens (§3.6 re-scope
+   pattern) — every pre-existing rule below follows both themes through these. */
+:root {
+  --bg-primary: var(--bg);
+  --bg-secondary: var(--bg2);
+  --bg-tertiary: var(--tertiary);
+  --bg-card: var(--card);
+  --fg-primary: var(--ink);
+  --fg-secondary: var(--ink2);
+  --fg-muted: var(--muted);
+  --border-color: var(--line);
+  --accent-light: var(--accent-soft);
+  --gradient-start: var(--grad-a);
+  --gradient-end: var(--grad-b);
   --success: #28a745;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -21,20 +130,25 @@
   --radius-xl: 24px;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-lg: var(--shadow);
   --transition: 0.2s ease;
   --container-width: 1200px;
+  --font-display: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 16px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
   line-height: 1.6;
-  color: var(--fg-primary);
-  background: var(--bg-primary);
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -45,152 +159,134 @@ body {
   padding: 0 24px;
 }
 
-h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.2; }
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+h4, h5, h6 { font-weight: 700; }
 h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
 h2 { font-size: clamp(2rem, 4vw, 3rem); }
 h3 { font-size: 1.25rem; }
+code {
+  font-family: var(--font-display);
+  font-size: 0.9em;
+  background: var(--accent-soft);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+::selection { background: var(--accent); color: #fff; }
 
-.gradient-text {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ---------- a11y (family spec §14) ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 0 0 8px 0;
+  font-weight: 700;
+}
+.skip-link:focus {
+  left: 0;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+@media (hover: none) {
+  [title] { pointer-events: auto; } /* suppress hover-only affordances gracefully */
 }
 
-/* Buttons */
+.gradient-text {
+  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Buttons — family standard (@wizard/theme): the gradient CTA is the one
+   family standard; .btn-lg/.btn-full/.btn-small stay as additive modifiers. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  font-size: 15px;
-  font-weight: 500;
+  gap: 0.5rem;
+  min-height: 44px; /* ≥40px tap targets */
+  padding: 0.65rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
   font-family: inherit;
-  text-decoration: none;
-  border: none;
-  border-radius: var(--radius-md);
+  border: 2px solid transparent;
   cursor: pointer;
-  transition: all var(--transition);
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  text-decoration: none;
 }
-
 .btn-primary {
-  background: var(--accent);
-  color: white;
+  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  color: #fff;
 }
-.btn-primary:hover {
-  background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
-}
-
+.btn-primary:hover { filter: brightness(1.06); }
 .btn-secondary {
-  background: var(--bg-tertiary);
-  color: var(--fg-primary);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
 }
-.btn-secondary:hover {
-  background: var(--bg-card);
-  border-color: var(--fg-muted);
-}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
 .btn-lg { padding: 16px 32px; font-size: 16px; }
 .btn-full { width: 100%; }
 .btn-small { padding: 8px 16px; font-size: 14px; }
 
-/* Navigation */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: rgba(10, 10, 15, 0.9);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-color);
+/* Family shell components (@wizard/theme) — the header/nav itself is
+   utility-class markup (see the utilities block by the footer styles). */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
 }
-
-.nav-container {
-  display: flex;
+.eyebrow {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  height: 72px;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
 }
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--fg-primary);
-  font-weight: 600;
-  font-size: 18px;
+.prose-legal h2 {
+  font-size: 1.15rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
-.nav-logo svg { color: var(--accent); }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.nav-links a {
-  color: var(--fg-secondary);
-  text-decoration: none;
-  font-size: 15px;
-  transition: color var(--transition);
-}
-.nav-links a:hover { color: var(--fg-primary); }
-.nav-cta { padding: 10px 20px !important; }
-
-.nav-github {
-  display: flex;
-  align-items: center;
-  color: var(--fg-secondary) !important;
-}
-.nav-github:hover { color: var(--fg-primary) !important; }
-
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-}
-.nav-toggle span {
-  width: 24px;
-  height: 2px;
-  background: var(--fg-primary);
-  transition: all var(--transition);
-}
-
-/* Mobile Menu */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 72px;
-  left: 0;
-  right: 0;
-  background: var(--bg-secondary);
-  padding: 24px;
-  flex-direction: column;
-  gap: 16px;
-  border-bottom: 1px solid var(--border-color);
-  z-index: 999;
-}
-.mobile-menu.active { display: flex; }
-.mobile-menu a {
-  color: var(--fg-primary);
-  text-decoration: none;
-  font-size: 16px;
-  padding: 12px 0;
-}
+.prose-legal p, .prose-legal li { color: var(--ink2); margin-bottom: 0.5rem; }
+.prose-legal ul { list-style: disc; padding-left: 1.4rem; margin-bottom: 1rem; }
+.prose-legal a { color: var(--accent); text-decoration: underline; }
+.prose-legal strong { color: var(--ink); }
 
 /* Hero */
 .hero {
-  padding: 140px 0 80px;
+  padding: 64px 0 80px;
   background: radial-gradient(ellipse at top, rgba(108, 99, 255, 0.1), transparent 50%);
 }
 
@@ -657,14 +753,17 @@ h3 { font-size: 1.25rem; }
   color: var(--success);
 }
 
-/* Footer — family-standard footer, markup matched byte-for-byte to wizard-web
-   packages/ui/src/components/Footer.astro. These utilities implement exactly
-   the classes that markup uses, mapped onto this site's tokens (the family
-   dark palette and MyKK's palette are the same values). Breakpoints per the
-   family theme: tab 768px, desk 980px, mobile-first (min-width). */
-.bg-bg2 { background-color: var(--bg-secondary); }
+/* Family shell utilities — implement exactly the Tailwind classes the shared
+   Nav.astro/Footer.astro markup emits (wizard-web @wizard/ui), against the
+   family tokens. Breakpoints per the family theme: tab 768px, desk 980px,
+   mobile-first (min-width). */
+.bg-bg { background-color: var(--bg); }
+.bg-bg\/90 { background-color: color-mix(in srgb, var(--bg) 90%, transparent); }
+.bg-bg2 { background-color: var(--bg2); }
+.backdrop-blur { backdrop-filter: blur(8px); }
 .border-t { border-top-width: 1px; border-top-style: solid; }
-.border-line { border-color: var(--border-color); }
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+.border-line { border-color: var(--line); }
 .container-site {
   margin-inline: auto;
   width: 100%;
@@ -672,39 +771,60 @@ h3 { font-size: 1.25rem; }
   padding-inline: 20px;
   padding-inline: max(20px, env(safe-area-inset-left));
 }
+.sticky { position: sticky; }
+.top-0 { top: 0; }
+.z-50 { z-index: 50; }
 .grid { display: grid; }
 .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .col-span-2 { grid-column: span 2 / span 2; }
 .flex { display: flex; }
+.flex-col { flex-direction: column; }
 .hidden { display: none; }
 .items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.ml-auto { margin-left: auto; }
+.gap-1 { gap: 0.25rem; }
 .gap-2 { gap: 0.5rem; }
+.gap-2\.5 { gap: 0.625rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
 .gap-10 { gap: 2.5rem; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
+.mt-2 { margin-top: 0.5rem; }
 .mt-3 { margin-top: 0.75rem; }
 .mt-4 { margin-top: 1rem; }
 .mt-10 { margin-top: 2.5rem; }
 .mt-20 { margin-top: 5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
 .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
 .pt-6 { padding-top: 1.5rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
 .h-5 { height: 1.25rem; }
 .w-5 { width: 1.25rem; }
-/* MyKK's display face is its body face; the family's is JetBrains Mono. */
-.font-display { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-.text-base { font-size: 1rem; line-height: 1.5rem; }
+.h-11 { height: 2.75rem; }
+.w-11 { width: 2.75rem; }
+.min-h-16 { min-height: 4rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.font-display { font-family: var(--font-display); }
 .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-base { font-size: 1rem; line-height: 1.5rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.font-medium { font-weight: 500; }
 .font-bold { font-weight: 700; }
 .font-extrabold { font-weight: 800; }
 .uppercase { text-transform: uppercase; }
 .tracking-wide { letter-spacing: 0.025em; }
 .text-center { text-align: center; }
-.text-ink { color: var(--fg-primary); }
-.text-ink2 { color: var(--fg-secondary); }
-.text-muted { color: var(--fg-muted); }
+.text-ink { color: var(--ink); }
+.text-ink2 { color: var(--ink2); }
+.text-muted { color: var(--muted); }
 .text-accent { color: var(--accent); }
 .no-underline { text-decoration-line: none; }
 .hover\:underline:hover { text-decoration-line: underline; }
 .hover\:text-accent:hover { color: var(--accent); }
+.hover\:text-ink:hover { color: var(--ink); }
+.hover\:bg-tertiary:hover { background-color: var(--tertiary); }
 /* The family gets this from Tailwind preflight; MyKK's reset keeps bullets. */
 footer ul { list-style: none; }
 
@@ -717,11 +837,14 @@ footer ul { list-style: none; }
   .desk\:grid-cols-\[2fr_1fr_1fr_1fr_1fr\] { grid-template-columns: 2fr 1fr 1fr 1fr 1fr; }
   .desk\:col-span-1 { grid-column: span 1 / span 1; }
   .desk\:block { display: block; }
+  .desk\:flex { display: flex; }
+  .desk\:hidden { display: none; }
+  .desk\:ml-0 { margin-left: 0; }
 }
 
 /* Legal / Support Pages */
 .legal-page {
-  padding: 140px 0 80px;
+  padding: 64px 0 80px;
   min-height: calc(100vh - 200px);
 }
 
@@ -824,7 +947,7 @@ footer ul { list-style: none; }
 .support-card > .btn { margin-top: 16px; }
 
 /* Docs Page */
-.docs-page { padding: 140px 0 80px; }
+.docs-page { padding: 64px 0 80px; }
 
 .docs-layout {
   display: grid;
@@ -900,7 +1023,7 @@ footer ul { list-style: none; }
 .docs-content a:hover { text-decoration: underline; }
 
 /* Roadmap Page */
-.roadmap-page { padding: 140px 0 80px; }
+.roadmap-page { padding: 64px 0 80px; }
 
 .roadmap-page .section-header { margin-bottom: 48px; }
 
@@ -927,7 +1050,7 @@ footer ul { list-style: none; }
 
 /* Thank You Page */
 .thank-you-page {
-  padding: 140px 0 80px;
+  padding: 64px 0 80px;
   min-height: calc(100vh - 200px);
   display: flex;
   align-items: center;
@@ -985,7 +1108,7 @@ footer ul { list-style: none; }
 
 /* 404 Page */
 .error-page {
-  padding: 140px 0 80px;
+  padding: 64px 0 80px;
   min-height: calc(100vh - 200px);
   display: flex;
   align-items: center;
@@ -1026,9 +1149,7 @@ footer ul { list-style: none; }
 }
 
 @media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-toggle { display: flex; }
-  .hero { padding: 120px 0 60px; }
+  .hero { padding: 48px 0 60px; }
   .features-grid { grid-template-columns: 1fr; }
   .widgets-grid { grid-template-columns: 1fr; }
   .steps { flex-direction: column; gap: 32px; }
