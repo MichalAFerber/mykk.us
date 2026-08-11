@@ -1,50 +1,6 @@
+// Header/menu/theme behavior lives in the family nav's inline script (per
+// @wizard/ui Nav.astro); anchor scrolling is native CSS scroll-behavior.
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile menu toggle
-  const navToggle = document.querySelector('.nav-toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
-
-  if (navToggle && mobileMenu) {
-    navToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-      navToggle.classList.toggle('active');
-    });
-
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-      });
-    });
-  }
-
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const href = anchor.getAttribute('href');
-      if (href === '#') return;
-
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        const navHeight = document.querySelector('.nav').offsetHeight;
-        window.scrollTo({
-          top: target.offsetTop - navHeight - 20,
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-
-  // Nav background on scroll
-  const nav = document.querySelector('.nav');
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 50) {
-      nav.style.background = 'rgba(10, 10, 15, 0.98)';
-    } else {
-      nav.style.background = 'rgba(10, 10, 15, 0.9)';
-    }
-  });
-
   // FAQ accordion
   const faqItems = document.querySelectorAll('.faq-item');
   faqItems.forEach(item => {
