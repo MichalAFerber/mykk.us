@@ -81,16 +81,19 @@
   color-scheme: dark;
 }
 
-/* MyKK brand accent override (the ONLY per-site design delta). Dark values
-   are the original MyKK indigo (#6c63ff) and its #6c63ff → #e040fb gradient.
-   The original design was dark-only, so the LIGHT accent is a derived darker
-   indigo of the same hue for contrast on white — owner to confirm (see PR). */
+/* MyKK brand accent override (the ONLY per-site design delta). Dark accent is
+   the original MyKK indigo (#6c63ff); the original design was dark-only, so
+   the LIGHT accent is a derived darker indigo of the same hue for contrast on
+   white — owner to confirm (see PR). The button gradient (--grad-a/--grad-b)
+   is tone-on-tone accent → deeper indigo, per the family pattern; the loud
+   indigo → magenta pair is the BRAND TEXT gradient (--gradient-start/-end in
+   the legacy block below), used by .gradient-text/.pro-tag, never buttons. */
 :root {
   --accent: #5348e0;
   --accent-hover: #4438cf;
   --accent-soft: rgba(108, 99, 255, 0.12);
-  --grad-a: #6c63ff;
-  --grad-b: #e040fb;
+  --grad-a: #5348e0;
+  --grad-b: #3d31c4;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
@@ -98,7 +101,7 @@
     --accent-hover: #7b73ff;
     --accent-soft: rgba(108, 99, 255, 0.15);
     --grad-a: #6c63ff;
-    --grad-b: #e040fb;
+    --grad-b: #4f3fd6;
   }
 }
 :root[data-theme='dark'] {
@@ -106,7 +109,7 @@
   --accent-hover: #7b73ff;
   --accent-soft: rgba(108, 99, 255, 0.15);
   --grad-a: #6c63ff;
-  --grad-b: #e040fb;
+  --grad-b: #4f3fd6;
 }
 
 /* Legacy MyKK token names, aliased onto the family tokens (§3.6 re-scope
@@ -121,8 +124,10 @@
   --fg-muted: var(--muted);
   --border-color: var(--line);
   --accent-light: var(--accent-soft);
-  --gradient-start: var(--grad-a);
-  --gradient-end: var(--grad-b);
+  /* Brand TEXT gradient (.gradient-text/.pro-tag) — deliberately not the
+     family button gradient; magenta reads as identity on text, garish on fills. */
+  --gradient-start: #6c63ff;
+  --gradient-end: #e040fb;
   --success: #28a745;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -138,6 +143,15 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* The family gets this from Tailwind preflight: buttons carry no UA chrome,
+   so the header's toggle buttons render as their classes say (transparent,
+   1px line border), not as ButtonFace boxes. */
+button {
+  background: transparent;
+  border: 0 solid;
+  font: inherit;
+  color: inherit;
+}
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
@@ -212,7 +226,7 @@ code {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -761,6 +775,7 @@ code {
 .bg-bg\/90 { background-color: color-mix(in srgb, var(--bg) 90%, transparent); }
 .bg-bg2 { background-color: var(--bg2); }
 .backdrop-blur { backdrop-filter: blur(8px); }
+.border { border-width: 1px; border-style: solid; }
 .border-t { border-top-width: 1px; border-top-style: solid; }
 .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
 .border-line { border-color: var(--line); }
