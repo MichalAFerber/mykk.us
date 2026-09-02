@@ -904,6 +904,20 @@ footer ul { list-style: none; }
   padding-left: 24px;
   margin-bottom: 16px;
 }
+
+/* The DMCA notice checklist is an ordered list, and the rules above styled only
+   `ul` — an <ol> inherited no marker and no indent. Same metrics, decimal marks. */
+.legal-content ol {
+  color: var(--fg-secondary);
+  list-style: decimal;
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.legal-content ol li {
+  padding: 4px 0;
+  line-height: 1.7;
+}
 .legal-content ul li {
   padding: 4px 0;
   line-height: 1.7;
