@@ -117,8 +117,96 @@ describe('privacy.html', () => {
     expect(html).toContain('href="/support"');
   });
 
+  // THE STORE-SUBMISSION BLOCKERS, pinned so they cannot silently return.
+  // Every one of these was a sentence that was false about shipped code, found
+  // by review after the page had already been rewritten once. The page is now
+  // the thing a Chrome Web Store reviewer compares live traffic against, so the
+  // claims most likely to be checked are the ones asserted here.
+  it('does not claim dashboard data reaches us only via cloud sync', () => {
+    // FALSE, and the most severe of the set: with no extension and no
+    // subscription, the stock widget calls api.mykk.us directly with your
+    // symbols and, if you set one, your own Marketstack API key.
+    const html = read('privacy.html');
+    expect(html).not.toMatch(/None of it reaches us unless you turn on cloud sync/i);
+    expect(html).not.toMatch(/is kept in your own browser and is never sent to us/i);
+  });
+
+  it('names every third party a widget can reach', () => {
+    // The page named Stripe, Google, Cloudflare, and Plausible, and stopped.
+    // These five also receive data, three of them on the FREE tier with no
+    // account at all.
+    const html = read('privacy.html');
+    for (const party of [
+      'Yahoo Finance',
+      'Marketstack',
+      'rss2json',
+      'corsproxy.io',
+      'allorigins.win',
+    ]) {
+      expect(html, party).toContain(party);
+    }
+  });
+
+  it('says turning cloud sync off does not delete what was already synced', () => {
+    // `signOutUser()` calls auth.signOut() and nothing else; no code path in the
+    // dashboard deletes the Firestore document.
+    const html = read('privacy.html');
+    expect(html).not.toMatch(/your configuration then lives only in your browser/i);
+    expect(html).toMatch(/does not delete what has already been synced/i);
+  });
+
+  it('states the session lifetime the Worker actually issues', () => {
+    // better-auth's 7-day default was correct until @tgwab/auth 0.3.1 landed in
+    // mykk.us-extension #19, which sets expiresIn to 30 days.
+    const html = read('privacy.html');
+    expect(html).toMatch(/session token is valid for thirty days/i);
+    expect(html).not.toMatch(/session token is valid for seven days/i);
+  });
+
+  it('does not claim to store a device browser name or a session IP', () => {
+    // `activations` is inserted with two blind indexes and nothing else, and no
+    // session on record carries an ipAddress.
+    const html = read('privacy.html');
+    expect(html).not.toMatch(/a hashed device identifier, the browser name/i);
+    expect(html).not.toMatch(/the IP address and browser user-agent string/i);
+  });
+
+  it('does not promise subscription email this service does not send', () => {
+    // The Worker sends no mail — health reports `mailer: not_provisioned`.
+    // Stripe sends it, and the page now says so rather than implying we do.
+    expect(read('privacy.html')).not.toMatch(/and send subscription email/i);
+  });
+
+  it('leaves Discord undisclosed, per the owner ruling', () => {
+    // Michal ruled the address is masked in the Worker (mykk.us-extension #18)
+    // rather than the relay being disclosed here. If that ever reverses, this
+    // test is the reminder that the page has to change with it.
+    expect(read('privacy.html')).not.toMatch(/discord/i);
+  });
+
   it('carries a Last updated date', () => {
     expect(read('privacy.html')).toMatch(/<strong>Last updated:<\/strong>/);
+  });
+});
+
+describe('the legal pages agree with each other', () => {
+  it('does not tell two different stories about whose Firebase holds synced settings', () => {
+    // dmca.html said "your own Google Firebase account rather than on our
+    // systems" while privacy.html said "a Google Firebase project we operate",
+    // one day apart. start.mykk.us ships projectId 'start-mykk-us', which is
+    // ours — so the DMCA page was the wrong one.
+    for (const page of ['privacy.html', 'dmca.html']) {
+      expect(read(page), page).not.toMatch(/your own Google Firebase account/i);
+    }
+    expect(read('dmca.html')).toMatch(/a Google Firebase project we operate/i);
+  });
+
+  it('uses US spelling on the pages this change touches', () => {
+    // House style is US English, CMOS. terms.html is a known exception, filed
+    // separately rather than rewritten here.
+    for (const page of ['privacy.html', 'dmca.html']) {
+      expect(read(page), page).not.toMatch(/licence|honour|organisation/i);
+    }
   });
 });
 
