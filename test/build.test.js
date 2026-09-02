@@ -71,6 +71,48 @@ describe('index.html', () => {
     expect(read('index.html')).toContain('https://start.mykk.us');
   });
 
+  // WHY THIS IS PINNED. index.html used to carry a roadmap PREVIEW: six items
+  // copied from roadmap.html, each with its own Done/Planned badge. A second
+  // copy of another page's status is wrong the moment either side changes, and
+  // this one had drifted four ways — Keyboard Shortcuts, Custom CSS Injection,
+  // and ICS Calendar Sync still marked Planned after they shipped, plus a Music
+  // Player entry the July 16 changelog records removing from the roadmap.
+  //
+  // Owner ruling, 2026-09-02: delete the duplicate rather than sync it. These
+  // assertions are what make that a decision instead of a one-time tidy — a
+  // future "let's show a few highlights on the homepage" fails here first.
+  describe('the roadmap lives on one page', () => {
+    it('carries no roadmap items of its own', () => {
+      const html = read('index.html');
+      expect(html).not.toContain('roadmap-item');
+      expect(html).not.toContain('roadmap-status');
+    });
+
+    it('does not restate a Done or Planned status', () => {
+      const html = read('index.html');
+      expect(html).not.toContain('status-done');
+      expect(html).not.toContain('status-planned');
+    });
+
+    // Removing the copy is only half the job; the reader still needs the page.
+    it('links to /roadmap instead', () => {
+      expect(read('index.html')).toMatch(/href="\/roadmap"/);
+    });
+
+    // THE NEGATIVE CONTROL. Three of the four assertions above are absence
+    // claims, which pass just as happily when the matcher is wrong. This runs
+    // them over the markup index.html actually carried and requires them to
+    // fire.
+    it('would catch the preview markup coming back', () => {
+      const asItStood =
+        '<div class="roadmap-item">' +
+        '<div class="roadmap-status status-planned">Planned</div>' +
+        '<h3>Music Player</h3></div>';
+      expect(asItStood).toContain('roadmap-item');
+      expect(asItStood).toContain('status-planned');
+    });
+  });
+
   // WHY THESE ARE HERE. Same reason as the privacy.html pins below, and the
   // same failure: copy that silently stopped matching the product. This page
   // advertised $12/year while Stripe charged $3 — four times the real price, in

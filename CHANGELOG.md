@@ -13,10 +13,12 @@ All notable changes to the MyKK website (mykk.us).
 - **Marked the shipped Pro features on the roadmap.** `roadmap.html` listed six Pro features under Completed with no tier shown, so they read as included, while the landing page marks Pro features plainly. A visitor comparing the two pages saw a disagreement — and "an inaccurate description" was one of the three reasons the Chrome Web Store rejected MyKK on 2026-04-23.
 - The six were derived from the dashboard's own gating — the call sites of `isExtensionSubscriptionActive()` in `mykk.us-dashboard/index.html` — rather than from either page's copy: **ICS Calendar Sync, Dashboard Pages, Bookmark Folders, Stock Quotes, RSS Feeds, and Ambient Sounds**. Deriving the list from the landing page instead would have found only three; its Pro list is a marketing highlight, not an inventory.
 - The `Pro` badge sits **beside** `Done`, never instead of it: a shipped Pro feature is both, and replacing the status would tell a visitor the feature is not built.
+- **Removed the roadmap preview from the homepage** (owner ruling). It mirrored six items from `roadmap.html` with their own status badges and had drifted four ways: Keyboard Shortcuts, Custom CSS Injection, and ICS Calendar Sync were still marked Planned after shipping, and a Music Player entry remained after the July 16 roadmap dropped it. A copy of another page's status is wrong the moment either side changes, so the section is now a heading and a link to `/roadmap`. There is one source.
 
 ### Tests
 - Pinned the Pro price by value in `test/build.test.js` — on the card and in the parsed JSON-LD offer — with a negative control proving the check still catches the old figure. This drift was silent for the same reason the privacy-policy drift was: nothing checked.
 - Pinned the tier of every Completed roadmap item, in both directions — the six that must carry the badge and the nine that must not — with a negative control proving the check catches a badge removed *and* a badge wrongly added.
+- Pinned the homepage's roadmap removal too, so a future "just a few highlights" reintroduction fails a test rather than quietly re-creating the drift.
 
 ## July 16, 2026
 
