@@ -16,6 +16,7 @@ describe('Static site — required files', () => {
     'index.html',
     'privacy.html',
     'terms.html',
+    'dmca.html',
     'support.html',
     'docs.html',
     'roadmap.html',
