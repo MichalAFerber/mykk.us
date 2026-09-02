@@ -15,10 +15,18 @@ All notable changes to the MyKK website (mykk.us).
 - The `Pro` badge sits **beside** `Done`, never instead of it: a shipped Pro feature is both, and replacing the status would tell a visitor the feature is not built.
 - **Removed the roadmap preview from the homepage** (owner ruling). It mirrored six items from `roadmap.html` with their own status badges and had drifted four ways: Keyboard Shortcuts, Custom CSS Injection, and ICS Calendar Sync were still marked Planned after shipping, and a Music Player entry remained after the July 16 roadmap dropped it. A copy of another page's status is wrong the moment either side changes, so the section is now a heading and a link to `/roadmap`. There is one source.
 
+### Site
+- **The refund FAQ no longer prints an email address.** It routed contact to `support@mykk.us`; it now points at the support form, per the owner ruling of 2026-08-07 that `privacy.html` and `dmca.html` already follow and `terms.html` adopted in #24.
+
+### Engineering
+- **CI now runs the test suite before a change reaches `main`.** The repo had only `deploy.yml`; `package.json` has carried a `test` script the whole time and nothing ran it, so the first signal on a regression was whatever the deploy did with it — which for a static site is nothing at all. Added `.github/workflows/ci.yml` with the job named `ci`, and a `.nvmrc` pinning Node 24 (§15 estate floor), which the repo had been missing entirely.
+- **Widened the contact assertion to the scope its ruling always had.** It was enforced on `privacy.html` alone while the rule covered every page; three pages reached it one at a time.
+
 ### Tests
 - Pinned the Pro price by value in `test/build.test.js` — on the card and in the parsed JSON-LD offer — with a negative control proving the check still catches the old figure. This drift was silent for the same reason the privacy-policy drift was: nothing checked.
 - Pinned the tier of every Completed roadmap item, in both directions — the six that must carry the badge and the nine that must not — with a negative control proving the check catches a badge removed *and* a badge wrongly added.
 - Pinned the homepage's roadmap removal too, so a future "just a few highlights" reintroduction fails a test rather than quietly re-creating the drift.
+- Pinned the contact route across all nine content pages, in both directions — no `@mykk.us` address, and a working link to the support form — with a negative control over the sentence `index.html` actually carried.
 
 ## July 16, 2026
 
