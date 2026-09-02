@@ -70,6 +70,76 @@ describe('index.html', () => {
   it('links to the Cloud Dashboard at start.mykk.us', () => {
     expect(read('index.html')).toContain('https://start.mykk.us');
   });
+
+  // WHY THESE ARE HERE. Same reason as the privacy.html pins below, and the
+  // same failure: copy that silently stopped matching the product. This page
+  // advertised $12/year while Stripe charged $3 — four times the real price, in
+  // two places, one of them the structured data search engines and assistants
+  // read. Nothing failed, because nothing checked. A price is the one string on
+  // a marketing site that is a factual claim about a charge, so it gets pinned
+  // by value rather than by "the page mentions a price".
+  describe('Pro pricing matches what Stripe charges', () => {
+    const PRO_PRICE = '$3';
+    // Retired. `price_1TAlSLB3mV7aPjYRNCqxhdCl` is deactivated in Stripe, and
+    // the live price is price_1U9BC1B3mV7aPjYROft17chl at $3/year.
+    const RETIRED_PRICE = '$12';
+
+    // The Pro card, as a visitor reads it.
+    function proPriceCard(html) {
+      return html.match(
+        /<span class="price-amount">(\$\d+)<\/span>\s*<span class="price-period">([^<]+)<\/span>/g
+      );
+    }
+
+    it('shows $3 per year on the Pro card', () => {
+      const cards = proPriceCard(read('index.html'));
+      // Two priced cards: Free at $0 forever, Pro at $3 per year.
+      expect(cards).toHaveLength(2);
+      expect(cards[1]).toContain(PRO_PRICE);
+      expect(cards[1]).toContain('per year');
+    });
+
+    // THE NEGATIVE CONTROL. The assertion above is a claim that a string is
+    // present; that is worth nothing unless the same matcher can report the
+    // wrong price. This runs it over the page as it actually stood before this
+    // change and shows it picks $12 out, so a green run above means the price
+    // is right rather than that the matcher is blind.
+    it('would have caught the $12 the page used to carry', () => {
+      const asItStood = read('index.html').replace(PRO_PRICE, RETIRED_PRICE);
+      const cards = proPriceCard(asItStood);
+      expect(cards[1]).toContain(RETIRED_PRICE);
+      expect(cards[1]).not.toContain(PRO_PRICE);
+    });
+
+    it('states the price the same way in the structured data', () => {
+      const html = read('index.html');
+      const block = html.match(
+        /<script type="application\/ld\+json">([\s\S]*?)<\/script>/
+      );
+      expect(block).not.toBeNull();
+      // Parsed, not grepped: this block is hand-edited and a trailing comma
+      // makes Google drop the whole thing silently.
+      const data = JSON.parse(block[1]);
+      const pro = data.offers.find((o) => o.name === 'Pro');
+      expect(pro.price).toBe('3');
+      expect(pro.priceCurrency).toBe('USD');
+      expect(pro.billingIncrement).toBe('P1Y');
+    });
+
+    it('states the 30-day trial next to the price, not only at checkout', () => {
+      const html = read('index.html');
+      // The card captured at checkout is the part a visitor must not discover
+      // on the Stripe page.
+      expect(html).toMatch(/30-day free trial, card required/i);
+      expect(html).toMatch(/cancel any time before day 31/i);
+    });
+
+    it('does not advertise the retired price anywhere on the page', () => {
+      // changelog.html keeps its $12 line — that entry is history and true of
+      // the day it describes. This is about what the page sells today.
+      expect(read('index.html')).not.toContain(RETIRED_PRICE);
+    });
+  });
 });
 
 describe('privacy.html', () => {

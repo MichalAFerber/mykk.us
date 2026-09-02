@@ -59,9 +59,15 @@
       {
         "@type": "Offer",
         "name": "Pro",
-        "price": "12",
+        "price": "3",
         "priceCurrency": "USD",
-        "billingIncrement": "P1Y"
+        "billingIncrement": "P1Y",
+        "eligibleDuration": {
+          "@type": "QuantitativeValue",
+          "name": "Free trial",
+          "value": 30,
+          "unitCode": "DAY"
+        }
       }
     ],
     "author": {
@@ -719,11 +725,11 @@
           <a href="https://chrome.google.com/webstore/detail/ipeboldhljgjleidbklaanchekkdnjlo" class="btn btn-secondary btn-full" target="_blank" rel="noopener">Install Free</a>
         </div>
         <div class="pricing-card featured">
-          <div class="pricing-badge">Best Value</div>
+          <div class="pricing-badge">30-day free trial</div>
           <div class="pricing-header">
             <h3>Pro</h3>
             <div class="price">
-              <span class="price-amount">$12</span>
+              <span class="price-amount">$3</span>
               <span class="price-period">per year</span>
             </div>
           </div>
@@ -777,7 +783,8 @@
               Priority support
             </li>
           </ul>
-          <button class="btn btn-primary btn-full" id="checkout-pro" type="button">Subscribe to Pro</button>
+          <button class="btn btn-primary btn-full" id="checkout-pro" type="button">Start Your Free Trial</button>
+          <p class="pricing-note">30-day free trial, card required &middot; cancel any time before day 31 and you are never billed</p>
         </div>
       </div>
     </div>
@@ -851,6 +858,10 @@
         <details class="faq-item">
           <summary>How do I activate Pro?</summary>
           <p>After subscribing, install the MyKK Chrome extension (if you haven't already), click the extension icon, and sign in with the same Google account you used to purchase. Pro features activate automatically.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does the 30-day free trial work?</summary>
+          <p>The trial starts when you subscribe, not when you install. Checkout takes your card and charges nothing for 30 days — cancel any time before day 31 and you are never billed. After that it is $3 per year. The free dashboard needs no account and no card at all, and keeps working whether you trial Pro or not.</p>
         </details>
         <details class="faq-item">
           <summary>Is there a refund policy?</summary>

@@ -640,6 +640,16 @@ code {
 .pricing-features li:last-child { border-bottom: none; }
 .pricing-features svg { color: var(--success); flex-shrink: 0; }
 
+/* The trial terms, under the Pro button. Small, but the card captured at
+   checkout has to be stated where the price is. */
+.pricing-note {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
 /* FAQ */
 .faq {
   padding: 100px 0;

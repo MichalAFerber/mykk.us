@@ -2,6 +2,16 @@
 
 All notable changes to the MyKK website (mykk.us).
 
+## September 2, 2026
+
+### Pricing
+- **Corrected the Pro price to $3/year.** The pricing card and the `application/ld+json` offer both advertised **$12/year** while Stripe charged $3 on `price_1U9BC1B3mV7aPjYROft17chl` — four times the real price, including in the structured data search engines and assistants read. The $12 price was retired and deactivated in Stripe; nothing on this site was updated with it.
+- **Stated the 30-day free trial where the price is.** MyKK Pro is $3/year after a free 30-day trial, matching BookmarkWizard and CaptureWizard. The card badge, the button, and a new FAQ entry now say a card is captured at checkout and the first charge falls on day 31, so a visitor does not discover the card requirement on the Stripe page.
+- `changelog.html`'s "$12/year" line is left alone: it is a dated historical entry and was true of the day it describes.
+
+### Tests
+- Pinned the Pro price by value in `test/build.test.js` — on the card and in the parsed JSON-LD offer — with a negative control proving the check still catches the old figure. This drift was silent for the same reason the privacy-policy drift was: nothing checked.
+
 ## July 16, 2026
 
 ### Docs
