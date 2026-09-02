@@ -221,14 +221,6 @@ describe('privacy.html', () => {
     expect(html).toMatch(/session token/i);
   });
 
-  it('routes contact through the support form, not an email address', () => {
-    // Owner ruling, 2026-08-07 — the same rule dmca.html carries. terms.html is
-    // a known exception, filed separately rather than changed here.
-    const html = read('privacy.html');
-    expect(html).not.toMatch(/[a-z0-9._%+-]+@mykk\.us/i);
-    expect(html).toContain('href="/support"');
-  });
-
   // THE STORE-SUBMISSION BLOCKERS, pinned so they cannot silently return.
   // Every one of these was a sentence that was false about shipped code, found
   // by review after the page had already been rewritten once. The page is now
@@ -320,6 +312,64 @@ describe('the legal pages agree with each other', () => {
       expect(read(page), page).not.toMatch(/licence|honour|organisation/i);
     }
   });
+});
+
+// WHY THIS MOVED AND WIDENED. The owner ruling of 2026-08-07 — contact routes
+// through the support form, not an email address — was enforced on privacy.html
+// alone, inside the privacy.html block, while its own comment noted that
+// dmca.html carried the same rule and terms.html was an exception "filed
+// separately". Two pages later (terms.html in #24, index.html here) that is
+// three instances of one ruling reached one page at a time. When a rule keeps
+// escaping its test, the test has the wrong scope, so the assertion now runs
+// over every page the ruling covers instead of the one it was written against.
+//
+// terms.html is no longer an exception: #24 routed both of its contacts through
+// the form, so including it here is free regression cover for that fix.
+describe('contact routes through the support form, not an email address', () => {
+  // Owner ruling, 2026-08-07.
+  //
+  // support.html is the one page NOT in this list, and deliberately: its three
+  // meta descriptions (description, og:, twitter:) still name support@mykk.us,
+  // and it is the page the form itself lives on. Whether the ruling reaches a
+  // social-preview string on the support page is a copy decision, not mine to
+  // make silently — it is filed rather than fixed here, exactly the way
+  // terms.html was. Named in the code so the omission reads as considered
+  // rather than missed.
+  const PAGES = [
+    'index.html',
+    'privacy.html',
+    'terms.html',
+    'dmca.html',
+    'docs.html',
+    'roadmap.html',
+    'changelog.html',
+    'thank-you.html',
+    '404.html',
+  ];
+
+  it.each(PAGES)('%s names no @mykk.us address', (page) => {
+    expect(read(page), page).not.toMatch(/[a-z0-9._%+-]+@mykk\.us/i);
+  });
+
+  // THE NEGATIVE CONTROL. Every assertion above claims an absence, and an
+  // absence is exactly the claim that passes when the instrument is broken.
+  // This runs the same matcher over the sentence index.html actually carried
+  // and requires it to fire.
+  it('catches the address index.html used to carry', () => {
+    const before =
+      "<p>Yes, we offer a 30-day money-back guarantee. If you're not " +
+      'satisfied with Pro, contact us at support@mykk.us for a full refund.</p>';
+    expect(before).toMatch(/[a-z0-9._%+-]+@mykk\.us/i);
+  });
+
+  // The other half of the ruling: removing an address is only half a fix if it
+  // leaves the reader with no way to make contact at all.
+  it.each(['index.html', 'privacy.html', 'terms.html', 'dmca.html'])(
+    '%s offers the support form instead',
+    (page) => {
+      expect(read(page), page).toContain('href="/support"');
+    }
+  );
 });
 
 describe('terms.html', () => {

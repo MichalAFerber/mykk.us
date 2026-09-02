@@ -1,0 +1,82 @@
+# TGWAB CI — DEV-STANDARDS §15, adapted for a plain static site.
+#
+# The job is named `ci` because templates/ruleset-main.json requires the
+# status-check context "ci" (§4). Rename one and you MUST rename both, or merges
+# block forever.
+#
+# WHY THIS EXISTS. Until now this repo had only deploy.yml. `package.json` has
+# carried a `test` script running vitest the whole time and nothing anywhere ran
+# it, so the first signal on a regression was whatever the deploy did with it —
+# which for a static site is nothing at all. That is how index.html came to
+# advertise $12/year against a live Stripe price of $3.
+#
+# WHAT DIFFERS FROM templates/ci.yml, AND WHY
+#
+# This is a hand-written static site: no bundler, no framework, no build step.
+# The files in the repo root ARE the deployed artifact — Cloudflare Pages uploads
+# them as-is. So `dist` never exists, and every template step that inspects it
+# would scan an empty or missing directory and pass vacuously, which is worse
+# than not running it: a vacuous gate reads as a green gate.
+#
+#   • No `npm run build`. There is no build script and nothing to build.
+#   • No `npm run lint`. There is no lint script. The template's
+#     `--if-present` form would be a silent no-op, so it is omitted rather than
+#     kept as decoration.
+#   • No `./scripts/no-eval.sh dist` and no mailto scan over `dist`. Both need
+#     built output. NOTE the mailto rule is still satisfied here: the only
+#     `mailto:` in the repo is in `.well-known/security.txt`, which is the
+#     exception the §1 gate carves out anyway (verified 2026-09-02).
+#   • No `./scripts/check-citations.sh`. THIS ONE IS A REAL GAP, not a vacuous
+#     step: the repo carries four `DS §N` citations today (`_headers` ×2,
+#     `ads.txt`, `styles.css`), so the check would have something to range-check.
+#     It is omitted only because `scripts/` does not exist in this repo yet.
+#     Copying `scripts/check-citations.sh` in from tgwab-standards and adding the
+#     step back is the follow-up; it is deliberately not bundled with the change
+#     that first turns CI on, because a red first run means the required `ci`
+#     context never appears and the ruleset swap that depends on it cannot happen.
+#   • No `npx playwright` / `npm run test:e2e`. There is no e2e harness here.
+#   • No `npm audit`. `devDependencies` hold vitest alone and there is no
+#     production tree to audit — `--omit=dev` would scan nothing.
+#
+# What is left is the part that carries the weight: a frozen install and the
+# vitest suite, which pins the pricing, the legal-page claims, the roadmap
+# tiers, and the contact route.
+#
+# There is deliberately NO deploy step: deploy.yml owns that (§4). A second
+# deploying job here would race it.
+#
+# Action SHAs are pinned per §15 — a tag is mutable, a SHA is not.
+
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci: # job name == the required status-check context
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc # never a hardcoded node-version: (§15)
+          cache: npm
+
+      # Exits non-zero if package-lock.json has drifted from package.json.
+      - run: npm ci
+
+      - run: npm test
