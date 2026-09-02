@@ -71,6 +71,48 @@ describe('index.html', () => {
     expect(read('index.html')).toContain('https://start.mykk.us');
   });
 
+  // WHY THIS IS PINNED. index.html used to carry a roadmap PREVIEW: six items
+  // copied from roadmap.html, each with its own Done/Planned badge. A second
+  // copy of another page's status is wrong the moment either side changes, and
+  // this one had drifted four ways — Keyboard Shortcuts, Custom CSS Injection,
+  // and ICS Calendar Sync still marked Planned after they shipped, plus a Music
+  // Player entry the July 16 changelog records removing from the roadmap.
+  //
+  // Owner ruling, 2026-09-02: delete the duplicate rather than sync it. These
+  // assertions are what make that a decision instead of a one-time tidy — a
+  // future "let's show a few highlights on the homepage" fails here first.
+  describe('the roadmap lives on one page', () => {
+    it('carries no roadmap items of its own', () => {
+      const html = read('index.html');
+      expect(html).not.toContain('roadmap-item');
+      expect(html).not.toContain('roadmap-status');
+    });
+
+    it('does not restate a Done or Planned status', () => {
+      const html = read('index.html');
+      expect(html).not.toContain('status-done');
+      expect(html).not.toContain('status-planned');
+    });
+
+    // Removing the copy is only half the job; the reader still needs the page.
+    it('links to /roadmap instead', () => {
+      expect(read('index.html')).toMatch(/href="\/roadmap"/);
+    });
+
+    // THE NEGATIVE CONTROL. Three of the four assertions above are absence
+    // claims, which pass just as happily when the matcher is wrong. This runs
+    // them over the markup index.html actually carried and requires them to
+    // fire.
+    it('would catch the preview markup coming back', () => {
+      const asItStood =
+        '<div class="roadmap-item">' +
+        '<div class="roadmap-status status-planned">Planned</div>' +
+        '<h3>Music Player</h3></div>';
+      expect(asItStood).toContain('roadmap-item');
+      expect(asItStood).toContain('status-planned');
+    });
+  });
+
   // WHY THESE ARE HERE. Same reason as the privacy.html pins below, and the
   // same failure: copy that silently stopped matching the product. This page
   // advertised $12/year while Stripe charged $3 — four times the real price, in
@@ -300,5 +342,103 @@ describe('sitemap.xml', () => {
     const xml = read('sitemap.xml');
     expect(xml).toContain('<loc>https://mykk.us/</loc>');
     expect(xml).toMatch(/<loc>https:\/\/mykk\.us\/privacy<\/loc>/);
+  });
+});
+
+// WHY THESE ARE HERE. Same class as the pricing pins: two of our own pages
+// disagreed, and nothing checked. The roadmap listed shipped Pro features under
+// Completed with no tier shown, so they read as included — and "an inaccurate
+// description" was one of the three reasons the Chrome Web Store rejected MyKK
+// on 2026-04-23.
+//
+// THE AUTHORITY IS THE DASHBOARD CODE, NOT EITHER PAGE. The list below was
+// derived from the call sites of `isExtensionSubscriptionActive()` in
+// `mykk.us-dashboard/index.html` on origin/main, because a feature is Pro if and
+// only if the dashboard gates it. Deriving it from the landing page instead
+// would have missed three of the six: the pricing card's Pro list is a marketing
+// highlight, not an inventory. This test cannot reach that repo, so it pins the
+// conclusion; if the gating changes there, this is the thing that has to be
+// re-derived, not quietly edited to match.
+describe('roadmap.html', () => {
+  // Feature → the gate's line numbers in mykk.us-dashboard/index.html.
+  const PRO_FEATURES = {
+    'ICS Calendar Sync': '6402, 8449, 8582',
+    'Dashboard Pages': '8807, 8922',
+    'Bookmark Folders': '6008, 6979',
+    'Stock Quotes': '6396, 7910',
+    'RSS Feeds': '8011, 8177',
+    'Ambient Sounds': '6407, 8791',
+  };
+
+  // Ungated in the dashboard, so they must NOT carry the badge. This half is
+  // what stops the fix from degenerating into "mark everything Pro".
+  const FREE_FEATURES = [
+    'PWA / Offline Mode',
+    'Custom CSS Injection',
+    'Keyboard Shortcuts',
+    'Screensaver',
+    'High Contrast Mode',
+    'Accessibility (a11y)',
+    'Touch-Friendly UI',
+    'Light / Dark Mode',
+    'Notepad Modes',
+  ];
+
+  /** Every roadmap card, as { title, isPro, isDone }. */
+  function items() {
+    const html = read('roadmap.html');
+    return [...html.matchAll(/<div class="roadmap-item">([\s\S]*?)<\/div>/g)].map((m) => ({
+      title: (m[1].match(/<h3>([^<]+)<\/h3>/) || [, ''])[1],
+      isPro: m[1].includes('status-pro'),
+      isDone: m[1].includes('status-done'),
+    }));
+  }
+
+  function find(title) {
+    const item = items().find((i) => i.title === title);
+    expect(item, `no roadmap item titled "${title}"`).toBeDefined();
+    return item;
+  }
+
+  it.each(Object.keys(PRO_FEATURES))('marks %s as Pro', (title) => {
+    expect(find(title).isPro).toBe(true);
+  });
+
+  it.each(FREE_FEATURES)('does not mark %s as Pro', (title) => {
+    expect(find(title).isPro).toBe(false);
+  });
+
+  // THE NEGATIVE CONTROL. The assertions above claim a badge is present; that
+  // is worth nothing unless the same reader reports it missing. This strips the
+  // badge from a real item and requires the check to catch it, so a green run
+  // means the roadmap is marked rather than that the matcher sees Pro
+  // everywhere.
+  it('would catch a Pro item that lost its badge', () => {
+    const html = read('roadmap.html');
+    const stripped = html.replace(
+      '<span class="roadmap-status status-pro">Pro</span>\n          <h3>Stock Quotes</h3>',
+      '<h3>Stock Quotes</h3>'
+    );
+    expect(stripped).not.toBe(html); // the strip actually did something
+    const block = stripped.match(
+      /<div class="roadmap-item">(?:(?!<\/div>)[\s\S])*?<h3>Stock Quotes<\/h3>[\s\S]*?<\/div>/
+    );
+    expect(block[0].includes('status-pro')).toBe(false);
+  });
+
+  it('marks Pro alongside Done, never instead of it', () => {
+    // A shipped Pro feature is both. Replacing the status badge rather than
+    // adding to it would tell a visitor the feature is not built.
+    for (const item of items().filter((i) => i.isPro)) {
+      expect(item.isDone, `${item.title} is Pro but not Done`).toBe(true);
+    }
+  });
+
+  // A tripwire, deliberately exact. A seventh gated feature reaching the
+  // roadmap should fail here and be re-derived from the dashboard's gating,
+  // not absorbed silently.
+  it('marks exactly the six features the dashboard gates', () => {
+    const marked = items().filter((i) => i.isPro).map((i) => i.title).sort();
+    expect(marked).toEqual(Object.keys(PRO_FEATURES).sort());
   });
 });
