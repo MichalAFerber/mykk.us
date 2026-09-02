@@ -77,6 +77,49 @@ describe('privacy.html', () => {
     const html = read('privacy.html').toLowerCase();
     expect(html).toMatch(/privacy|data|collect/);
   });
+
+  // WHY THESE ARE HERE. The Chrome Web Store rejected MyKK on 2026-04-23 for a
+  // privacy policy that contradicted the code, and the fix at the time wrote in
+  // the mechanism the extension used THEN. That mechanism was retired in v1.0.6
+  // and the page was not updated, so by v1.1.0 the policy described an API with
+  // no call site anywhere in the extension — the same rejection reason, aimed at
+  // a different sentence. The assertion above cannot catch that: it passes on
+  // any page containing the word "data".
+  //
+  // These pin the two claims that were false, by name. If the sign-in flow
+  // changes again, this test is what makes the policy fail loudly instead of
+  // silently going stale until a store reviewer finds it.
+  it('does not describe a sign-in mechanism the extension no longer uses', () => {
+    const html = read('privacy.html');
+    // Retired April 2026. `git grep getAuthToken` in mykk.us-extension: no hits.
+    expect(html).not.toMatch(/getAuthToken/i);
+    // Chrome's identity API no longer manages any OAuth token for MyKK —
+    // launchWebAuthFlow is redirect plumbing, and Google's tokens are held
+    // server-side by the Worker.
+    expect(html).not.toMatch(/OAuth tokens are managed by Chrome/i);
+  });
+
+  it('describes the flow the extension actually uses', () => {
+    const html = read('privacy.html');
+    // Sign-in happens on the Worker, not in the extension.
+    expect(html).toContain('api.mykk.us');
+    // The two artefacts that replaced the Google token: a short-lived one-time
+    // code, and our own session token.
+    expect(html).toMatch(/one-time code/i);
+    expect(html).toMatch(/session token/i);
+  });
+
+  it('routes contact through the support form, not an email address', () => {
+    // Owner ruling, 2026-08-07 — the same rule dmca.html carries. terms.html is
+    // a known exception, filed separately rather than changed here.
+    const html = read('privacy.html');
+    expect(html).not.toMatch(/[a-z0-9._%+-]+@mykk\.us/i);
+    expect(html).toContain('href="/support"');
+  });
+
+  it('carries a Last updated date', () => {
+    expect(read('privacy.html')).toMatch(/<strong>Last updated:<\/strong>/);
+  });
 });
 
 describe('terms.html', () => {

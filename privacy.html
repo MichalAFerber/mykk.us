@@ -144,95 +144,108 @@
   <section class="legal-page">
     <div class="container">
       <h1>Privacy Policy</h1>
-      <p><strong>Last updated:</strong> April 24, 2026</p>
+      <p><strong>Last updated:</strong> September 2, 2026</p>
 
       <div class="legal-content">
-        <h2>Overview</h2>
-        <p>MyKK.us consists of two parts:</p>
+        <p>MyKK is a browser start page in two parts: the MyKK Cloud Dashboard at <a href="https://start.mykk.us">start.mykk.us</a>, which is free and open source and needs no account, and the MyKK.us browser extension, which activates Pro features for subscribers. What you create in the dashboard &mdash; bookmarks, notes, widget layout, and theme &mdash; is kept in your own browser and is never sent to us. Our servers hold account, subscription, licence, and device-activation records, and the settings you choose to sync. This policy sets out exactly what leaves your device, where it goes, how long it stays, and how to have it removed.</p>
+
+        <h2>What the dashboard stores</h2>
+        <p>The dashboard keeps your configuration in your browser&rsquo;s <code>localStorage</code>: widget layout, bookmarks, notepad contents, calendar feed URLs, stock symbols, theme, and custom CSS. None of it reaches us unless you turn on cloud sync.</p>
+        <p>Cloud sync is off by default. When you turn it on and sign in with Google, your dashboard configuration is stored in a Google Firebase project we operate, under your Google account. You can point the dashboard at a Firebase project of your own in Settings instead, in which case the configuration never touches our infrastructure at all.</p>
+
+        <h2>How signing in to the extension works</h2>
+        <p>This section describes the flow used by extension version 1.1.0. It replaced an earlier design, and the mechanics matter because they determine what each party ever sees.</p>
+        <ol>
+          <li>You press &ldquo;Sign in with Google&rdquo; in the extension popup. The extension asks your browser to open a window at <code>api.mykk.us</code>. <strong>The extension itself runs no OAuth</strong> &mdash; it holds no Google client credentials, requests no Google scopes of its own, and never receives a Google access token.</li>
+          <li>Our server sends that window on to Google. You sign in to Google and approve the access requested, which is <code>openid</code>, <code>email</code>, and <code>profile</code>. Your Google password is entered on Google&rsquo;s own pages and is never visible to the extension or to us.</li>
+          <li>Google returns you to <code>api.mykk.us</code>, which creates or finds your MyKK account and sends the window back to the extension carrying a <strong>one-time code that expires after sixty seconds</strong> and can be used once.</li>
+          <li>The extension exchanges that code, together with its device identifier, for a <strong>MyKK session token</strong>. This token is ours, not Google&rsquo;s; it means nothing outside <code>api.mykk.us</code>. It is stored in <code>chrome.storage.local</code> and sent as an <code>Authorization</code> header on requests to our API.</li>
+        </ol>
+        <p>Your email address therefore reaches the extension <em>from our API</em>, in the response to that exchange &mdash; not read out of your Google account by the extension. A MyKK session token is valid for seven days and is renewed while you keep using it. Copies of the extension still on version 1.0.6 use an older token with a thirty-day lifetime, which we continue to honour until those copies update.</p>
+
+        <h2>What the extension stores on your device</h2>
         <ul>
-          <li>The <strong>MyKK Cloud Dashboard</strong> at <a href="https://start.mykk.us">start.mykk.us</a> — a free, open-source browser start page you can use without installing anything.</li>
-          <li>The <strong>MyKK.us Chrome extension</strong> — a companion that activates Pro features on the dashboard for paid subscribers.</li>
+          <li><strong>Session token</strong> &mdash; the bearer described above, in <code>chrome.storage.local</code>.</li>
+          <li><strong>Device identifier</strong> &mdash; a random identifier generated once per browser installation, so we can enforce the per-subscription device limit (three by default).</li>
+          <li><strong>Cached subscription status</strong> &mdash; your plan, email address, and expiry, so Pro features work without a request on every page load. The extension rechecks this with our API roughly once a day.</li>
         </ul>
-        <p>This policy explains what data each part collects, where it's stored, who it's shared with, and how you can control it.</p>
+        <p>The extension does not read your browsing history, the contents of other tabs or windows, or form data.</p>
 
-        <h2>Data We Collect</h2>
-
-        <h3>MyKK Cloud Dashboard (start.mykk.us)</h3>
-        <p>The dashboard stores your configuration <strong>locally in your browser</strong> via <code>localStorage</code>. This includes widget layout, bookmarks, notepad contents, theme selection, and custom CSS. This data never leaves your device unless you opt into cloud sync.</p>
-        <p>If you enable <strong>cloud sync</strong>, your dashboard configuration is stored in Firebase (operated by Google). Cloud sync is opt-in and disabled by default.</p>
-
-        <h3>MyKK.us Chrome Extension</h3>
-        <p>When you click "Sign in with Google" in the extension popup to activate Pro, the extension collects and transmits:</p>
+        <h2>What our servers store</h2>
+        <p>Our API and database run on Cloudflare. The records are:</p>
         <ul>
-          <li><strong>Email address</strong> — read from your Google account via OAuth (<code>chrome.identity.getAuthToken</code>) one time after you grant consent. The email is sent to our API at <code>api.mykk.us</code> so we can look up your Pro subscription.</li>
-          <li><strong>Device identifier</strong> — a random UUID generated once per browser installation and stored in <code>chrome.storage.local</code>. Sent alongside your email so we can enforce per-subscription device limits (default: 3 devices per subscription).</li>
+          <li><strong>Account</strong> &mdash; your email address, and the display name and profile-picture URL Google returns with it, together with whether Google reported the address verified.</li>
+          <li><strong>Sign-in provider record</strong> &mdash; your Google account identifier, the scopes granted, and the tokens Google issues when you sign in. These are held server-side and are used only to establish and re-establish your MyKK account.</li>
+          <li><strong>Sessions</strong> &mdash; one record per sign-in, holding the session token, its expiry, and the IP address and browser user-agent string the sign-in came from.</li>
+          <li><strong>Subscription and licence records</strong> &mdash; your Stripe customer and subscription identifiers, plan, seat count, status, and timestamps. The email address on these records is stored encrypted, and is indexed in a form that allows a lookup without holding the address in the clear.</li>
+          <li><strong>Device activations</strong> &mdash; one record per activated device, holding a hashed device identifier, the browser name, and first-seen, last-seen, and deactivation timestamps. The raw device identifier is not stored.</li>
         </ul>
-        <p>The extension does <strong>not</strong> read browsing history, contents of other tabs, form data, or any Google account data other than your email address.</p>
+        <p>Payment details are never stored by us and never reach our servers. Card numbers are entered directly into Stripe Checkout; after a payment, Stripe notifies our API and we record only the subscription metadata listed above.</p>
 
-        <h3>Payment Information</h3>
-        <p>If you purchase Pro, payment is processed by <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe</a>. Card details are entered directly into Stripe Checkout — we never see or store them. After a successful payment, Stripe notifies our API via webhook and we record the resulting subscription metadata (customer ID, subscription ID, email, plan) in our database.</p>
+        <h2>What leaves your device when Pro features run</h2>
+        <p>Pro widgets fetch data through our API rather than directly, so that private feed URLs are not handed to third-party proxy services. As a result, the calendar feed URLs, RSS feed URLs, and stock symbols you configure are sent to our server when those widgets refresh. We do not store them, and we do not store the feeds they return. Stock quote responses are cached for up to twenty-four hours, and stock symbol searches for up to seven days, to reduce calls to the upstream provider.</p>
 
-        <h2>Where Your Data Is Stored</h2>
+        <h2>How long we keep it</h2>
+        <p>We do not run an automated deletion schedule, and we would rather say so than imply one. In practice:</p>
         <ul>
-          <li><strong>On your device</strong> — dashboard configuration in <code>localStorage</code>; extension cache of subscription status, email, and device ID in <code>chrome.storage.local</code>.</li>
-          <li><strong>Our backend (Cloudflare)</strong> — a Cloudflare D1 (SQLite) database holds one row per paid subscription with: email, Stripe customer ID, Stripe subscription ID, plan name, max device count, active flag, and created/updated timestamps. A separate table records device activations (subscription record ID, device UUID, activation timestamp).</li>
-          <li><strong>Stripe</strong> — all payment data (cards, billing addresses, invoices) is stored by Stripe under <a href="https://stripe.com/privacy" target="_blank" rel="noopener">their privacy policy</a>.</li>
-          <li><strong>Firebase</strong> (optional) — if you enable dashboard cloud sync, your configuration is stored by Google under <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">their privacy policy</a>.</li>
+          <li><strong>Local data</strong> lasts until you clear your browser storage, sign out in the extension popup, or uninstall the extension.</li>
+          <li><strong>Account, subscription, licence, session, and device-activation records</strong> persist until you ask us to remove them. This includes sessions that have already expired and device activations you have signed out of, which are marked inactive rather than deleted.</li>
+          <li><strong>Cancelled subscriptions</strong> are kept, marked inactive, so access can be restored if you resubscribe.</li>
+          <li><strong>Stripe</strong> keeps payment and invoice records under its own retention rules.</li>
         </ul>
+        <p>Deletion is on request and we act on it &mdash; see &ldquo;Your rights and controls&rdquo; below.</p>
 
-        <h2>How We Use Your Data</h2>
+        <h2>How we use your data</h2>
         <ul>
-          <li>To verify your Pro subscription when you sign in with Google.</li>
-          <li>To communicate your subscription status to the dashboard so Pro widgets unlock automatically.</li>
+          <li>To create your account and sign you in.</li>
+          <li>To verify your Pro subscription and tell the dashboard to unlock Pro widgets.</li>
           <li>To enforce the per-subscription device limit.</li>
-          <li>To revalidate your subscription roughly every 24 hours so expired subscriptions stop unlocking Pro features.</li>
-          <li>To process payments and send subscription-related transactional email (receipts, renewal notices, cancellation confirmations) via Stripe.</li>
+          <li>To recheck your subscription roughly every twenty-four hours, so a lapsed subscription stops unlocking Pro features.</li>
+          <li>To fetch the Pro data your widgets request, on your behalf.</li>
+          <li>To process payments and send subscription email &mdash; receipts, renewal notices, and cancellation confirmations.</li>
         </ul>
+        <p>We do not use any of it for advertising, profiling, or resale.</p>
 
-        <h2>Data We Do Not Collect</h2>
+        <h2>What we do not collect</h2>
         <ul>
-          <li>Browsing history or contents of other tabs or windows</li>
+          <li>Your browsing history, or the contents of other tabs or windows</li>
+          <li>The contents of what you write in the dashboard &mdash; notes, bookmarks, and layout stay on your device unless you turn on cloud sync</li>
           <li>Cross-site tracking or advertising profiles</li>
           <li>Advertising or tracking cookies</li>
-          <li>Your name, postal address, age, or phone number</li>
-          <li>Any Google account data other than the email address you sign in with</li>
+          <li>Your postal address, date of birth, or telephone number</li>
+          <li>Card numbers or any other payment credential</li>
         </ul>
 
-        <h2>Data Sharing</h2>
-        <p>We do not sell your data, and we do not share it with third parties for advertising, analytics, or marketing. Your data is shared only with the service providers we depend on to deliver MyKK:</p>
+        <h2>Who we share it with</h2>
+        <p>We do not sell your data, and we do not share it for advertising, analytics, or marketing. It reaches only the providers we depend on to run MyKK:</p>
         <ul>
-          <li><strong>Stripe</strong> — processes payments and manages your subscription.</li>
-          <li><strong>Google</strong> — authenticates Google Sign-In; if you enable cloud sync, Firebase (a Google service) stores your dashboard configuration.</li>
-          <li><strong>Cloudflare</strong> — hosts our API (Cloudflare Workers) and subscription database (Cloudflare D1).</li>
-          <li><strong>Plausible Analytics</strong> — self-hosted on our own infrastructure at <code>plausible.thompsonblack.us</code>; records anonymous, cookieless usage statistics. No cookies, no personal data, and no cross-site tracking.</li>
+          <li><strong>Google</strong> &mdash; authenticates you at sign-in, and hosts Firebase if you use cloud sync, under <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">its privacy policy</a>.</li>
+          <li><strong>Stripe</strong> &mdash; processes payments and manages subscriptions, under <a href="https://stripe.com/privacy" target="_blank" rel="noopener">its privacy policy</a>.</li>
+          <li><strong>Cloudflare</strong> &mdash; hosts our API and database.</li>
+          <li><strong>Plausible Analytics</strong> &mdash; self-hosted on our own infrastructure, recording anonymous, cookieless usage statistics. No cookies, no personal data, and no cross-site tracking.</li>
+          <li>The upstream data providers behind Pro widgets receive the feed URL or stock symbol being requested, and nothing that identifies you.</li>
         </ul>
 
-        <h2>Data Retention</h2>
+        <h2>Your rights and controls</h2>
         <ul>
-          <li><strong>Local data</strong> persists until you clear your browser storage, sign out of the extension, or uninstall it.</li>
-          <li><strong>Subscription records</strong> persist while your subscription is active. If you cancel, the record is kept (marked inactive) so we can restore access if you resubscribe. To request full deletion, contact support@mykk.us.</li>
-          <li><strong>Device activations</strong> are removed when you click "Sign Out" in the extension popup, or when your subscription is cancelled.</li>
-        </ul>
-
-        <h2>Your Rights and Controls</h2>
-        <ul>
-          <li><strong>Sign Out</strong> — use the button in the extension popup. This deactivates the current device and clears locally cached subscription data.</li>
-          <li><strong>Uninstall</strong> — removes all extension data from your device.</li>
-          <li><strong>Manage or cancel Pro</strong> — use the Stripe Customer Portal linked from your receipt emails.</li>
-          <li><strong>Delete my data</strong> — email support@mykk.us from the address associated with your subscription. We'll remove your subscription record and device activations from our database.</li>
+          <li><strong>Sign out</strong> &mdash; the button in the extension popup deactivates that device and clears the session token and cached subscription data from it.</li>
+          <li><strong>Uninstall</strong> &mdash; removes every trace of extension data from your device.</li>
+          <li><strong>Turn off cloud sync</strong> &mdash; in dashboard Settings; your configuration then lives only in your browser.</li>
+          <li><strong>Manage or cancel Pro</strong> &mdash; through the Stripe customer portal linked from your receipt email.</li>
+          <li><strong>See or delete what we hold</strong> &mdash; ask through our <a href="/support">contact form</a>, from the address associated with your subscription. We will remove your account, sign-in provider record, sessions, subscription and licence records, and device activations.</li>
         </ul>
 
         <h2>Security</h2>
-        <p>All network traffic uses HTTPS. OAuth tokens are managed by Chrome's identity API and are not persisted by the extension. Our Cloudflare D1 database is encrypted at rest. Stripe handles payment data directly under their PCI-DSS compliance.</p>
+        <p>All traffic between the extension, the dashboard, and our API uses HTTPS. Our Cloudflare database is encrypted at rest, and the email addresses and device identifiers on subscription and activation records are additionally encrypted or hashed before they are stored. Payment data is handled entirely by Stripe under its PCI-DSS compliance and never reaches us. Sign-in credentials are entered on Google&rsquo;s pages; we never see your Google password.</p>
 
-        <h2>Children's Privacy</h2>
-        <p>MyKK is not directed at children under 13, and we do not knowingly collect data from them. If you believe a child has signed up for Pro, contact us and we'll delete the account.</p>
+        <h2>Children&rsquo;s privacy</h2>
+        <p>MyKK is not directed at children under 13, and we do not knowingly collect data from them. If you believe a child has signed up for Pro, tell us through our <a href="/support">contact form</a> and we will delete the account.</p>
 
-        <h2>Changes to This Policy</h2>
-        <p>We'll update the "Last updated" date at the top whenever this policy changes. For material changes affecting how we use or share data, existing Pro subscribers will be notified by email.</p>
+        <h2>Changes to this policy</h2>
+        <p>We update the &ldquo;Last updated&rdquo; date above whenever this policy changes. Where a change materially affects how we use or share your data, existing Pro subscribers are notified by email.</p>
 
         <h2>Contact</h2>
-        <p>Questions, deletion requests, or anything else: support@mykk.us.</p>
+        <p>Questions, deletion requests, or anything else &mdash; reach us through our <a href="/support">contact form</a>.</p>
       </div>
     </div>
   </section>
