@@ -147,11 +147,12 @@
       <p><strong>Last updated:</strong> September 2, 2026</p>
 
       <div class="legal-content">
-        <p>MyKK is a browser start page in two parts: the MyKK Cloud Dashboard at <a href="https://start.mykk.us">start.mykk.us</a>, which is free and open source and needs no account, and the MyKK.us browser extension, which activates Pro features for subscribers. What you create in the dashboard &mdash; bookmarks, notes, widget layout, and theme &mdash; is kept in your own browser and is never sent to us. Our servers hold account, subscription, licence, and device-activation records, and the settings you choose to sync. This policy sets out exactly what leaves your device, where it goes, how long it stays, and how to have it removed.</p>
+        <p>MyKK is a browser start page in two parts: the MyKK Cloud Dashboard at <a href="https://start.mykk.us">start.mykk.us</a>, which is free and open source and needs no account, and the MyKK.us browser extension, which activates Pro features for subscribers. What you create in the dashboard &mdash; bookmarks, notes, widget layout, and theme &mdash; is kept in your own browser by default. Our servers hold account, subscription, license, and device-activation records; the settings you choose to sync; and, when a widget refreshes, whatever that widget has to fetch. This policy sets out exactly what leaves your device, where it goes, how long it stays, and how to have it removed.</p>
 
         <h2>What the dashboard stores</h2>
-        <p>The dashboard keeps your configuration in your browser&rsquo;s <code>localStorage</code>: widget layout, bookmarks, notepad contents, calendar feed URLs, stock symbols, theme, and custom CSS. None of it reaches us unless you turn on cloud sync.</p>
-        <p>Cloud sync is off by default. When you turn it on and sign in with Google, your dashboard configuration is stored in a Google Firebase project we operate, under your Google account. You can point the dashboard at a Firebase project of your own in Settings instead, in which case the configuration never touches our infrastructure at all.</p>
+        <p>The dashboard keeps your configuration in your browser&rsquo;s <code>localStorage</code>: widget layout, bookmarks, notepad contents, calendar feed URLs, stock symbols, theme, custom CSS, and any API keys you enter for the weather and stock widgets. It stays there unless you turn on cloud sync, or unless a widget has to fetch something &mdash; see &ldquo;What leaves your device when a widget refreshes&rdquo; below, which is the honest answer to what reaches us and when.</p>
+        <p>Cloud sync is off by default. When you turn it on and sign in with Google, the dashboard uploads your <strong>whole settings object</strong> to a Google Firebase project <strong>we operate</strong> (<code>start-mykk-us</code>), stored under your Google account. That object is more than layout: it includes your bookmarks, your calendar and RSS feed URLs, and <strong>any weather or stock API keys you have entered</strong>. Firebase also records the Google account you sync with &mdash; its email address, display name, profile photo, and sign-in times.</p>
+        <p>You can point the dashboard at a Firebase project of your own in Settings instead, in which case none of it touches our infrastructure.</p>
 
         <h2>How signing in to the extension works</h2>
         <p>This section describes the flow used by extension version 1.1.0. It replaced an earlier design, and the mechanics matter because they determine what each party ever sees.</p>
@@ -161,7 +162,7 @@
           <li>Google returns you to <code>api.mykk.us</code>, which creates or finds your MyKK account and sends the window back to the extension carrying a <strong>one-time code that expires after sixty seconds</strong> and can be used once.</li>
           <li>The extension exchanges that code, together with its device identifier, for a <strong>MyKK session token</strong>. This token is ours, not Google&rsquo;s; it means nothing outside <code>api.mykk.us</code>. It is stored in <code>chrome.storage.local</code> and sent as an <code>Authorization</code> header on requests to our API.</li>
         </ol>
-        <p>Your email address therefore reaches the extension <em>from our API</em>, in the response to that exchange &mdash; not read out of your Google account by the extension. A MyKK session token is valid for seven days and is renewed while you keep using it. Copies of the extension still on version 1.0.6 use an older token with a thirty-day lifetime, which we continue to honour until those copies update.</p>
+        <p>Your email address therefore reaches the extension <em>from our API</em>, in the response to that exchange &mdash; not read out of your Google account by the extension. A MyKK session token is valid for thirty days and is renewed while you keep using it. Copies of the extension still on version 1.0.6 use an older token mechanism, which we continue to honor until those copies update.</p>
 
         <h2>What the extension stores on your device</h2>
         <ul>
@@ -176,20 +177,31 @@
         <ul>
           <li><strong>Account</strong> &mdash; your email address, and the display name and profile-picture URL Google returns with it, together with whether Google reported the address verified.</li>
           <li><strong>Sign-in provider record</strong> &mdash; your Google account identifier, the scopes granted, and the tokens Google issues when you sign in. These are held server-side and are used only to establish and re-establish your MyKK account.</li>
-          <li><strong>Sessions</strong> &mdash; one record per sign-in, holding the session token, its expiry, and the IP address and browser user-agent string the sign-in came from.</li>
-          <li><strong>Subscription and licence records</strong> &mdash; your Stripe customer and subscription identifiers, plan, seat count, status, and timestamps. The email address on these records is stored encrypted, and is indexed in a form that allows a lookup without holding the address in the clear.</li>
-          <li><strong>Device activations</strong> &mdash; one record per activated device, holding a hashed device identifier, the browser name, and first-seen, last-seen, and deactivation timestamps. The raw device identifier is not stored.</li>
+          <li><strong>Sessions</strong> &mdash; one record per sign-in, holding the session token, its expiry, and the browser user-agent string the sign-in came from. The record has a field for an originating IP address; our current deployment does not populate it, and no session on record carries one.</li>
+          <li><strong>Subscription and license records</strong> &mdash; your Stripe customer and subscription identifiers, the billing name Stripe Checkout collected, the plan, status, and the subscription&rsquo;s amount, currency, and billing interval, together with its trial end, current period end, and cancellation timestamps. The email address and the billing name on these records are stored encrypted, and the address is indexed in a form that allows a lookup without holding it in the clear. The device limit is a property of the product, not of your record.</li>
+          <li><strong>Device activations</strong> &mdash; one record per activated device, holding a hashed device identifier and first-seen, last-seen, and deactivation timestamps. The raw device identifier is not stored, and neither is your browser&rsquo;s name or version.</li>
         </ul>
         <p>Payment details are never stored by us and never reach our servers. Card numbers are entered directly into Stripe Checkout; after a payment, Stripe notifies our API and we record only the subscription metadata listed above.</p>
 
-        <h2>What leaves your device when Pro features run</h2>
-        <p>Pro widgets fetch data through our API rather than directly, so that private feed URLs are not handed to third-party proxy services. As a result, the calendar feed URLs, RSS feed URLs, and stock symbols you configure are sent to our server when those widgets refresh. We do not store them, and we do not store the feeds they return. Stock quote responses are cached for up to twenty-four hours, and stock symbol searches for up to seven days, to reduce calls to the upstream provider.</p>
+        <h2>What leaves your device when a widget refreshes</h2>
+        <p>This depends on whether you have the extension, and it is the part of this policy most likely to surprise you, so it is set out in full.</p>
+        <p><strong>With the extension and an active Pro subscription</strong>, the stock, RSS, and calendar widgets fetch through our API rather than reaching out from your browser. The stock symbols, RSS feed URLs, and calendar feed URLs you have configured are sent to our server, which fetches them on your behalf. Routing calendar feeds this way is deliberate: a private calendar URL usually has a secret token in it, and this keeps that URL from being handed to a third-party proxy.</p>
+        <p><strong>Without the extension</strong>, the widgets fall back to the paths they used before it existed, and those are different:</p>
+        <ul>
+          <li><strong>Stocks reach us anyway.</strong> The dashboard calls our API directly with the symbols you have configured &mdash; and, if you have entered a Marketstack API key in Settings, <strong>with that key</strong>. This happens with no extension, no subscription, and no cloud sync.</li>
+          <li><strong>RSS feeds go to <code>api.rss2json.com</code></strong>, a third-party service, which receives the feed URL.</li>
+          <li><strong>Calendar feeds go to <code>corsproxy.io</code> and then <code>api.allorigins.win</code></strong> when the feed itself does not permit a direct browser fetch. Those services receive the feed URL, secret token included. If that matters to you, install the extension or use a feed that does not embed a token.</li>
+        </ul>
+        <p><strong>What our server does with a URL you give it.</strong> The RSS and calendar endpoints fetch a URL you supplied, from our infrastructure. The fetch is guarded against being pointed at private networks, is capped at 2&nbsp;MB, and identifies itself upstream as <code>MyKK/1.0</code> with nothing about you attached. We do not store the URLs, and we do not store what comes back.</p>
+        <p><strong>Where stock data comes from.</strong> By default we ask <strong>Yahoo Finance</strong>, sending only the ticker symbol or search text. If you have supplied a <strong>Marketstack</strong> key, we use Marketstack instead and forward your key to them as the API credential &mdash; so Marketstack sees your key and your symbols, and their terms govern what they do with it. Quote responses are cached for up to twenty-four hours, and symbol searches for up to seven days, keyed by symbol alone.</p>
 
         <h2>How long we keep it</h2>
         <p>We do not run an automated deletion schedule, and we would rather say so than imply one. In practice:</p>
         <ul>
           <li><strong>Local data</strong> lasts until you clear your browser storage, sign out in the extension popup, or uninstall the extension.</li>
-          <li><strong>Account, subscription, licence, session, and device-activation records</strong> persist until you ask us to remove them. This includes sessions that have already expired and device activations you have signed out of, which are marked inactive rather than deleted.</li>
+          <li><strong>Account, subscription, license, and device-activation records</strong> persist until you ask us to remove them. A device you have signed out of is marked deactivated rather than deleted.</li>
+          <li><strong>Sessions</strong> are the exception, and they are shorter-lived than the rest. Signing out revokes the session record immediately, and an expired session is deleted the next time it is presented. What lingers is only a session that expired and was never used again.</li>
+          <li><strong>Synced settings</strong> stay in our Firebase project until you ask us to delete them. Turning cloud sync off does not remove them &mdash; see &ldquo;Your rights and controls&rdquo;.</li>
           <li><strong>Cancelled subscriptions</strong> are kept, marked inactive, so access can be restored if you resubscribe.</li>
           <li><strong>Stripe</strong> keeps payment and invoice records under its own retention rules.</li>
         </ul>
@@ -202,7 +214,7 @@
           <li>To enforce the per-subscription device limit.</li>
           <li>To recheck your subscription roughly every twenty-four hours, so a lapsed subscription stops unlocking Pro features.</li>
           <li>To fetch the Pro data your widgets request, on your behalf.</li>
-          <li>To process payments and send subscription email &mdash; receipts, renewal notices, and cancellation confirmations.</li>
+          <li>To process payments. Subscription email &mdash; receipts, renewal notices, and cancellation confirmations &mdash; is sent by Stripe, not by us; MyKK&rsquo;s own service sends no mail.</li>
         </ul>
         <p>We do not use any of it for advertising, profiling, or resale.</p>
 
@@ -223,16 +235,18 @@
           <li><strong>Stripe</strong> &mdash; processes payments and manages subscriptions, under <a href="https://stripe.com/privacy" target="_blank" rel="noopener">its privacy policy</a>.</li>
           <li><strong>Cloudflare</strong> &mdash; hosts our API and database.</li>
           <li><strong>Plausible Analytics</strong> &mdash; self-hosted on our own infrastructure, recording anonymous, cookieless usage statistics. No cookies, no personal data, and no cross-site tracking.</li>
-          <li>The upstream data providers behind Pro widgets receive the feed URL or stock symbol being requested, and nothing that identifies you.</li>
+          <li><strong>Yahoo Finance</strong> &mdash; receives the ticker symbol or search text behind the stock widget, and nothing that identifies you.</li>
+          <li><strong>Marketstack</strong> &mdash; only if you supply your own API key, in which case it receives that key and your symbols.</li>
+          <li><strong>rss2json, corsproxy.io, and allorigins.win</strong> &mdash; third-party services the dashboard falls back to for RSS and calendar feeds when the extension is not present. They receive the feed URL. See the section above.</li>
         </ul>
 
         <h2>Your rights and controls</h2>
         <ul>
           <li><strong>Sign out</strong> &mdash; the button in the extension popup deactivates that device and clears the session token and cached subscription data from it.</li>
           <li><strong>Uninstall</strong> &mdash; removes every trace of extension data from your device.</li>
-          <li><strong>Turn off cloud sync</strong> &mdash; in dashboard Settings; your configuration then lives only in your browser.</li>
-          <li><strong>Manage or cancel Pro</strong> &mdash; through the Stripe customer portal linked from your receipt email.</li>
-          <li><strong>See or delete what we hold</strong> &mdash; ask through our <a href="/support">contact form</a>, from the address associated with your subscription. We will remove your account, sign-in provider record, sessions, subscription and licence records, and device activations.</li>
+          <li><strong>Turn off cloud sync</strong> &mdash; in dashboard Settings. This stops further uploads and signs you out of Firebase, but <strong>it does not delete what has already been synced</strong>; that copy stays in our Firebase project until you ask us to remove it. Use the contact form below.</li>
+          <li><strong>Manage or cancel Pro</strong> &mdash; through the Stripe customer portal, linked from the subscription email Stripe sends you.</li>
+          <li><strong>See or delete what we hold</strong> &mdash; ask through our <a href="/support">contact form</a>, from the address associated with your subscription. We will remove your account, sign-in provider record, sessions, subscription and license records, device activations, and your synced settings.</li>
         </ul>
 
         <h2>Security</h2>
@@ -242,7 +256,7 @@
         <p>MyKK is not directed at children under 13, and we do not knowingly collect data from them. If you believe a child has signed up for Pro, tell us through our <a href="/support">contact form</a> and we will delete the account.</p>
 
         <h2>Changes to this policy</h2>
-        <p>We update the &ldquo;Last updated&rdquo; date above whenever this policy changes. Where a change materially affects how we use or share your data, existing Pro subscribers are notified by email.</p>
+        <p>We update the &ldquo;Last updated&rdquo; date above whenever this policy changes. Where a change materially affects how we use or share your data, we will tell existing Pro subscribers at the address on their subscription.</p>
 
         <h2>Contact</h2>
         <p>Questions, deletion requests, or anything else &mdash; reach us through our <a href="/support">contact form</a>.</p>
