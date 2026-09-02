@@ -776,6 +776,15 @@ code {
   background: rgba(40, 167, 69, 0.15);
   color: var(--success);
 }
+/* Sits beside status-done, never instead of it: a Pro feature that is shipped is
+   both Done and Pro, and dropping either half is how the roadmap came to read as
+   "included". Accent-tinted to match the Pro pricing card rather than the
+   done/planned traffic light, because it answers a different question. */
+.status-pro {
+  background: rgba(108, 99, 255, 0.15);
+  color: var(--accent);
+  margin-left: 8px;
+}
 
 /* Family shell utilities — implement exactly the Tailwind classes the shared
    Nav.astro/Footer.astro markup emits (wizard-web @wizard/ui), against the

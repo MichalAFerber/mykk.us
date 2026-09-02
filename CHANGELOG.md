@@ -9,8 +9,14 @@ All notable changes to the MyKK website (mykk.us).
 - **Stated the 30-day free trial where the price is.** MyKK Pro is $3/year after a free 30-day trial, matching BookmarkWizard and CaptureWizard. The card badge, the button, and a new FAQ entry now say a card is captured at checkout and the first charge falls on day 31, so a visitor does not discover the card requirement on the Stripe page.
 - `changelog.html`'s "$12/year" line is left alone: it is a dated historical entry and was true of the day it describes.
 
+### Roadmap
+- **Marked the shipped Pro features on the roadmap.** `roadmap.html` listed six Pro features under Completed with no tier shown, so they read as included, while the landing page marks Pro features plainly. A visitor comparing the two pages saw a disagreement — and "an inaccurate description" was one of the three reasons the Chrome Web Store rejected MyKK on 2026-04-23.
+- The six were derived from the dashboard's own gating — the call sites of `isExtensionSubscriptionActive()` in `mykk.us-dashboard/index.html` — rather than from either page's copy: **ICS Calendar Sync, Dashboard Pages, Bookmark Folders, Stock Quotes, RSS Feeds, and Ambient Sounds**. Deriving the list from the landing page instead would have found only three; its Pro list is a marketing highlight, not an inventory.
+- The `Pro` badge sits **beside** `Done`, never instead of it: a shipped Pro feature is both, and replacing the status would tell a visitor the feature is not built.
+
 ### Tests
 - Pinned the Pro price by value in `test/build.test.js` — on the card and in the parsed JSON-LD offer — with a negative control proving the check still catches the old figure. This drift was silent for the same reason the privacy-policy drift was: nothing checked.
+- Pinned the tier of every Completed roadmap item, in both directions — the six that must carry the badge and the nine that must not — with a negative control proving the check catches a badge removed *and* a badge wrongly added.
 
 ## July 16, 2026
 
