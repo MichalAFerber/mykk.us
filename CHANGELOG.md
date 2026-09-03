@@ -9,6 +9,8 @@ All notable changes to the MyKK website (mykk.us).
 - **Stated the 30-day free trial where the price is.** MyKK Pro is $3/year after a free 30-day trial, matching BookmarkWizard and CaptureWizard. The card badge, the button, and a new FAQ entry now say a card is captured at checkout and the first charge falls on day 31, so a visitor does not discover the card requirement on the Stripe page.
 - `changelog.html`'s "$12/year" line is left alone: it is a dated historical entry and was true of the day it describes.
 - **The Pro card listed "Donetick task integration" twice.** One entry removed; the list now names eleven distinct features, every one of which the dashboard actually gates.
+- **The Pro card now names every gated feature** (owner call). It listed nine of the twelve the dashboard gates; **ICS calendar sync, Bookmark folders, and Dashboard pages** are added, using the names `roadmap.html` and the dashboard already use so the three surfaces agree.
+- **Two Free entries made explicit about their free half.** "Favorites / bookmarks" and "Mini calendar" were true as written but could be read as covering the paid half, since Bookmark folders and ICS calendar sync are both gated. Both keep their free feature and now name the Pro half rather than being deleted, which would have understated the free tier.
 
 ### Roadmap
 - **Marked the shipped Pro features on the roadmap.** `roadmap.html` listed six Pro features under Completed with no tier shown, so they read as included, while the landing page marks Pro features plainly. A visitor comparing the two pages saw a disagreement — and "an inaccurate description" was one of the three reasons the Chrome Web Store rejected MyKK on 2026-04-23.
@@ -29,6 +31,7 @@ All notable changes to the MyKK website (mykk.us).
 - Pinned the homepage's roadmap removal too, so a future "just a few highlights" reintroduction fails a test rather than quietly re-creating the drift.
 - Pinned the contact route across all nine content pages, in both directions — no `@mykk.us` address, and a working link to the support form — with a negative control over the sentence `index.html` actually carried.
 - Pinned both pricing cards against repeated feature names, with a negative control over the duplicate as it actually stood. A duplicate that survives says nobody has read the list as a list, which is where a wrong entry hides next.
+- Extended that pin to the **membership** of both cards, so a future edit that drops a paid feature fails instead of passing quietly. Compared sorted, so reordering for design is free while adding, dropping or renaming an entry is not. The comment says plainly that the source of truth is the dashboard's gating in another repo and that this pins a conclusion rather than verifying one.
 
 ## July 16, 2026
 

@@ -192,7 +192,7 @@ describe('index.html', () => {
   //
   // Cheap to state, so it is stated for BOTH cards: a repeat in Free is the same
   // defect as a repeat in Pro.
-  describe('the pricing cards list each feature once', () => {
+  describe('the pricing cards', () => {
     /** The visible text of every <li> in one pricing card. */
     function featuresOf(cardClass) {
       const html = read('index.html');
@@ -234,6 +234,87 @@ describe('index.html', () => {
         'Ambient sounds',
       ];
       expect(duplicatesIn(asItStood)).toEqual(['Donetick task integration']);
+    });
+
+    // ---- MEMBERSHIP ------------------------------------------------------
+    //
+    // WHAT THE SOURCE OF TRUTH ACTUALLY IS, AND WHAT THIS TEST CAN SEE. A
+    // feature is Pro if and only if the dashboard gates it, and that gating
+    // lives in ANOTHER REPO — `mykk.us-dashboard/index.html` on origin/main.
+    // This suite cannot read it, so what follows is a pinned CONCLUSION, not a
+    // verification. If the dashboard's gating changes, this list has to be
+    // re-derived by hand; a failure here means "the card changed", never "the
+    // card disagrees with the dashboard".
+    //
+    // HOW TO RE-DERIVE IT (the complete method — the earlier one was wrong):
+    //   1. every call site of `isExtensionSubscriptionActive()`, which catches
+    //      per-widget gates; PLUS
+    //   2. the section-level toggles, `updateIntegrationsVisibility()` above
+    //      all, which gates whole settings sections at once.
+    // Step 2 is not optional. "iFrame widgets" is gated ONLY at the section
+    // level (`section-iframe`, and `.iframe-widget` hidden in bulk), so a
+    // call-site-only sweep returns 11 of the 12 features and looks complete.
+    //
+    // The 12 gated features and where they are gated, as of 2026-09-02:
+    //   Live weather & radar   6387, 7770        Twitter/X feed    6415, 7770
+    //   Daily focus            6392              Donetick          6422, 9049, 7770
+    //   To-do list             6393              Bookmark folders  6008, 6979
+    //   Stock quotes           6396, 7910, 7770  iFrame widgets    7770 only
+    //   ICS calendar sync      6402, 8449, 8582  RSS feeds         8011, 8177, 7770
+    //   Ambient sounds         6407, 8791        Dashboard pages   8807, 8922, 7770
+    //
+    // "Daily focus" and "to-do list" are two gates carried by one card entry,
+    // which is why 12 features read as 11 lines below.
+    const PRO_FEATURES = [
+      'Everything in Free',
+      'Live weather &amp; radar',
+      'iFrame widgets (unlimited)',
+      'Donetick task integration',
+      'RSS feeds',
+      'Stock quotes (Yahoo Finance)',
+      'Twitter/X feed widget',
+      'Daily focus &amp; to-do list',
+      'Ambient sounds',
+      'ICS calendar sync (Google, Outlook, Apple, Nextcloud)',
+      'Bookmark folders',
+      'Dashboard pages (multiple, tabbed)',
+      'Chrome extension',
+      'Priority support',
+    ];
+
+    const FREE_FEATURES = [
+      'Search bar (7 engines)',
+      // Both parentheticals are load-bearing: the free feature is real, and the
+      // richer half of it is gated. Without them a reader can take either entry
+      // as covering the paid half.
+      'Favorites / bookmarks (folders are Pro)',
+      'Mini calendar (ICS calendar sync is Pro)',
+      'Date &amp; clock widgets',
+      'Drag &amp; drop layout',
+      'Custom themes &amp; backgrounds',
+      'Greeting &amp; quotes',
+      'Notepad (plain, rich text, markdown)',
+      'Paint canvas &amp; webcam',
+      'Light / dark mode',
+      'Cloud sync (Google Sign-In)',
+      'Export / import settings',
+    ];
+
+    // Sorted, so reordering the card for design reasons is free while adding,
+    // dropping or renaming an entry is not.
+    it.each([
+      ['Pro', 'pricing-card featured', PRO_FEATURES],
+      ['Free', 'pricing-card', FREE_FEATURES],
+    ])('the %s card lists exactly the expected features', (_l, cardClass, expected) => {
+      expect(featuresOf(cardClass).sort()).toEqual([...expected].sort());
+    });
+
+    // THE NEGATIVE CONTROL for the pin. Dropping a paid feature is the failure
+    // this exists to prevent, so prove the comparison reports it rather than
+    // trusting that it would.
+    it('would catch a paid feature dropped from the Pro card', () => {
+      const missingOne = PRO_FEATURES.filter((f) => f !== 'Bookmark folders');
+      expect(missingOne.sort()).not.toEqual([...PRO_FEATURES].sort());
     });
   });
 });
