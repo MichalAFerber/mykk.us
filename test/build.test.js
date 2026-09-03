@@ -423,7 +423,7 @@ describe('privacy.html', () => {
     expect(read('privacy.html')).not.toMatch(/discord/i);
   });
 
-  it('does not claim an installed base on a version the Store never served', () => {
+  it('names no extension version at all', () => {
     // The page said "Copies of the extension still on version 1.0.6 use an older
     // token mechanism, which we continue to honor until those copies update."
     // Both halves were wrong. The Chrome Web Store has served v1.0.4 throughout
@@ -437,9 +437,14 @@ describe('privacy.html', () => {
     // tries the legacy HMAC token first (worker/src/session.js). It is the
     // version number, and the installed base it asserted, that were invented.
     const html = read('privacy.html');
-    expect(html).not.toMatch(/version 1\.0\.6/i);
-    // Pinned by shape as well as by number, so the same claim cannot return
-    // wearing a different version.
+    // NO VERSION NUMBER, ANYWHERE. Owner ruling on #30: a version on this page
+    // decays faster than anyone edits the page, and it is worse than useless to
+    // a reviewer holding a later build -- it tells them the policy does not
+    // cover what they are looking at. The flow assertions above carry the
+    // substance instead, and they do not decay.
+    expect(html).not.toMatch(/version \d+\.\d+/i);
+    // Pinned by shape as well as by number, so the claim cannot return wearing
+    // a different version.
     expect(html).not.toMatch(/copies of the extension still on version/i);
     // ...and the true disclosure must survive the removal of the false one.
     expect(html).toMatch(/older session token/i);

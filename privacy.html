@@ -155,7 +155,7 @@
         <p>You can point the dashboard at a Firebase project of your own in Settings instead, in which case none of it touches our infrastructure.</p>
 
         <h2>How signing in to the extension works</h2>
-        <p>This section describes the flow used by extension version 1.1.1. It replaced an earlier design, and the mechanics matter because they determine what each party ever sees.</p>
+        <p>This section describes the sign-in the extension performs today. It replaced an earlier design, and the mechanics matter because they determine what each party ever sees.</p>
         <ol>
           <li>You press &ldquo;Sign in with Google&rdquo; in the extension popup. The extension asks your browser to open a window at <code>api.mykk.us</code>. <strong>The extension itself runs no OAuth</strong> &mdash; it holds no Google client credentials, requests no Google scopes of its own, and never receives a Google access token.</li>
           <li>Our server sends that window on to Google. You sign in to Google and approve the access requested, which is <code>openid</code>, <code>email</code>, and <code>profile</code>. Your Google password is entered on Google&rsquo;s own pages and is never visible to the extension or to us.</li>
