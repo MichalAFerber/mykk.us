@@ -182,6 +182,60 @@ describe('index.html', () => {
       expect(read('index.html')).not.toContain(RETIRED_PRICE);
     });
   });
+
+  // WHY THIS IS PINNED. The Pro card listed "Donetick task integration" twice,
+  // at index.html:751 and again at :767, and it survived long enough to be
+  // noticed by accident — which says nobody had read that list as a list since
+  // it was written. A duplicate is small, but a pricing card is the page that
+  // says what a customer gets for $3, and a list nobody proof-reads is exactly
+  // where a stale or wrong entry hides next.
+  //
+  // Cheap to state, so it is stated for BOTH cards: a repeat in Free is the same
+  // defect as a repeat in Pro.
+  describe('the pricing cards list each feature once', () => {
+    /** The visible text of every <li> in one pricing card. */
+    function featuresOf(cardClass) {
+      const html = read('index.html');
+      const card = html.match(
+        new RegExp(`<div class="${cardClass}">([\\s\\S]*?)</ul>`)
+      );
+      expect(card, `no pricing card matching "${cardClass}"`).not.toBeNull();
+      return [...card[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) =>
+        m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+      );
+    }
+
+    function duplicatesIn(items) {
+      const seen = new Set();
+      return items.filter((t) => (seen.has(t) ? true : (seen.add(t), false)));
+    }
+
+    it.each([
+      ['Pro', 'pricing-card featured'],
+      ['Free', 'pricing-card'],
+    ])('the %s card names no feature twice', (_label, cardClass) => {
+      const items = featuresOf(cardClass);
+      // A card with no features parsed would pass the duplicate check for the
+      // wrong reason, so prove the reader found the list first.
+      expect(items.length).toBeGreaterThan(5);
+      expect(duplicatesIn(items)).toEqual([]);
+    });
+
+    // THE NEGATIVE CONTROL. The assertion above claims an absence, which is the
+    // kind that passes when the reader is broken. This runs the same detector
+    // over the list as it actually stood and requires it to name the repeat.
+    it('would have caught the Donetick entry listed twice', () => {
+      const asItStood = [
+        'Everything in Free',
+        'Live weather &amp; radar',
+        'Donetick task integration',
+        'RSS feeds',
+        'Donetick task integration',
+        'Ambient sounds',
+      ];
+      expect(duplicatesIn(asItStood)).toEqual(['Donetick task integration']);
+    });
+  });
 });
 
 describe('privacy.html', () => {
