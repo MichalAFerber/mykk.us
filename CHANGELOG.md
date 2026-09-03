@@ -8,6 +8,7 @@ All notable changes to the MyKK website (mykk.us).
 - **Corrected the Pro price to $3/year.** The pricing card and the `application/ld+json` offer both advertised **$12/year** while Stripe charged $3 on `price_1U9BC1B3mV7aPjYROft17chl` — four times the real price, including in the structured data search engines and assistants read. The $12 price was retired and deactivated in Stripe; nothing on this site was updated with it.
 - **Stated the 30-day free trial where the price is.** MyKK Pro is $3/year after a free 30-day trial, matching BookmarkWizard and CaptureWizard. The card badge, the button, and a new FAQ entry now say a card is captured at checkout and the first charge falls on day 31, so a visitor does not discover the card requirement on the Stripe page.
 - `changelog.html`'s "$12/year" line is left alone: it is a dated historical entry and was true of the day it describes.
+- **The Pro card listed "Donetick task integration" twice.** One entry removed; the list now names eleven distinct features, every one of which the dashboard actually gates.
 
 ### Roadmap
 - **Marked the shipped Pro features on the roadmap.** `roadmap.html` listed six Pro features under Completed with no tier shown, so they read as included, while the landing page marks Pro features plainly. A visitor comparing the two pages saw a disagreement — and "an inaccurate description" was one of the three reasons the Chrome Web Store rejected MyKK on 2026-04-23.
@@ -27,6 +28,7 @@ All notable changes to the MyKK website (mykk.us).
 - Pinned the tier of every Completed roadmap item, in both directions — the six that must carry the badge and the nine that must not — with a negative control proving the check catches a badge removed *and* a badge wrongly added.
 - Pinned the homepage's roadmap removal too, so a future "just a few highlights" reintroduction fails a test rather than quietly re-creating the drift.
 - Pinned the contact route across all nine content pages, in both directions — no `@mykk.us` address, and a working link to the support form — with a negative control over the sentence `index.html` actually carried.
+- Pinned both pricing cards against repeated feature names, with a negative control over the duplicate as it actually stood. A duplicate that survives says nobody has read the list as a list, which is where a wrong entry hides next.
 
 ## July 16, 2026
 
