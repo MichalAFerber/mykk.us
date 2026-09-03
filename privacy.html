@@ -144,7 +144,7 @@
   <section class="legal-page">
     <div class="container">
       <h1>Privacy Policy</h1>
-      <p><strong>Last updated:</strong> September 2, 2026</p>
+      <p><strong>Last updated:</strong> September 3, 2026</p>
 
       <div class="legal-content">
         <p>MyKK is a browser start page in two parts: the MyKK Cloud Dashboard at <a href="https://start.mykk.us">start.mykk.us</a>, which is free and open source and needs no account, and the MyKK.us browser extension, which activates Pro features for subscribers. What you create in the dashboard &mdash; bookmarks, notes, widget layout, and theme &mdash; is kept in your own browser by default. Our servers hold account, subscription, license, and device-activation records; the settings you choose to sync; and, when a widget refreshes, whatever that widget has to fetch. This policy sets out exactly what leaves your device, where it goes, how long it stays, and how to have it removed.</p>
@@ -155,14 +155,14 @@
         <p>You can point the dashboard at a Firebase project of your own in Settings instead, in which case none of it touches our infrastructure.</p>
 
         <h2>How signing in to the extension works</h2>
-        <p>This section describes the flow used by extension version 1.1.0. It replaced an earlier design, and the mechanics matter because they determine what each party ever sees.</p>
+        <p>This section describes the flow used by extension version 1.1.1. It replaced an earlier design, and the mechanics matter because they determine what each party ever sees.</p>
         <ol>
           <li>You press &ldquo;Sign in with Google&rdquo; in the extension popup. The extension asks your browser to open a window at <code>api.mykk.us</code>. <strong>The extension itself runs no OAuth</strong> &mdash; it holds no Google client credentials, requests no Google scopes of its own, and never receives a Google access token.</li>
           <li>Our server sends that window on to Google. You sign in to Google and approve the access requested, which is <code>openid</code>, <code>email</code>, and <code>profile</code>. Your Google password is entered on Google&rsquo;s own pages and is never visible to the extension or to us.</li>
           <li>Google returns you to <code>api.mykk.us</code>, which creates or finds your MyKK account and sends the window back to the extension carrying a <strong>one-time code that expires after sixty seconds</strong> and can be used once.</li>
           <li>The extension exchanges that code, together with its device identifier, for a <strong>MyKK session token</strong>. This token is ours, not Google&rsquo;s; it means nothing outside <code>api.mykk.us</code>. It is stored in <code>chrome.storage.local</code> and sent as an <code>Authorization</code> header on requests to our API.</li>
         </ol>
-        <p>Your email address therefore reaches the extension <em>from our API</em>, in the response to that exchange &mdash; not read out of your Google account by the extension. A MyKK session token is valid for thirty days and is renewed while you keep using it. Copies of the extension still on version 1.0.6 use an older token mechanism, which we continue to honor until those copies update.</p>
+        <p>Your email address therefore reaches the extension <em>from our API</em>, in the response to that exchange &mdash; not read out of your Google account by the extension. A MyKK session token is valid for thirty days and is renewed while you keep using it. Our API also still accepts an older session token, issued by the sign-in endpoint this flow replaced, so a copy of the extension that already holds one keeps working until it updates.</p>
 
         <h2>What the extension stores on your device</h2>
         <ul>
