@@ -423,6 +423,33 @@ describe('privacy.html', () => {
     expect(read('privacy.html')).not.toMatch(/discord/i);
   });
 
+  it('names no extension version at all', () => {
+    // The page said "Copies of the extension still on version 1.0.6 use an older
+    // token mechanism, which we continue to honor until those copies update."
+    // Both halves were wrong. The Chrome Web Store has served v1.0.4 throughout
+    // (mykk.us-extension #22): 1.0.5 and 1.0.6 were built and tagged in July and
+    // never submitted. And v1.0.4 cannot obtain or present a session token
+    // against the current Worker at all -- its sign-in POST to
+    // /api/license/auth is 400 "Missing id_token or device_id", and its
+    // revalidation POST to /api/license/email-status is an unrouted 404.
+    //
+    // The mechanism claim on its own is true and is kept: resolveToken still
+    // tries the legacy HMAC token first (worker/src/session.js). It is the
+    // version number, and the installed base it asserted, that were invented.
+    const html = read('privacy.html');
+    // NO VERSION NUMBER, ANYWHERE. Owner ruling on #30: a version on this page
+    // decays faster than anyone edits the page, and it is worse than useless to
+    // a reviewer holding a later build -- it tells them the policy does not
+    // cover what they are looking at. The flow assertions above carry the
+    // substance instead, and they do not decay.
+    expect(html).not.toMatch(/version \d+\.\d+/i);
+    // Pinned by shape as well as by number, so the claim cannot return wearing
+    // a different version.
+    expect(html).not.toMatch(/copies of the extension still on version/i);
+    // ...and the true disclosure must survive the removal of the false one.
+    expect(html).toMatch(/older session token/i);
+  });
+
   it('carries a Last updated date', () => {
     expect(read('privacy.html')).toMatch(/<strong>Last updated:<\/strong>/);
   });
