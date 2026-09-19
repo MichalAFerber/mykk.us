@@ -24,6 +24,7 @@ describe('Static site — required files', () => {
     'thank-you.html',
     'styles.css',
     'script.js',
+    'checkout-email.js',
     'robots.txt',
     'sitemap.xml',
     'favicon.svg',
@@ -41,8 +42,22 @@ describe('script.js', () => {
     ).not.toThrow();
   });
 
-  it('points the Stripe checkout flow at api.mykk.us', () => {
-    expect(read('script.js')).toContain('api.mykk.us/api/checkout/create-session');
+  it('opens the checkout email modal rather than fetching a session directly', () => {
+    const js = read('script.js');
+    expect(js).toContain("window.MykkCheckoutEmail");
+    expect(js).not.toContain('api.mykk.us/api/checkout/create-session');
+  });
+});
+
+describe('checkout-email.js', () => {
+  it('parses as valid JavaScript', () => {
+    expect(() =>
+      execSync('node --check checkout-email.js', { cwd: siteRoot, stdio: 'pipe' })
+    ).not.toThrow();
+  });
+
+  it('points the checkout flow at api.mykk.us/api/checkout/redirect', () => {
+    expect(read('checkout-email.js')).toContain('api.mykk.us/api/checkout/redirect');
   });
 });
 
@@ -172,8 +187,8 @@ describe('index.html', () => {
       const html = read('index.html');
       // The card captured at checkout is the part a visitor must not discover
       // on the Stripe page.
-      expect(html).toMatch(/30-day free trial, card required/i);
-      expect(html).toMatch(/cancel any time before day 31/i);
+      expect(html).toMatch(/free 30-day trial/i);
+      expect(html).toMatch(/renews automatically/i);
     });
 
     it('does not advertise the retired price anywhere on the page', () => {

@@ -623,6 +623,12 @@ code {
 }
 .price-amount { font-size: 48px; font-weight: 700; }
 .price-period { color: var(--fg-muted); }
+.pricing-trial {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
 
 .pricing-features {
   list-style: none;
@@ -1290,4 +1296,76 @@ footer ul { list-style: none; }
   margin-top: 12px;
   font-size: 12px;
   color: var(--fg-muted);
+}
+
+/* Checkout email modal (owner ruling 2026-09-18) — the Pro button collects
+   an email before opening Stripe Checkout, so the license is tied to it. */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-overlay.visible {
+  display: flex;
+}
+.modal {
+  background: var(--card);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.modal-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.modal-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.modal-body {
+  padding: 20px;
+}
+.modal-body label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.modal-body input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  font-family: inherit;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border-top: 1px solid var(--line);
+}
+.field-error {
+  font-size: 12px;
+  color: #e5484d;
+  min-height: 14px;
+  margin-top: 6px;
+}
+.field-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
 }

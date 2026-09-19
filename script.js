@@ -31,33 +31,53 @@ document.addEventListener('DOMContentLoaded', () => {
   style.textContent = '.feature-card.visible,.step.visible,.pricing-card.visible,.roadmap-item.visible,.widget-card.visible{opacity:1!important;transform:translateY(0)!important}';
   document.head.appendChild(style);
 
-  // Stripe Checkout
-  const checkoutBtn = document.getElementById('checkout-pro');
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', async () => {
-      checkoutBtn.disabled = true;
-      checkoutBtn.textContent = 'Redirecting...';
+  // Checkout email modal (owner ruling 2026-09-18): collect the email that
+  // the license will be tied to, then navigate to the checkout-redirect
+  // endpoint with it attached. Pure helpers live in checkout-email.js.
+  const overlay = document.getElementById('checkout-email-modal');
+  if (overlay) {
+    const { isValidEmail, buildCheckoutUrl } = window.MykkCheckoutEmail;
 
-      try {
-        const response = await fetch('https://api.mykk.us/api/checkout/create-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({}),
-        });
-
-        const data = await response.json();
-
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          throw new Error(data.error || 'Failed to create checkout session');
-        }
-      } catch (error) {
-        console.error('Checkout error:', error);
-        checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Subscribe to Pro';
-        alert('Something went wrong. Please try again or contact support@mykk.us');
+    const input = document.getElementById('checkout-email-input');
+    const errorEl = document.getElementById('checkout-email-error');
+    const cancelBtn = document.getElementById('checkout-email-cancel');
+    const continueBtn = document.getElementById('checkout-email-continue');
+    const setError = (message) => { errorEl.textContent = message; };
+    const close = () => {
+      overlay.classList.remove('visible');
+      setError('');
+    };
+    const open = () => {
+      input.value = '';
+      setError('');
+      overlay.classList.add('visible');
+      input.focus();
+    };
+    const submit = () => {
+      const raw = input.value;
+      if (!isValidEmail(raw)) {
+        setError('Enter a valid email address.');
+        return;
       }
+      window.location.href = buildCheckoutUrl(raw);
+    };
+
+    document.querySelectorAll('[data-checkout-trigger]').forEach((el) => {
+      el.addEventListener('click', open);
+    });
+    continueBtn.addEventListener('click', submit);
+    cancelBtn.addEventListener('click', close);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submit();
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('visible')) close();
     });
   }
 });
