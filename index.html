@@ -660,8 +660,8 @@
   <section class="pricing" id="pricing">
     <div class="container">
       <div class="section-header">
-        <h2>Free Forever.<br>Pro When You're Ready.</h2>
-        <p>The dashboard is open source and always free. Pro unlocks premium integrations.</p>
+        <h2>Simple Pricing</h2>
+        <p>Start free, upgrade when you need more</p>
       </div>
       <div class="pricing-grid">
         <div class="pricing-card">
@@ -722,16 +722,17 @@
               Export / import settings
             </li>
           </ul>
-          <a href="https://chrome.google.com/webstore/detail/ipeboldhljgjleidbklaanchekkdnjlo" class="btn btn-secondary btn-full" target="_blank" rel="noopener">Install Free</a>
+          <a href="https://chrome.google.com/webstore/detail/ipeboldhljgjleidbklaanchekkdnjlo" class="btn btn-secondary btn-full">Install Free</a>
         </div>
         <div class="pricing-card featured">
-          <div class="pricing-badge">30-day free trial</div>
+          <div class="pricing-badge">Best Value</div>
           <div class="pricing-header">
             <h3>Pro</h3>
             <div class="price">
               <span class="price-amount">$3</span>
               <span class="price-period">per year</span>
             </div>
+            <p class="pricing-trial">Free 30-day trial — cancel anytime before it ends and pay nothing</p>
           </div>
           <ul class="pricing-features">
             <li>
@@ -791,8 +792,8 @@
               Priority support
             </li>
           </ul>
-          <button class="btn btn-primary btn-full" id="checkout-pro" type="button">Start Your Free Trial</button>
-          <p class="pricing-note">30-day free trial, card required &middot; cancel any time before day 31 and you are never billed</p>
+          <p class="pricing-note">After the trial, Pro is $3 per year and <strong>renews automatically</strong> until you cancel. <a href="/terms.html">How to cancel</a>.</p>
+          <button class="btn btn-primary btn-full" id="checkout-pro" type="button" data-checkout-trigger>Start Free Trial</button>
         </div>
       </div>
     </div>
@@ -935,6 +936,35 @@
     </div>
   </footer>
 
+  <!-- Checkout email modal (owner ruling 2026-09-18): the Pro button opens
+       this first, so the license is tied to the email typed here. -->
+  <div class="modal-overlay" id="checkout-email-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="checkout-email-title">
+      <div class="modal-header">
+        <h2 id="checkout-email-title">Get Pro</h2>
+      </div>
+      <div class="modal-body">
+        <label for="checkout-email-input">Email</label>
+        <input
+          type="email"
+          id="checkout-email-input"
+          autocomplete="email"
+          placeholder="you@example.com"
+          aria-describedby="checkout-email-hint checkout-email-error"
+        />
+        <p class="field-error" id="checkout-email-error" role="alert"></p>
+        <p class="field-hint" id="checkout-email-hint">
+          Your license will be tied to this email. Use the same email each time.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="checkout-email-cancel" type="button">Cancel</button>
+        <button class="btn btn-primary" id="checkout-email-continue" type="button">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/checkout-email.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>
