@@ -425,10 +425,14 @@ describe('privacy.html', () => {
     expect(html).not.toMatch(/the IP address and browser user-agent string/i);
   });
 
-  it('does not promise subscription email this service does not send', () => {
-    // The Worker sends no mail — health reports `mailer: not_provisioned`.
-    // Stripe sends it, and the page now says so rather than implying we do.
-    expect(read('privacy.html')).not.toMatch(/and send subscription email/i);
+  it('names the mail the Worker sends, and does not claim it sends none', () => {
+    // The page said "MyKK's own service sends no mail". That was true until
+    // mykk.us-extension #72 (2026-09-18), which made the Worker send the
+    // trial-started, receipt, and expired emails through the estate mailer;
+    // /api/health now reports `mailer: ok`.
+    const html = read('privacy.html');
+    expect(html).not.toMatch(/sends no mail/i);
+    expect(html).toMatch(/trial, receipt, and expiry emails/i);
   });
 
   it('leaves Discord undisclosed, per the owner ruling', () => {
