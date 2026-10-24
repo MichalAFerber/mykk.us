@@ -35,12 +35,10 @@
 #     that first turns CI on, because a red first run means the required `ci`
 #     context never appears and the ruleset swap that depends on it cannot happen.
 #   • No `npx playwright` / `npm run test:e2e`. There is no e2e harness here.
-#   • No `npm audit`. `devDependencies` hold vitest alone and there is no
-#     production tree to audit — `--omit=dev` would scan nothing.
 #
-# What is left is the part that carries the weight: a frozen install and the
-# vitest suite, which pins the pricing, the legal-page claims, the roadmap
-# tiers, and the contact route.
+# What is left is the part that carries the weight: a frozen install, the
+# full-tree `npm audit`, and the vitest suite, which pins the pricing, the
+# legal-page claims, the roadmap tiers, and the contact route.
 #
 # There is deliberately NO deploy step: deploy.yml owns that (§4). A second
 # deploying job here would race it.
@@ -78,5 +76,8 @@ jobs:
 
       # Exits non-zero if package-lock.json has drifted from package.json.
       - run: npm ci
+
+      # FULL tree, deliberately not --omit=dev (§15): the dev half is the toolchain, and its output is what ships.
+      - run: npm audit --audit-level=high
 
       - run: npm test
